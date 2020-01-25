@@ -487,4 +487,23 @@ playGame.prototype = {
               }
   }
 
+var callback = function(result) {
+    if(!result) {
+        app.writeLog('Interstitial ad is not ready');
+        return;
+    }
+
+    Enhance.showInterstitialAd();
+};
+
+// set interval
+var tid = setInterval(interPop, 180000);
+function interPop() {
+ Enhance.isInterstitialReady(callback);
+
+}
+function abortTimer() { // to be called when you want to stop the timer
+  clearInterval(tid);
+}
+
 
