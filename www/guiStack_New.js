@@ -32,10 +32,11 @@ window.onload = function () {
             gameOptions.gameHeight = gameOptions.gameWidth * ratio;
         }
     }
-    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight + 30, Phaser.CANVAS);
+    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight , Phaser.CANVAS);
     game.state.add("introToGame", introScene);
     game.state.add("PlayGame", playGame);
     game.state.start("introToGame");
+	localStorage.setItem("showInterstatial", 0);
     //game.state.add("PlayGame", playGame);
     //game.state.start("PlayGame");
     document.getElementById("loadingGG").style.display = 'none';
@@ -444,6 +445,9 @@ playGame.prototype = {
                 this.victorySound.play();
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 340, "smallfont", "Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
+				
+				localStorage.setItem("showInterstatial", 1);
+				setTimeout(function(){ localStorage.setItem("showInterstatial", 1);; }, 29000);
                 LEVEL = LEVEL + 1;
                 levelScore = this.score;
                 oldlevelScore = this.score;
@@ -487,23 +491,5 @@ playGame.prototype = {
               }
   }
 
-var callback = function(result) {
-    if(!result) {
-        app.writeLog('Interstitial ad is not ready');
-        return;
-    }
-
-    Enhance.showInterstitialAd();
-};
-
-// set interval
-var tid = setInterval(interPop, 180000);
-function interPop() {
- Enhance.isInterstitialReady(callback);
-
-}
-function abortTimer() { // to be called when you want to stop the timer
-  clearInterval(tid);
-}
 
 

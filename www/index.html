@@ -282,7 +282,7 @@
     <audio id="NiceSound" class="gameSounds">
         <source src="assets\sounds\OveMelaa-ItaloUnlimited.mp3" type="audio/mp3">
     </audio>
-    <div id="muteBtn"> <img id="muteImg" src="assets/sprites/mute.png" /> </div>
+ 
    <div id="gameDiv"></div>
  <script type=text/javascript> 
  var callback = function(result) {
@@ -294,15 +294,20 @@
     Enhance.showInterstitialAd();
 };
 
-// set interval
-var tid = setInterval(interPop, 45000);
-function interPop() {
- Enhance.isInterstitialReady(callback);
+// set interval to check for interstatial
 
+var showItOrNo = localStorage.getItem("showInterstatial");
+var onceOnlyAd = 0;
+var tid = setInterval(interPop, 1000);
+function interPop() {
+showItOrNo = localStorage.getItem("showInterstatial");
+if(showItOrNo == 1 ){
+	Enhance.isInterstitialReady(callback);
+	localStorage.setItem("showInterstatial", 0);
+ }
+else {return;}
 }
-function abortTimer() { // to be called when you want to stop the timer
-  clearInterval(tid);
-}
+
 
  </script>
 </body>
