@@ -2,7 +2,7 @@
 <widget id="com.GuiGhostGames.StackerBoB" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Stacker Boxes of Balance</name>
     <description>
-        A blank PhoneGap app.
+        Stack the boxes to get the High Score! Simple, Easy Play
     </description>
  <author href="http://guighostgames.com" email="info@guighost.com">GuiGhost Games </author>
 <access origin="*"/>
