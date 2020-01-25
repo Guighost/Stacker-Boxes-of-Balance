@@ -270,6 +270,8 @@
     <script src="phaser.min.js"></script>
     <script src="box2d-plugin-full.js"></script>
     <script src="guiStack_New.js"></script>
+     <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
 
 </head>
 <body>
@@ -282,7 +284,27 @@
     </audio>
     <div id="muteBtn"> <img id="muteImg" src="assets/sprites/mute.png" /> </div>
    <div id="gameDiv"></div>
- 
+ <script type=text/javascript> 
+ var callback = function(result) {
+    if(!result) {
+        app.writeLog('Interstitial ad is not ready');
+        return;
+    }
+
+    Enhance.showInterstitialAd();
+};
+
+// set interval
+var tid = setInterval(interPop, 45000);
+function interPop() {
+ Enhance.isInterstitialReady(callback);
+
+}
+function abortTimer() { // to be called when you want to stop the timer
+  clearInterval(tid);
+}
+
+ </script>
 </body>
 </html>
 <!--//Credits to http://www.emanueleferonato.com/ for the tuturial on the javascript that started this project-->

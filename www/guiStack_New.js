@@ -32,7 +32,7 @@ window.onload = function () {
             gameOptions.gameHeight = gameOptions.gameWidth * ratio;
         }
     }
-    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS);
+    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight + 30, Phaser.CANVAS);
     game.state.add("introToGame", introScene);
     game.state.add("PlayGame", playGame);
     game.state.start("introToGame");
@@ -264,7 +264,7 @@ playGame.prototype = {
         platform1.y = game.height - (game.height / 3.25);
         var platform2 = game.add.sprite((game.width - (game.width / randomSpot2)), game.height, platSrc);
         platform2.y = game.height - (game.height / 3.25);
-        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - GROUNDHEIGHT - gameOptions.fallingHeight, "crate1");
+        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight, "crate1");
 
     
                 
