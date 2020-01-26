@@ -446,8 +446,7 @@ playGame.prototype = {
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 340, "smallfont", "Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
 				
-				localStorage.setItem("showInterstatial", 1);
-				setTimeout(function(){ localStorage.setItem("showInterstatial", 1);; }, 29000);
+				
                 LEVEL = LEVEL + 1;
                 levelScore = this.score;
                 oldlevelScore = this.score;
@@ -460,6 +459,8 @@ playGame.prototype = {
                     if (gameOptions.gravity >= 2250) { gameOptions.gravity = 2250; }
             
                     game.state.start("PlayGame");
+					localStorage.setItem("showInterstatial", 1);
+				setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 29000);
                     myAudio.play();
                 }, this);
             }
@@ -469,6 +470,8 @@ playGame.prototype = {
                 lvlUpDisplayText.anchor.set(0.5);
                 game.time.events.add(Phaser.Timer.SECOND * 7, function () {
                     game.state.start("PlayGame");
+					localStorage.setItem("showInterstatial", 1);
+				setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 29000);
                 }, this);}
            
         }
