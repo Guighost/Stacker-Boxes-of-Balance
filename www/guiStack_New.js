@@ -458,9 +458,11 @@ playGame.prototype = {
                     if (gameOptions.fallingHeight >= 600) { gameOptions.fallingHeight = 600; }
                     if (gameOptions.gravity >= 2250) { gameOptions.gravity = 2250; }
             
-                    game.state.start("PlayGame");
-					localStorage.setItem("showInterstatial", 1);
-				setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 29000);
+                    game.state.start("PlayGame"); 
+					if (LEVEL % 2 == 0) {
+						localStorage.setItem("showInterstatial", 1);
+						setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 29000);
+					}
                     myAudio.play();
                 }, this);
             }
