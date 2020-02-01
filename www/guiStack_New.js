@@ -450,7 +450,15 @@ playGame.prototype = {
                 LEVEL = LEVEL + 1;
                 levelScore = this.score;
                 oldlevelScore = this.score;
-                game.time.events.add(Phaser.Timer.SECOND * 5, function () {
+				
+				game.time.events.add(Phaser.Timer.SECOND * 3, function () {
+					if (LEVEL % 2 == 0) {
+						localStorage.setItem("showInterstatial", 1);
+						setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
+					}
+				}, this);
+				
+                game.time.events.add(Phaser.Timer.SECOND * 6, function () {
                     gameOptions.crateSpeed = gameOptions.crateSpeed - 25;
                     gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
                     gameOptions.gravity = gameOptions.gravity + 50;
@@ -458,12 +466,8 @@ playGame.prototype = {
                     if (gameOptions.fallingHeight >= 600) { gameOptions.fallingHeight = 600; }
                     if (gameOptions.gravity >= 2250) { gameOptions.gravity = 2250; }
             
-                    
-					if (LEVEL % 2 == 0) {
-						localStorage.setItem("showInterstatial", 1);
-						setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
-					}
-					game.state.start("PlayGame"); 
+                    game.state.start("PlayGame"); 
+			
                     myAudio.play();
                 }, this);
             }
@@ -471,12 +475,16 @@ playGame.prototype = {
             else {
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
-                game.time.events.add(Phaser.Timer.SECOND * 7, function () {
-               
-				localStorage.setItem("showInterstatial", 1);
-				setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
+				
+				game.time.events.add(Phaser.Timer.SECOND * 2, function() {
+					localStorage.setItem("showInterstatial", 1);
+					setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
+				}, this);
+				
+                game.time.events.add(Phaser.Timer.SECOND * 6, function () {
+                    game.state.start("PlayGame");
+				
                 }, this);}
-				game.state.start("PlayGame");
            
         }
     }
