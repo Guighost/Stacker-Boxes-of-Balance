@@ -458,11 +458,12 @@ playGame.prototype = {
                     if (gameOptions.fallingHeight >= 600) { gameOptions.fallingHeight = 600; }
                     if (gameOptions.gravity >= 2250) { gameOptions.gravity = 2250; }
             
-                    game.state.start("PlayGame"); 
+                    
 					if (LEVEL % 2 == 0) {
 						localStorage.setItem("showInterstatial", 1);
-						setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 29000);
+						setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
 					}
+					game.state.start("PlayGame"); 
                     myAudio.play();
                 }, this);
             }
@@ -471,10 +472,11 @@ playGame.prototype = {
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
                 game.time.events.add(Phaser.Timer.SECOND * 7, function () {
-                    game.state.start("PlayGame");
-					localStorage.setItem("showInterstatial", 1);
-				setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 29000);
+               
+				localStorage.setItem("showInterstatial", 1);
+				setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
                 }, this);}
+				game.state.start("PlayGame");
            
         }
     }
