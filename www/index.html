@@ -323,13 +323,14 @@ else {return;}
 
  </script>
     <script type="text/javascript">
+        var isBannerAdVisible = false;
         if (isBannerAdVisible) {
             isBannerAdVisible = false;
             Enhance.hideBannerAd();
         }
 
-        var callback = function (result) {
-            if (!result) {
+        var callback2 = function (result2) {
+            if (!result2) {
                 app.writeLog('Banner ad is not ready');
                 return;
             }
@@ -338,7 +339,7 @@ else {return;}
             Enhance.showBannerAdWithPosition(Enhance.Position.BOTTOM);
         };
 
-        Enhance.isBannerAdReady(callback);
+        Enhance.isBannerAdReady(callback2);
     </script>
 </body>
 </html>
