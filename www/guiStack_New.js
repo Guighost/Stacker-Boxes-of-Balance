@@ -253,7 +253,7 @@ playGame.prototype = {
         var randomSpot1 = Math.floor((Math.random() * 9) +2);
         var randomSpot2 = Math.floor(Math.random() * 9);
         var ground = game.add.sprite(game.width / 2, game.height, "ground1");
-        ground.y = (game.height - ground.height / 2) -40;
+        ground.y = (game.height - ground.height / 2) -60;
         ground.loadTexture(groundSrc);
 
        
@@ -265,7 +265,7 @@ playGame.prototype = {
         platform1.y = game.height - (game.height / 3.25);
         var platform2 = game.add.sprite((game.width - (game.width / randomSpot2)), game.height, platSrc);
         platform2.y = game.height - (game.height / 3.25);
-        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight, "crate1");
+        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -30, "crate1");
 
     
                 
@@ -297,7 +297,7 @@ playGame.prototype = {
         game.input.onDown.add(this.dropCrate, this);
 
         this.menuGroup = game.add.group();
-        var tap = game.add.sprite(game.width / 2, game.height - 240, "tap");
+        var tap = game.add.sprite(game.width / 2, game.height - 300, "tap");
         tap.anchor.set(0.5);
         this.menuGroup.add(tap);
         if (LEVEL <= 1) {
@@ -310,10 +310,10 @@ playGame.prototype = {
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
-        var hiScoreText = game.add.bitmapText(game.width / 2, game.height - 114, "smallfont", "YOUR TOP SCORE", 24);
+        var hiScoreText = game.add.bitmapText(game.width / 2, game.height - 164, "smallfont", "YOUR TOP SCORE", 24);
         hiScoreText.anchor.set(0.5);
         this.menuGroup.add(hiScoreText);
-        var hiScore = game.add.bitmapText(game.width / 2, game.height - 60, "font", this.savedData.score.toString(), 72);
+        var hiScore = game.add.bitmapText(game.width / 2, game.height - 110, "font", this.savedData.score.toString(), 72);
         hiScore.anchor.set(0.5);
         this.menuGroup.add(hiScore);
         var tapTween = game.add.tween(tap).to({
