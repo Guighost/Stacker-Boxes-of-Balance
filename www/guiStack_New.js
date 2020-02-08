@@ -9,10 +9,10 @@ var gameOptions = {
     gravity: 2250,
     crateSpeed: 2000,
     crateHorizontalRange: 540,
-    fallingHeight: 350,
+    fallingHeight: 380,
     localStorageName: "Stacker_HighScore",
     gameWidth: 640,
-    gameHeight: 960
+    gameHeight: 920
 }
 
 var GROUNDHEIGHT;
@@ -253,7 +253,7 @@ playGame.prototype = {
         var randomSpot1 = Math.floor((Math.random() * 9) +2);
         var randomSpot2 = Math.floor(Math.random() * 9);
         var ground = game.add.sprite(game.width / 2, game.height, "ground1");
-        ground.y = game.height - ground.height / 2;
+        ground.y = (game.height - ground.height / 2) -40;
         ground.loadTexture(groundSrc);
 
        
@@ -310,10 +310,10 @@ playGame.prototype = {
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
-        var hiScoreText = game.add.bitmapText(game.width / 2, game.height - 74, "smallfont", "YOUR TOP SCORE", 24);
+        var hiScoreText = game.add.bitmapText(game.width / 2, game.height - 114, "smallfont", "YOUR TOP SCORE", 24);
         hiScoreText.anchor.set(0.5);
         this.menuGroup.add(hiScoreText);
-        var hiScore = game.add.bitmapText(game.width / 2, game.height - 20, "font", this.savedData.score.toString(), 72);
+        var hiScore = game.add.bitmapText(game.width / 2, game.height - 60, "font", this.savedData.score.toString(), 72);
         hiScore.anchor.set(0.5);
         this.menuGroup.add(hiScore);
         var tapTween = game.add.tween(tap).to({
