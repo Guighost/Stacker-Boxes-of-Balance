@@ -5,7 +5,7 @@ var levelScore = 0;
 var oldLevelScore = 0;
 var LEVEL = 1;
 var gameOptions = {
-    timeLimit: 60,
+    timeLimit: 30,
     gravity: 2250,
     crateSpeed: 2000,
     crateHorizontalRange: 540,
@@ -36,7 +36,16 @@ window.onload = function () {
     game.state.add("introToGame", introScene);
     game.state.add("PlayGame", playGame);
     game.state.start("introToGame");
-	localStorage.setItem("showInterstatial", 0);
+    localStorage.setItem("showInterstatial", 0);
+
+    if (localStorage.getItem("stackerLevel") == null) {
+        LEVEL = 1;
+        localStorage.setItem("stackerLevel", LEVEL);
+    }
+    else LEVEL = JSON.parse(localStorage.getItem("stackerLevel"));
+    console.log("Player is level " + LEVEL);
+
+
     //game.state.add("PlayGame", playGame);
     //game.state.start("PlayGame");
     document.getElementById("loadingGG").style.display = 'none';
@@ -79,7 +88,7 @@ introScene.prototype = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         game.stage.disableVisibilityChange = true;
-        game.load.image("intro", "images/introBack2.png");
+        game.load.image("intro", "images/introBack3.png");
         game.load.image("playBtn1", "images/playButton.png");
         game.load.image("tut1", "images/intro1.png");
         game.load.image("tut2", "images/intro2.png");
@@ -103,34 +112,39 @@ introScene.prototype = {
     loadGame1: function () {
         //introBackS.destroy(); 
         if (alreadyclicked == false) {
-            alreadyclicked = true;
-        var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
-        var tut2 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut2');
-        tut2.visible = false;
-        tut1.width = 300;
-        tut1.height = 300;
-        var timer1 = setTimeout(function () {
-            tut1.visible = false;
-            tut2.visible = true;
-          
-            tut2.width = 300;
-            tut2.height = 300;
+            if (LEVEL == 1) {
+                alreadyclicked = true;
+                var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
+                var tut2 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut2');
+                tut2.visible = false;
+                tut1.width = 300;
+                tut1.height = 300;
+                var timer1 = setTimeout(function () {
+                    tut1.visible = false;
+                    tut2.visible = true;
 
-        }, 1500);
-        var timer2 = setTimeout(function () {
-            tut2.visible = false;
-            var tut3 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut3');
-            tut3.width = 300;
-            tut3.height = 300;
+                    tut2.width = 300;
+                    tut2.height = 300;
 
-        }, 3000);
-        var timer3 = setTimeout(function () {
-           
-            game.state.start("PlayGame");
-            document.getElementById("loadingGG").style.display = 'block';
-        }, 5000);
+                }, 1250);
+                var timer2 = setTimeout(function () {
+                    tut2.visible = false;
+                    var tut3 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut3');
+                    tut3.width = 300;
+                    tut3.height = 300;
 
-      }      
+                }, 2500);
+                var timer3 = setTimeout(function () {
+
+                  
+                }, 4000);
+
+            }
+            else {
+                game.state.start("PlayGame");
+                document.getElementById("loadingGG").style.display = 'block';
+            }
+        }
     },
 
 
@@ -152,7 +166,22 @@ playGame.prototype = {
         game.load.image("ground7", "assets/sprites/ground7.png");
         game.load.image("ground8", "assets/sprites/ground8.png");
         game.load.image("ground9", "assets/sprites/ground9.png");
-        game.load.image("ground10", "assets/sprites/ground9.png");
+        game.load.image("ground10", "assets/sprites/ground10.png");
+        game.load.image("ground11", "assets/sprites/ground11.png");
+        game.load.image("ground12", "assets/sprites/ground12.png");
+        game.load.image("ground13", "assets/sprites/ground13.png");
+        game.load.image("ground14", "assets/sprites/ground14.png");
+        game.load.image("ground15", "assets/sprites/ground15.png");
+        game.load.image("ground16", "assets/sprites/ground16.png");
+        game.load.image("ground17", "assets/sprites/ground17.png");
+        game.load.image("ground18", "assets/sprites/ground18.png");
+        game.load.image("ground19", "assets/sprites/ground19.png");
+        game.load.image("ground20", "assets/sprites/ground20.png");
+        game.load.image("ground21", "assets/sprites/ground21.png");
+        game.load.image("ground22", "assets/sprites/ground22.png");
+        game.load.image("ground23", "assets/sprites/ground23.png");
+        game.load.image("ground24", "assets/sprites/ground24.png");
+        game.load.image("ground25", "assets/sprites/ground25.png");
         game.load.image("plat1", "assets/sprites/plat1.png");
         game.load.image("plat2", "assets/sprites/plat2.png");
         game.load.image("plat3", "assets/sprites/plat3.png");
@@ -163,6 +192,21 @@ playGame.prototype = {
         game.load.image("plat8", "assets/sprites/plat8.png");
         game.load.image("plat9", "assets/sprites/plat9.png");
         game.load.image("plat10", "assets/sprites/plat10.png");
+        game.load.image("plat11", "assets/sprites/plat11.png");
+        game.load.image("plat12", "assets/sprites/plat12.png");
+        game.load.image("plat13", "assets/sprites/plat13.png");
+        game.load.image("plat14", "assets/sprites/plat14.png");
+        game.load.image("plat15", "assets/sprites/plat15.png");
+        game.load.image("plat16", "assets/sprites/plat16.png");
+        game.load.image("plat17", "assets/sprites/plat17.png");
+        game.load.image("plat18", "assets/sprites/plat18.png");
+        game.load.image("plat19", "assets/sprites/plat19.png");
+        game.load.image("plat20", "assets/sprites/plat20.png");
+        game.load.image("plat21", "assets/sprites/plat21.png");
+        game.load.image("plat22", "assets/sprites/plat22.png");
+        game.load.image("plat23", "assets/sprites/plat23.png");
+        game.load.image("plat24", "assets/sprites/plat24.png");
+        game.load.image("plat25", "assets/sprites/plat25.png");
         game.load.image("sky1", "assets/sprites/sky1.png");
         game.load.image("sky2", "assets/sprites/sky2.png");
         game.load.image("sky3", "assets/sprites/sky3.png");
@@ -173,6 +217,21 @@ playGame.prototype = {
         game.load.image("sky8", "assets/sprites/sky8.png");
         game.load.image("sky9", "assets/sprites/sky9.png");
         game.load.image("sky10", "assets/sprites/sky10.png");
+        game.load.image("sky11", "assets/sprites/sky11.png");
+        game.load.image("sky12", "assets/sprites/sky12.png");
+        game.load.image("sky13", "assets/sprites/sky13.png");
+        game.load.image("sky14", "assets/sprites/sky14.png");
+        game.load.image("sky15", "assets/sprites/sky15.png");
+        game.load.image("sky16", "assets/sprites/sky16.png");
+        game.load.image("sky17", "assets/sprites/sky17.png");
+        game.load.image("sky18", "assets/sprites/sky18.png");
+        game.load.image("sky19", "assets/sprites/sky19.png");
+        game.load.image("sky20", "assets/sprites/sky20.png");
+        game.load.image("sky21", "assets/sprites/sky21.png");
+        game.load.image("sky22", "assets/sprites/sky22.png");
+        game.load.image("sky23", "assets/sprites/sky23.png");
+        game.load.image("sky24", "assets/sprites/sky24.png");
+        game.load.image("sky25", "assets/sprites/sky20.png");
         game.load.image("crate1", "assets/sprites/crate1.png");
         game.load.image("crate2", "assets/sprites/crate2.png");
         game.load.image("crate3", "assets/sprites/crate3.png");
@@ -183,6 +242,21 @@ playGame.prototype = {
         game.load.image("crate8", "assets/sprites/crate8.png");
         game.load.image("crate9", "assets/sprites/crate9.png");
         game.load.image("crate10", "assets/sprites/crate10.png");
+        game.load.image("crate11", "assets/sprites/crate11.png");
+        game.load.image("crate12", "assets/sprites/crate12.png");
+        game.load.image("crate13", "assets/sprites/crate13.png");
+        game.load.image("crate14", "assets/sprites/crate14.png");
+        game.load.image("crate15", "assets/sprites/crate15.png");
+        game.load.image("crate16", "assets/sprites/crate16.png");
+        game.load.image("crate17", "assets/sprites/crate17.png");
+        game.load.image("crate18", "assets/sprites/crate18.png");
+        game.load.image("crate19", "assets/sprites/crate19.png");
+        game.load.image("crate20", "assets/sprites/crate20.png");
+        game.load.image("crate21", "assets/sprites/crate21.png");
+        game.load.image("crate22", "assets/sprites/crate22.png");
+        game.load.image("crate23", "assets/sprites/crate23.png");
+        game.load.image("crate24", "assets/sprites/crate24.png");
+        game.load.image("crate25", "assets/sprites/crate25.png");
         game.load.image("title", "assets/sprites/title.png");
         game.load.image("title2", "assets/sprites/title4.png");
         game.load.image("tap", "assets/sprites/tap.png");
@@ -222,15 +296,23 @@ playGame.prototype = {
         this.removeSound = game.add.audio("remove");
         this.score = 0;
         if (LEVEL > 1) { this.score = levelScore; oldLevelScore = this.score; }
+
+        if (localStorage.getItem("stackerScore") == null) {
+            localStorage.setItem("stackerScore", this.score);
+        }
+        else {
+            this.score = JSON.parse(localStorage.getItem("stackerScore"));
+            console.log("score is " + this.score);
+        }
+        
         GROUNDHEIGHT = game.cache.getImage("ground1").height;
         CRATEHEIGHT = game.cache.getImage("crate1").height;
         this.firstCrate = true;
         var ImgBase = LEVEL;
-        if (ImgBase > 10 && ImgBase < 21) { ImgBase = ImgBase - 10; }
-        if (ImgBase > 20 && ImgBase < 31) { ImgBase = ImgBase - 20; }
-        if (ImgBase > 30 && ImgBase < 41) { ImgBase = ImgBase - 30; }
-        if (ImgBase > 40 && ImgBase < 51) { ImgBase = ImgBase - 40; }
-        if (ImgBase > 50 && ImgBase < 61) { ImgBase = ImgBase - 50; }
+        if (ImgBase > 25 && ImgBase <= 50) { ImgBase = ImgBase - 24; }
+        if (ImgBase > 50 && ImgBase <= 75) { ImgBase = ImgBase - 49; }
+        if (ImgBase > 75 && ImgBase <= 100) { ImgBase = ImgBase - 74; }
+       
 
         var skySrc = 'sky' + ImgBase;
 
@@ -243,8 +325,7 @@ playGame.prototype = {
         game.physics.startSystem(Phaser.Physics.BOX2D);
         game.physics.box2d.gravity.y = gameOptions.gravity;
         this.canDrop = true;
-
-     
+             
 
         var groundSrc = "ground" + ImgBase;
         var platSrc = "plat" + ImgBase;
@@ -252,6 +333,7 @@ playGame.prototype = {
 
         var randomSpot1 = Math.floor((Math.random() * 9) +2);
         var randomSpot2 = Math.floor(Math.random() * 9);
+    
         var ground = game.add.sprite(game.width / 2, game.height, "ground1");
         ground.y = (game.height - ground.height / 2) -60;
         ground.loadTexture(groundSrc);
@@ -263,7 +345,13 @@ playGame.prototype = {
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
         var platform1 = game.add.sprite(game.width / randomSpot1, game.height, platSrc);
         platform1.y = game.height - (game.height / 3.25);
-        var platform2 = game.add.sprite((game.width - (game.width / randomSpot2)), game.height, platSrc);
+        var calcPlat2 = (game.width / randomSpot2);
+
+        if (calcPlat2 < (game.width / 2) +35) { calcPlat2 = (game.width / 2) + 45; console.log("less than 1/2 gamewidth") }
+        if (calcPlat2 > (game.width -100)) { calcPlat2 = (game.width / 2) + 150; console.log("moved to prevent offscreen") }
+        if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width / randomSpot1) + 96) + 140; console.log("moved to prevent overflow on plat1") }
+        console.log("calPlat2 = " + calcPlat2)
+        var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
         platform2.y = game.height - (game.height / 3.25);
         this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -30, "crate1");
 
@@ -296,6 +384,16 @@ playGame.prototype = {
 
         game.input.onDown.add(this.dropCrate, this);
 
+        ///handle level for timer
+        if (LEVEL > 3 && LEVEL <= 6) { gameOptions.timeLimit = 35; }
+        if (LEVEL >= 7 && LEVEL <= 10) { gameOptions.timeLimit = 45; }
+        if (LEVEL >= 11 && LEVEL <= 15) { gameOptions.timeLimit = 50; }
+        if (LEVEL >= 16 && LEVEL <= 20) { gameOptions.timeLimit = 55; }
+        if (LEVEL >= 21 ) { gameOptions.timeLimit = 60; }
+       
+        
+
+
         this.menuGroup = game.add.group();
         var tap = game.add.sprite(game.width / 2, game.height - 300, "tap");
         tap.anchor.set(0.5);
@@ -306,7 +404,7 @@ playGame.prototype = {
             this.menuGroup.add(title);
         }
         else {
-            var title2 = game.add.image(game.width / 2, tap.y - 470, "title2");
+            var title2 = game.add.image(game.width / 2, tap.y - 720, "title2");
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
@@ -319,9 +417,13 @@ playGame.prototype = {
         var tapTween = game.add.tween(tap).to({
             alpha: 0
         }, 150, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
-        //this.levelText = game.add.bitmapText(game.width - (game.width - 10), 90, "font", "Level: " + LEVEL.toString(), 48);
+        var levelGoalText = LEVEL * 10;
+        if (LEVEL > 12 && LEVEL < 20) { levelGoalText = 125; }
+        if (LEVEL > 20) { levelGoalText = 150; }
+        this.levelText = game.add.bitmapText((game.width / 4 - 25), 550, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
     },
     dropCrate: function () {
+        this.levelText.destroy();
         if (this.firstCrate) {
             this.firstCrate = false;
             this.menuGroup.destroy();
@@ -439,17 +541,21 @@ playGame.prototype = {
             }));
            
             var levelCheck = LEVEL * 10;
-            if (LEVEL > 7) { levelCheck = 75 }
+           
+            if (LEVEL > 12 && LEVEL < 20) { levelCheck = 125 }
+            if (LEVEL > 20) { levelCheck = 150; }
             if (scoreCheck >= levelCheck) {
                 myAudio.pause();
                 this.victorySound.play();
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 340, "smallfont", "Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
 				
-				
+                localStorage.setItem("stackerScore", this.score);
                 LEVEL = LEVEL + 1;
+                localStorage.setItem("stackerLevel", LEVEL);
                 levelScore = this.score;
                 oldlevelScore = this.score;
+
 				
 				game.time.events.add(Phaser.Timer.SECOND * 3, function () {
 					if (LEVEL % 2 == 0) {
