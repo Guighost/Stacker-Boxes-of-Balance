@@ -135,7 +135,8 @@ introScene.prototype = {
 
                 }, 2500);
                 var timer3 = setTimeout(function () {
-
+                    game.state.start("PlayGame");
+                    document.getElementById("loadingGG").style.display = 'block';
                   
                 }, 4000);
 
