@@ -405,7 +405,7 @@ playGame.prototype = {
             this.menuGroup.add(title);
         }
         else {
-            var title2 = game.add.image(game.width / 2, tap.y - 720, "title2");
+            var title2 = game.add.image(game.width / 2, tap.y - 555, "title2");
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
@@ -421,7 +421,7 @@ playGame.prototype = {
         var levelGoalText = LEVEL * 10;
         if (LEVEL > 12 && LEVEL < 20) { levelGoalText = 125; }
         if (LEVEL > 20) { levelGoalText = 150; }
-        this.levelText = game.add.bitmapText((game.width / 4 - 25), 550, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
+        this.levelText = game.add.bitmapText((game.width / 4 - 25), 605, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
     },
     dropCrate: function () {
         this.levelText.destroy();
