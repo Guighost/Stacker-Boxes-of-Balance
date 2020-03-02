@@ -6,8 +6,8 @@ var oldLevelScore = 0;
 var LEVEL = 1;
 var gameOptions = {
     timeLimit: 30,
-    gravity: 2250,
-    crateSpeed: 2000,
+    gravity: 2350,
+    crateSpeed: 1500,
     crateHorizontalRange: 540,
     fallingHeight: 380,
     localStorageName: "Stacker_HighScore",
@@ -303,6 +303,7 @@ playGame.prototype = {
         }
         else {
             this.score = JSON.parse(localStorage.getItem("stackerScore"));
+            oldLevelScore = JSON.parse(localStorage.getItem("stackerScore"));
             console.log("score is " + this.score);
         }
         
@@ -332,7 +333,8 @@ playGame.prototype = {
         var platSrc = "plat" + ImgBase;
         CrateSrc = "crate" + ImgBase;
 
-        var randomSpot1 = Math.floor((Math.random() * 9) +2);
+        var randomSpot1 = Math.floor((Math.random() * 9) + 2);
+        if (randomSpot1 <= (gameOptions.width / 2)) { randomSpot1 = randomSpot1 - 150; console.log("plat1 moved back x = " + randomSpot1) }
         var randomSpot2 = Math.floor(Math.random() * 9);
     
         var ground = game.add.sprite(game.width / 2, game.height, "ground1");
@@ -341,20 +343,20 @@ playGame.prototype = {
 
        
         game.add.bitmapText(game.width - (game.width / 4), 40, "smallfont", "Score", 45);
-        game.add.bitmapText(game.width - (game.width / 4) + 50, 95, "smallfont", "" + this.score, 40);
+        game.add.bitmapText(game.width - (game.width / 4) + 5 , 95, "smallfont", "" + this.score, 40);
         game.add.bitmapText(10, 40, "smallfont", "Level" , 45);
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
         var platform1 = game.add.sprite(game.width / randomSpot1, game.height, platSrc);
-        platform1.y = game.height - (game.height / 3.25);
+        platform1.y = ground.y - 250;
         var calcPlat2 = (game.width / randomSpot2);
 
-        if (calcPlat2 < (game.width / 2) +35) { calcPlat2 = (game.width / 2) + 45; console.log("less than 1/2 gamewidth") }
-        if (calcPlat2 > (game.width -100)) { calcPlat2 = (game.width / 2) + 150; console.log("moved to prevent offscreen") }
-        if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width / randomSpot1) + 96) + 140; console.log("moved to prevent overflow on plat1") }
+        if (calcPlat2 < (game.width / 2) + 45) { calcPlat2 = (game.width / 2) + 145; console.log("less than 1/2 gamewidth") }
+        if (calcPlat2 > (game.width -100)) { calcPlat2 = (game.width / 2) + 210; console.log("moved to prevent offscreen") }
+        if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width ) - 96); console.log("moved to prevent overflow on plat1") }
         console.log("calPlat2 = " + calcPlat2)
         var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
-        platform2.y = game.height - (game.height / 3.25);
-        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -30, "crate1");
+        platform2.y = ground.y - 180;;
+        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -50, "crate1");
 
     
                 
@@ -386,11 +388,11 @@ playGame.prototype = {
         game.input.onDown.add(this.dropCrate, this);
 
         ///handle level for timer
-        if (LEVEL > 3 && LEVEL <= 6) { gameOptions.timeLimit = 35; }
-        if (LEVEL >= 7 && LEVEL <= 10) { gameOptions.timeLimit = 45; }
-        if (LEVEL >= 11 && LEVEL <= 15) { gameOptions.timeLimit = 50; }
-        if (LEVEL >= 16 && LEVEL <= 20) { gameOptions.timeLimit = 55; }
-        if (LEVEL >= 21 ) { gameOptions.timeLimit = 60; }
+        if (LEVEL > 3 && LEVEL <= 6) { gameOptions.timeLimit = 45; }
+        if (LEVEL >= 7 && LEVEL <= 10) { gameOptions.timeLimit = 50; }
+        if (LEVEL >= 11 && LEVEL <= 15) { gameOptions.timeLimit = 60; }
+        if (LEVEL >= 16 && LEVEL <= 20) { gameOptions.timeLimit = 75; }
+        if (LEVEL >= 21 ) { gameOptions.timeLimit = 90; }
        
         
 
@@ -405,7 +407,7 @@ playGame.prototype = {
             this.menuGroup.add(title);
         }
         else {
-            var title2 = game.add.image(game.width / 2, tap.y - 555, "title2");
+            var title2 = game.add.image(game.width / 2, tap.y - 505, "title2");
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
@@ -418,10 +420,9 @@ playGame.prototype = {
         var tapTween = game.add.tween(tap).to({
             alpha: 0
         }, 150, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
-        var levelGoalText = LEVEL * 10;
-        if (LEVEL > 12 && LEVEL < 20) { levelGoalText = 125; }
-        if (LEVEL > 20) { levelGoalText = 150; }
-        this.levelText = game.add.bitmapText((game.width / 4 - 25), 605, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
+        var levelGoalText = LEVEL * 5;
+        if (LEVEL > 25) {    levelGoalText = 125;        }
+        this.levelText = game.add.bitmapText((game.width / 4 - 25), tap.y - 165, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
     },
     dropCrate: function () {
         this.levelText.destroy();
@@ -540,11 +541,16 @@ playGame.prototype = {
             localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
                 score: Math.max(this.score, this.savedData.score)
             }));
-           
-            var levelCheck = LEVEL * 10;
-           
-            if (LEVEL > 12 && LEVEL < 20) { levelCheck = 125 }
-            if (LEVEL > 20) { levelCheck = 150; }
+
+          
+
+            var levelCheck = LEVEL * 5;
+            if (LEVEL > 25) {
+                levelcheck = 125;
+            }
+            //if (LEVEL > 6 && LEVEL <= 8) { levelCheck = 55 }
+            //if (LEVEL >= 9 && LEVEL <= 10) { levelCheck = 70 }
+            //if (LEVEL > 20) { levelCheck = 150; }
             if (scoreCheck >= levelCheck) {
                 myAudio.pause();
                 this.victorySound.play();
@@ -565,13 +571,13 @@ playGame.prototype = {
 					}
 				}, this);
 				
-                game.time.events.add(Phaser.Timer.SECOND * 6, function () {
+                game.time.events.add(Phaser.Timer.SECOND * 5, function () {
                     gameOptions.crateSpeed = gameOptions.crateSpeed - 25;
                     gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
                     gameOptions.gravity = gameOptions.gravity + 50;
                     if (gameOptions.crateSpeed <= 749) { gameOptions.crateSpeed = 750; }
                     if (gameOptions.fallingHeight >= 600) { gameOptions.fallingHeight = 600; }
-                    if (gameOptions.gravity >= 2250) { gameOptions.gravity = 2250; }
+                    if (gameOptions.gravity >= 2500) { gameOptions.gravity = 2500; }
             
                     game.state.start("PlayGame"); 
 			
