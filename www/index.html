@@ -73,11 +73,62 @@
    
 
         }
+        #selfInterstatial{
+            position:absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            background-image:url("images/selfPromoteBack.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 3000;
+            display: none;
+        }
+        #selfAdInner {
+            position: absolute;
+            top: 8%;
+            left: 5%;
+            width: 90%;
+            height: 60%;
+            background-color: red;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 3000;
+        }
+        #selfAdGraphic {
+            width: 100%;
+            background-image: url("images/starMatchPromo1.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        #gameLink {
+            position: absolute;
+            left: 50%;
+            bottom: 15%;
+            width: 232px;
+            height: 79px;
+            background-image: url("images/google-play-badge232x79.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform: translateX(-120px);
+        }
+        #adTimerX {
+            position: absolute;
+            width: 20px;
+            top: 5px;
+            right: 20px;
+            background-color:lightgray;
+            border: 1px double blue;
+            border-radius: 2px;
+            font-size: 18px;
+            font-family:'Comic Sans MS';
+        }
         #bannerB {
             position: relative;
             width: 100%;
             height: 40px;
-            background-color:blueviolet;
+            background-color: blueviolet;
         }
         /*/*menu Stuff/**/
         .topnav {
@@ -293,33 +344,96 @@
     </audio>
  
    <div id="gameDiv"></div>
-    <!--<div id="bannerB">
+
+    <!--SELF Advertising-->
+    <div id="selfInterstatial">
         here
-    </div>-->
+        <div id="closeSelfAd">X</div>
+        <div id="selfAdMain">
+            <div id="adTimerX"> 15 </div>
+            <div id="selfAdInner">
+                <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
+              
+            </div>
+            <a id="gameLink" href="https://play.google.com/store/apps/dev?id=8098884313818524240&hl=en_US"> <div></div></a>
+        </div>
+    </div>
  <script type=text/javascript> 
- var callback = function(result) {
-    if(!result) {
-        app.writeLog('Interstitial ad is not ready');
-        return;
-    }
+        var selfPromote = false;
+        var selfTick = 0;
+        var adTimerDiv = document.getElementById("adTimerX");
+        var selfAdCountdown = 15;
+        setInterval(handleAdTimer, 1000, 16)
+        function checkSelfPromote() {
+            selfTick++;
+            if (selfTick >= 2) { selfPromote = true; console.log("SelfPromote is " + selfPromote + " and selfTick = " + selfTick); selfTick = 0; };
+        }
+   
+        var callback = function(result) {
+                if(!result) {
+                    app.writeLog('Interstitial ad is not ready');
+                    return;
+                }
+                try {
+                    if (selfPromote) {
+                        selfPromote = false; console.log("self Promote active");
+                        document.getElementById("selfInterstatial").style.display = block;
+                        setInterval( handleAdTimer , 1000, 16)
 
-    Enhance.showInterstitialAd();
-};
+                    }
+                    else {
+                        try { Enhance.showInterstitialAd(); }
+                        catch(err){console.log("caughtError = " + err)}
+                        
+                    }
+                }
+                 catch (err) {
+                     console.log("caught = " + err)
+                 } 
+    
+        };
+        var currentAdStep = 0;
+        var adImgStep = 1;
+        function handleAdTimer() {
+            currentAdStep++;
+            var adImg = document.getElementById("selfAdGraphic");
+            if (currentAdStep == 3 || currentAdStep == 6 || currentAdStep == 9 || currentAdStep == 12) { adImgStep++;}   
+               
+                if (adImgStep > 5) { adImgStep = 1; }
+                adImg.src = "images/starMatchPromo" + adImgStep + ".png";
+            
+            selfAdCountdown = selfAdCountdown - 1;
+            adTimerDiv.innerHTML = selfAdCountdown;
+            if (selfAdCountdown <= 0) {
+                adTimerDiv.innerHTML = "X";
+            }
+        }
+        adTimerDiv.onclick = function () {
+            if (selfAdCountdown) {
+                document.getElementById("selfInterstatial").style.display = "none";
+            }
+            else { return;}
+        }
 
-// set interval to check for interstatial
+        // set interval to check for interstatial
 
-var showItOrNo = localStorage.getItem("showInterstatial");
-var onceOnlyAd = 0;
-var tid = setInterval(interPop, 500);
-function interPop() {
-showItOrNo = localStorage.getItem("showInterstatial");
-if(showItOrNo == 1 ){
-	Enhance.isInterstitialReady(callback);
-	localStorage.setItem("showInterstatial", 0);
- }
-else {return;}
-}
+        var showItOrNo = localStorage.getItem("showInterstatial");
+        var onceOnlyAd = 0;
+        var tid = setInterval(interPop, 500);
+        function interPop() {
+        showItOrNo = localStorage.getItem("showInterstatial");
+        if (showItOrNo == 1) {
+                checkSelfPromote();
+                try { Enhance.isInterstitialReady(callback); }
+                catch (err) { console.log("caught = " + err)}
 
+	
+	        localStorage.setItem("showInterstatial", 0);
+         }
+        else {return;}
+        }
+
+        
 
  </script>
     <!--<script type="text/javascript">

@@ -14,12 +14,14 @@ var gameOptions = {
     gameWidth: 640,
     gameHeight: 920
 }
-
+var playAdTime = 0;
 var GROUNDHEIGHT;
 var CRATEHEIGHT;
 var CrateSrc = 'crate1';
 var alreadyclicked = false;
 var gameDiv = document.getElementById('gameDiv')
+var timeBetweenAds = 150;
+
 window.onload = function () {
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
@@ -64,8 +66,15 @@ window.onload = function () {
         }, false);
     }
     myAudio.pause();
-   
 
+    var playTime = setInterval(updateplayAdTime, 1000)
+    function updateplayAdTime() {
+
+        playAdTime++;
+
+        //console.log("GamePlayTime = " + playAdTime);
+
+    }
     ///mute sound if minimized	
     function handleVisibilityChange() {
         if (document.hidden) {
@@ -259,7 +268,7 @@ playGame.prototype = {
         game.load.image("crate24", "assets/sprites/crate24.png");
         game.load.image("crate25", "assets/sprites/crate25.png");
         game.load.image("title", "assets/sprites/title.png");
-        game.load.image("title2", "assets/sprites/title4.png");
+        game.load.image("title2", "assets/sprites/title5.png");
         game.load.image("tap", "assets/sprites/tap.png");
         game.load.audio("hit01", ["assets/sounds/hit01.mp3", "assets/sounds/hit01.ogg"]);
         game.load.audio("hit02", ["assets/sounds/hit02.mp3", "assets/sounds/hit02.ogg"]);
@@ -350,9 +359,12 @@ playGame.prototype = {
         platform1.y = ground.y - 250;
         var calcPlat2 = (game.width / randomSpot2);
 
-        if (calcPlat2 < (game.width / 2) + 45) { calcPlat2 = (game.width / 2) + 145; console.log("less than 1/2 gamewidth") }
-        if (calcPlat2 > (game.width -100)) { calcPlat2 = (game.width / 2) + 210; console.log("moved to prevent offscreen") }
-        if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width ) - 96); console.log("moved to prevent overflow on plat1") }
+        if (calcPlat2 < (game.width / 2) + 45) {
+            calcPlat2 = (game.width / 2) + 145;
+            //console.log("less than 1/2 gamewidth")
+        }
+        if (calcPlat2 > (game.width -100)) { calcPlat2 = (game.width / 2) + 210;  }
+        if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width ) - 96);  }
         console.log("calPlat2 = " + calcPlat2)
         var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
         platform2.y = ground.y - 180;;
@@ -388,8 +400,8 @@ playGame.prototype = {
         game.input.onDown.add(this.dropCrate, this);
 
         ///handle level for timer
-        if (LEVEL > 3 && LEVEL <= 6) { gameOptions.timeLimit = 45; }
-        if (LEVEL >= 7 && LEVEL <= 10) { gameOptions.timeLimit = 50; }
+        if (LEVEL > 4 && LEVEL <= 6) { gameOptions.timeLimit = 35; }
+        if (LEVEL >= 7 && LEVEL <= 10) { gameOptions.timeLimit = 45; }
         if (LEVEL >= 11 && LEVEL <= 15) { gameOptions.timeLimit = 60; }
         if (LEVEL >= 16 && LEVEL <= 20) { gameOptions.timeLimit = 75; }
         if (LEVEL >= 21 ) { gameOptions.timeLimit = 90; }
@@ -544,8 +556,8 @@ playGame.prototype = {
 
           
 
-            var levelCheck = LEVEL * 5;
-            if (LEVEL > 25) {
+            var levelCheck = (LEVEL * 5 ) + 10;
+            if (LEVEL > 21) {
                 levelcheck = 125;
             }
             //if (LEVEL > 6 && LEVEL <= 8) { levelCheck = 55 }
@@ -565,9 +577,12 @@ playGame.prototype = {
 
 				
 				game.time.events.add(Phaser.Timer.SECOND * 3, function () {
-					if (LEVEL % 2 == 0) {
-						localStorage.setItem("showInterstatial", 1);
-						setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
+                    if ((LEVEL % 2 == 0) && playAdTime > timeBetweenAds) {
+                        playAdTime = 0;
+
+                        localStorage.setItem("showInterstatial", 1);
+                        setTimeout(function () { console.log("showAd"); localStorage.setItem("showInterstatial", 0);; }, 8000); 
+                       
 					}
 				}, this);
 				
@@ -588,11 +603,19 @@ playGame.prototype = {
             else {
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
+
+                if (playAdTime > timeBetweenAds) {
+                    playAdTime = 0;
+
+                    game.time.events.add(Phaser.Timer.SECOND * 2, function () {
+                        
+                        localStorage.setItem("showInterstatial", 1);
+                        setTimeout(function () { console.log("showAd"); localStorage.setItem("showInterstatial", 0);; }, 10000); 
+                      
+                    }, this);
+
+                }
 				
-				game.time.events.add(Phaser.Timer.SECOND * 2, function() {
-					localStorage.setItem("showInterstatial", 1);
-					setTimeout(function(){ localStorage.setItem("showInterstatial", 0);; }, 10000);
-				}, this);
 				
                 game.time.events.add(Phaser.Timer.SECOND * 6, function () {
                     game.state.start("PlayGame");
