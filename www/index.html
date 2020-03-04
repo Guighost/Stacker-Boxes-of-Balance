@@ -120,7 +120,7 @@
             right: 20px;
             background-color:lightgray;
             border: 1px double blue;
-            border-radius: 2px;
+            border-radius: 5px;
             font-size: 18px;
             font-family:'Comic Sans MS';
         }
@@ -363,54 +363,86 @@
         var selfTick = 0;
         var adTimerDiv = document.getElementById("adTimerX");
         var selfAdCountdown = 15;
-        setInterval(handleAdTimer, 1000, 16)
+        var selfAdLocalStore = localStorage.getItem("showSelfAd");
+
         function checkSelfPromote() {
             selfTick++;
-            if (selfTick >= 2) { selfPromote = true; console.log("SelfPromote is " + selfPromote + " and selfTick = " + selfTick); selfTick = 0; };
+            if (selfTick == 2) { selfPromote = true; selfTick = 0; };
+            selfAdLocalStore = localStorage.getItem("showSelfAd");
+            console.log("selfAdLocalStore = " + selfAdLocalStore);
+            if (selfAdLocalStore == 1) {
+                console.log("self Promote active");
+                var selfInter = document.getElementById("selfInterstatial");
+                selfInter.style.display = "block";
+                handleAdTimer();
+                selfPromote = false;
+
+                setTimeout(function () {
+                    localStorage.setItem("showSelfAd", 0);
+                    localStorage.setItem("showInterstatial", 0);
+                }, 2500)
+
+            }
+            else {
+                console.log("self Promote NOT active- fireEnhance");
+                fireEnhance();
+
+            }
+            
         }
-   
-        var callback = function(result) {
+        function fireEnhance() {
+
+            setTimeout(function () {
+                 try { Enhance.isInterstitialReady(callback); }
+                catch (err) { console.log("caughtx = " + err) }
+                localStorage.setItem("showInterstatial", 0);
+            }, 500)
+        }
+
+
+            
+        var callback = function (result) {
+                     
                 if(!result) {
                     app.writeLog('Interstitial ad is not ready');
                     return;
                 }
-                try {
-                    if (selfPromote) {
-                        selfPromote = false; console.log("self Promote active");
-                        document.getElementById("selfInterstatial").style.display = block;
-                        setInterval( handleAdTimer , 1000, 16)
-
-                    }
-                    else {
-                        try { Enhance.showInterstitialAd(); }
-                        catch(err){console.log("caughtError = " + err)}
-                        
-                    }
-                }
-                 catch (err) {
-                     console.log("caught = " + err)
-                 } 
+                try { Enhance.showInterstitialAd(); }
+                catch (err) { console.log("caughtError = " + err) };
     
         };
         var currentAdStep = 0;
         var adImgStep = 1;
+        var adImg = document.getElementById("selfAdGraphic");
+        var timerInProgress = 1;
         function handleAdTimer() {
-            currentAdStep++;
-            var adImg = document.getElementById("selfAdGraphic");
-            if (currentAdStep == 3 || currentAdStep == 6 || currentAdStep == 9 || currentAdStep == 12) { adImgStep++;}   
+            if (timerInProgress == 1) {
+                    timerInProgress = 0;
+                    var adInterval = setInterval(function () {
+                        currentAdStep++;
+                          
+                        if (currentAdStep == 3 || currentAdStep == 6 || currentAdStep == 9 || currentAdStep == 12 || currentAdStep == 15) { adImgStep++;}   
                
-                if (adImgStep > 5) { adImgStep = 1; }
-                adImg.src = "images/starMatchPromo" + adImgStep + ".png";
+                            if (adImgStep > 6) { adImgStep = 1; }
+                            adImg.src = "images/starMatchPromo" + adImgStep + ".png";
             
-            selfAdCountdown = selfAdCountdown - 1;
-            adTimerDiv.innerHTML = selfAdCountdown;
-            if (selfAdCountdown <= 0) {
-                adTimerDiv.innerHTML = "X";
+                        selfAdCountdown = selfAdCountdown - 1;
+                        adTimerDiv.innerHTML = selfAdCountdown;
+                        if (selfAdCountdown <= 0) {
+                            adTimerDiv.innerHTML = "X";
+                        }
+                    }, 1000);
+                    if (currentAdStep > 16) {
+                        clearInterval(adInterval);
+                        currentAdStep = 0;
+                    }
             }
+            else { timerInProgress = 0; }
         }
         adTimerDiv.onclick = function () {
             if (selfAdCountdown) {
                 document.getElementById("selfInterstatial").style.display = "none";
+                currentAdStep = 0;
             }
             else { return;}
         }
@@ -420,16 +452,13 @@
         var showItOrNo = localStorage.getItem("showInterstatial");
         var onceOnlyAd = 0;
         var tid = setInterval(interPop, 500);
-        function interPop() {
-        showItOrNo = localStorage.getItem("showInterstatial");
-        if (showItOrNo == 1) {
-                checkSelfPromote();
-                try { Enhance.isInterstitialReady(callback); }
-                catch (err) { console.log("caught = " + err)}
 
-	
-	        localStorage.setItem("showInterstatial", 0);
-         }
+        function interPop() {
+            showItOrNo = localStorage.getItem("showInterstatial");
+            if (showItOrNo == 1) {
+                checkSelfPromote();
+            
+             }
         else {return;}
         }
 
