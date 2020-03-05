@@ -610,7 +610,7 @@ playGame.prototype = {
         else {
             var scoreCheck = this.score - oldLevelScore;
             game.time.events.remove(this.removeEvent);
-            
+            pauseAllAudio();
             var scoreText = game.add.bitmapText(game.width / 2, game.height / 4, "font", "Your Total Score", 56);
             scoreText.anchor.set(0.5);
             var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 90, "font", this.score.toString(), 78);
@@ -633,7 +633,7 @@ playGame.prototype = {
             //if (LEVEL >= 9 && LEVEL <= 10) { levelCheck = 70 }
             //if (LEVEL > 20) { levelCheck = 150; }
             if (scoreCheck >= levelCheck) {
-                pauseAllAudio();
+                
                 //myAudio.pause();
                 this.victorySound.play();
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 300, "smallfont", "Level Up", 48);
