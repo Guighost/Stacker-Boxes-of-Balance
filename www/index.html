@@ -355,7 +355,7 @@
                 <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
               
             </div>
-            <a id="gameLink" href="https://play.google.com/store/apps/dev?id=8098884313818524240&hl=en_US" onClick="javascript:return openExternal(this)"> <div></div></a>
+            <a id="gameLink" href="https://play.google.com/store/apps/dev?id=8098884313818524240&hl=en_US" target='_blank' onClick="javascript:return openExternal(this)"> <div></div></a>
         </div>
     </div>
  <script type=text/javascript> 
@@ -364,6 +364,9 @@
         var adTimerDiv = document.getElementById("adTimerX");
         var selfAdCountdown = 15;
         var selfAdLocalStore = localStorage.getItem("showSelfAd");
+        window.onload = function () {
+            Enhance.logEvent('AppLaunch');
+        }
 
         function openExternal(elem) {
             var Android = userAgent.indexOf("android") > -1;
@@ -384,6 +387,7 @@
             console.log("selfAdLocalStore = " + selfAdLocalStore);
             if (selfAdLocalStore == 1) {
                 console.log("self Promote active");
+                 Enhance.logEvent('self-promote');
                 var selfInter = document.getElementById("selfInterstatial");
                 selfInter.style.display = "block";
                 handleAdTimer();
@@ -403,7 +407,7 @@
             
         }
         function fireEnhance() {
-
+            Enhance.logEvent('calledEnhance');
             setTimeout(function () {
                  try { Enhance.isInterstitialReady(callback); }
                 catch (err) { console.log("caughtx = " + err) }
@@ -474,7 +478,8 @@
         else {return;}
         }
 
-        
+        //Enhance.logEvent('game_over', 'level', '2');
+        //Enhance.logEvent('exit');
 
  </script>
     <!--<script type="text/javascript">

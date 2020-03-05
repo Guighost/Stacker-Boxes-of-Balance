@@ -31,6 +31,8 @@
 <plugin  source="npm" name="cordova-plugin-network-information"/>
 <plugin  source="npm" name="cordova-plugin-vibration"/>
 <plugin name="enhance-cordova-connector"/>
+  <plugin name="fitatu-cordova-plugin-market" />
+
  <access origin="*" />
     <feature name="http://api.phonegap.com/1.0/device" />
     <content src="index.html" />
