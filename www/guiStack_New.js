@@ -20,7 +20,7 @@ var CRATEHEIGHT;
 var CrateSrc = 'crate1';
 var alreadyclicked = false;
 var gameDiv = document.getElementById('gameDiv')
-var timeBetweenAds = 120;
+var timeBetweenAds = 30;
 
 window.onload = function () {
     var windowWidth = window.innerWidth;
@@ -57,8 +57,18 @@ window.onload = function () {
     //game.state.start("PlayGame");
     document.getElementById("loadingGG").style.display = 'none';
 
-    myAudio = new Audio("assets/sounds/OveMelaa-ItaloUnlimited.mp3", "assets/sounds/OveMelaa-ItaloUnlimited.ogg" ); // game music loop
+    myAudio = new Audio("assets/sounds/loops/OveMelaa-ItaloUnlimited.mp3", "assets/sounds/OveMelaa-ItaloUnlimited.ogg" ); // game music loop
     myAudio.load();
+    myAudioUplifting = new Audio("assets/sounds/loops/Cafofo_Uplifting.mp3"); // game music loop
+    myAudioUplifting.load();
+    myAudioMystery = new Audio("assets/sounds/loops/Cafofo_ MysteryMenu.mp3"); // game music loop
+    myAudioMystery.load();
+    myAudioCSI = new Audio("assets/sounds/loops/Cafofo_CSI_Variation.mp3"); // game music loop
+    myAudioCSI.load();
+    myAudioTension = new Audio("assets/sounds/loops/Cafofo_TensionMix.mp3"); // game music loop
+    myAudioTension.load();
+    myAudioElements = new Audio("assets/sounds/loops/OveMelaa_Elements.mp3"); // game music loop
+    myAudioElements.load();
  
   
     myAudio.volume = 0.2;
@@ -70,7 +80,58 @@ window.onload = function () {
             this.play();
         }, false);
     }
-    myAudio.pause();
+
+    myAudioCSI.volume = 0.2;
+    if (typeof myAudioCSI.loop == 'boolean')
+    { myAudioCSI.loop = true; }
+    else {
+        myAudioCSI.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+
+    myAudioTension.volume = 0.2;
+    if (typeof myAudioTension.loop == 'boolean')
+    { myAudioTension.loop = true; }
+    else {
+        myAudioTension.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+
+    myAudioElements.volume = 0.2;
+    if (typeof myAudioElements.loop == 'boolean')
+    { myAudioElements.loop = true; }
+    else {
+        myAudioElements.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+
+    myAudioMystery.volume = 0.2;
+    if (typeof myAudioMystery.loop == 'boolean')
+    { myAudioMystery.loop = true; }
+    else {
+        myAudioMystery.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+
+    myAudioUplifting.volume = 0.2;
+    if (typeof myAudioUplifting.loop == 'boolean')
+    { myAudioUplifting.loop = true; }
+    else {
+        myAudioUplifting.addEventListener('ended', function () {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+    pauseAllAudio();
+    //myAudio.pause();
 
     var playTime = setInterval(updateplayAdTime, 1000)
     function updateplayAdTime() {
@@ -83,9 +144,11 @@ window.onload = function () {
     ///mute sound if minimized	
     function handleVisibilityChange() {
         if (document.hidden) {
-            myAudio.pause();
+            pauseAllAudio();
+            //myAudio.pause();
         } else {
-            myAudio.play();
+            //myAudio.play();
+            switchAndPlayTheme(levelPassed)
         }
     }
     document.addEventListener("visibilitychange", handleVisibilityChange, false);
@@ -449,7 +512,7 @@ playGame.prototype = {
             this.timer = 0;
             this.timerEvent = game.time.events.loop(Phaser.Timer.SECOND, this.tick, this);
             this.timeText = game.add.bitmapText(game.width - (game.width / 2) - 70, 60, "font", gameOptions.timeLimit.toString(), 84);
-            myAudio.play();
+            switchAndPlayTheme(LEVEL)
             
         }
         if (this.canDrop && this.timer <= gameOptions.timeLimit) {
@@ -547,7 +610,7 @@ playGame.prototype = {
         else {
             var scoreCheck = this.score - oldLevelScore;
             game.time.events.remove(this.removeEvent);
-            this.gameOverSound.play();
+            
             var scoreText = game.add.bitmapText(game.width / 2, game.height / 4, "font", "Your Total Score", 56);
             scoreText.anchor.set(0.5);
             var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 90, "font", this.score.toString(), 78);
@@ -570,7 +633,8 @@ playGame.prototype = {
             //if (LEVEL >= 9 && LEVEL <= 10) { levelCheck = 70 }
             //if (LEVEL > 20) { levelCheck = 150; }
             if (scoreCheck >= levelCheck) {
-                myAudio.pause();
+                pauseAllAudio();
+                //myAudio.pause();
                 this.victorySound.play();
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 300, "smallfont", "Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
@@ -603,12 +667,14 @@ playGame.prototype = {
             
                     game.state.start("PlayGame"); 
 			
-                    myAudio.play();
+                    switchAndPlayTheme(LEVEL)
                 }, this);
             }
            
             else {
-                myAudio.pause();
+                pauseAllAudio();
+                //myAudio.pause();
+                this.gameOverSound.play();
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
                 console.log("playAdTime = " + playAdTime);
@@ -634,7 +700,7 @@ playGame.prototype = {
 				
                 game.time.events.add(Phaser.Timer.SECOND * 6, function () {
                     game.state.start("PlayGame");
-                    myAudio.play();
+                    switchAndPlayTheme(LEVEL);
 				
                 }, this);}
            
@@ -658,5 +724,93 @@ playGame.prototype = {
               }
   }
 
+function switchAndPlayTheme(levelPassed) {
+    if (levelPassed > 24) { levelPassed = levelPassed - 24 };
+    switch (levelPassed) {
+        case 1:
+            myAudio.play();
+            break;
+        case 2:
+            myAudioCSI.play();
+            break;
+        case 3:
+            myAudioElements.play();
+            break;
+        case 4:
+            myAudioMystery.play();
+            break;
+        case 5:
+            myAudioUplifting.play();
+            break;
+        case 6:
+            myAudio.play();
+            break;
+        case 7:
+            myAudioCSI.play();
+            break;
+        case 8:
+            myAudioTension.play();
+            break;
+        case 9:
+            myAudioUplifting.play();
+            break;
+        case 10:
+            myAudioMystery.play();
+            break;
+        case 11:
+            myAudioElements.play();
+            break;
+        case 12:
+            myAudioCSI.play();
+            break;
+        case 13:
+            myAudioUplifting.play();
+            break;
+        case 14:
+            myAudioTension.play();
+            break;
+        case 15:
+            myAudioMystery.play();
+            break;
+        case 16:
+            myAudio.play();
+            break;
+        case 17:
+            myAudioElements.play();
+            break;
+        case 18:
+            myAudioMystery.play();
+            break;
+
+        case 19:
+            myAudioUplifting.play();
+            break;
+        case 20:
+            myAudioTension.play();
+            break;
+        case 21:
+            myAudioUplifting.play();
+            break;
+        case 22:
+            myAudioCSI.play();
+            break;
+        case 23:
+            myAudioElements.play();
+            break;
+        case 24:
+            myAudioMystery.play();
+            break;
+        default:
+            myAudio.play();
+    }
+  }
+function pauseAllAudio() {
+    myAudio.pause()
+    myAudioMystery.pause();
+    myAudioCSI.pause();
+    myAudioTension.pause();
+    myAudioUplifting.pause();
+    myAudioElements.pause();
+};
 
 

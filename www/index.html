@@ -355,7 +355,7 @@
                 <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
               
             </div>
-            <a id="gameLink" href="https://play.google.com/store/apps/dev?id=8098884313818524240&hl=en_US"> <div></div></a>
+            <a id="gameLink" href="https://play.google.com/store/apps/dev?id=8098884313818524240&hl=en_US" onClick="javascript:return openExternal(this)"> <div></div></a>
         </div>
     </div>
  <script type=text/javascript> 
@@ -364,6 +364,18 @@
         var adTimerDiv = document.getElementById("adTimerX");
         var selfAdCountdown = 15;
         var selfAdLocalStore = localStorage.getItem("showSelfAd");
+
+        function openExternal(elem) {
+            var Android = userAgent.indexOf("android") > -1;
+
+            if (Android) {
+                console.log("Device is Android Phone");
+                // Prevent execution of the default onClick handler 
+                window.open(elem.href, "_system");
+                return false;
+            }
+            else { console.log("Not Android"); return };
+        }
 
         function checkSelfPromote() {
             selfTick++;

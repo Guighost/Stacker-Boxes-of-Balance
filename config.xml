@@ -1,10 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.GuiGhostGames.StackerBoB" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.GuiGhostGames.StackerBoB" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Stacker Boxes of Balance</name>
     <description>
         Stack the boxes to get the High Score! Simple, Easy Play
     </description>
- <author href="http://guighostgames.com" email="info@guighost.com">GuiGhost Games </author>
+ <author href="http://guighostgames.com" email="info@guighost.com">
+ GuiGhost Games
+ </author>
+ 
+ 
+ 
 <access origin="*"/>
 <allow-navigation href="*"/>
 <allow-intent href="http://*/*"/>
@@ -26,6 +31,8 @@
 <plugin  source="npm" name="cordova-plugin-network-information"/>
 <plugin  source="npm" name="cordova-plugin-vibration"/>
 <plugin name="enhance-cordova-connector"/>
+ <access origin="*" />
+    <feature name="http://api.phonegap.com/1.0/device" />
     <content src="index.html" />
 <preference name="orientation" value="portrait"/>
 <preference name="target-device" value="universal"/>
@@ -33,7 +40,6 @@
 <preference name="DisallowOverscroll" value="true"/>
 
 -<platform name="android">
-
 	<allow-intent href="market:*"/>
 	<icon src="icon.png"/>
 	<preference name="android-targetSdkVersion" value="28"/>
