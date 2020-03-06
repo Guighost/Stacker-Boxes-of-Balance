@@ -6,13 +6,13 @@ var oldLevelScore = 0;
 var LEVEL = 1;
 var gameOptions = {
     timeLimit: 30,
-    gravity: 2350,
+    gravity: 2000,
     crateSpeed: 1500,
     crateHorizontalRange: 540,
-    fallingHeight: 380,
+    fallingHeight: 500,
     localStorageName: "Stacker_HighScore",
     gameWidth: 640,
-    gameHeight: 920
+    gameHeight: 960
 }
 var playAdTime = 0;
 var GROUNDHEIGHT;
@@ -20,7 +20,8 @@ var CRATEHEIGHT;
 var CrateSrc = 'crate1';
 var alreadyclicked = false;
 var gameDiv = document.getElementById('gameDiv')
-var timeBetweenAds = 30;
+var timeBetweenAds = 120;
+//document.getElementById('gameDiv').style["top"] = 0;
 
 window.onload = function () {
     var windowWidth = window.innerWidth;
@@ -636,7 +637,7 @@ playGame.prototype = {
                 
                 //myAudio.pause();
                 this.victorySound.play();
-                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 300, "smallfont", "Level Up", 48);
+                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 310, "smallfont", "Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
 				
                 localStorage.setItem("stackerScore", this.score);
@@ -659,10 +660,10 @@ playGame.prototype = {
 				
                 game.time.events.add(Phaser.Timer.SECOND * 5, function () {
                     gameOptions.crateSpeed = gameOptions.crateSpeed - 25;
-                    gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
+                    //gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
                     gameOptions.gravity = gameOptions.gravity + 50;
                     if (gameOptions.crateSpeed <= 749) { gameOptions.crateSpeed = 750; }
-                    if (gameOptions.fallingHeight >= 600) { gameOptions.fallingHeight = 600; }
+                    if (gameOptions.fallingHeight >= 700) { gameOptions.fallingHeight = 700; }
                     if (gameOptions.gravity >= 2500) { gameOptions.gravity = 2500; }
             
                     game.state.start("PlayGame"); 
@@ -679,7 +680,7 @@ playGame.prototype = {
                 lvlUpDisplayText.anchor.set(0.5);
                 console.log("playAdTime = " + playAdTime);
 
-                if (playAdTime > timeBetweenAds - 60) {
+                if (playAdTime > timeBetweenAds - 90) {
                     playAdTime = 0;
 
                     game.time.events.add(Phaser.Timer.SECOND * 2, function () {

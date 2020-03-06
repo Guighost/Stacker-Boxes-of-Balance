@@ -108,21 +108,27 @@
             bottom: 15%;
             width: 232px;
             height: 79px;
-            background-image: url("images/google-play-badge232x79.png");
+            /*background-image: url("images/google-play-badge232x79.png");
             background-size: cover;
-            background-repeat: no-repeat;
+            background-repeat: no-repeat;*/
             transform: translateX(-120px);
+        }
+        #gPlayImg {
+            display: inline-block;
+            width: 300px;
+            margin-left: 50%;
+            transform: translate(-150px,-250px);
         }
         #adTimerX {
             position: absolute;
             width: 20px;
             top: 5px;
             right: 20px;
-            background-color:lightgray;
+            background-color: lightgray;
             border: 1px double blue;
             border-radius: 5px;
             font-size: 18px;
-            font-family:'Comic Sans MS';
+            font-family: 'Comic Sans MS';
         }
         #bannerB {
             position: relative;
@@ -330,8 +336,7 @@
     <script src="phaser.min.js"></script>
     <script src="box2d-plugin-full.js"></script>
     <script src="guiStack_New.js"></script>
-     <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+  
 
 </head>
 <body>
@@ -345,9 +350,9 @@
  
    <div id="gameDiv"></div>
 
-    <!--SELF Advertising-->
+    <!--SELF Advertising-->`
     <div id="selfInterstatial">
-        here
+        .
         <div id="closeSelfAd">X</div>
         <div id="selfAdMain">
             <div id="adTimerX"> 15 </div>
@@ -355,30 +360,51 @@
                 <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
               
             </div>
-            <a id="gameLink" href="https://play.google.com/store/apps/dev?id=8098884313818524240&hl=en_US" target='_blank' onClick="javascript:return openExternal(this)"> <div></div></a>
+          
+            <a id="gameLink" class="external-link" href='https://play.google.com/store/apps/dev?id=8098884313818524240' target='_blank'><img id="gPlayImg" alt='Get it on Google Play' src='images/google-play-badge_altered.png' /></a>
+
         </div>
     </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+
+          try {
+              Enhance.logEvent('tutorial_begin');
+          } catch (err) { console.log("Caught Error: " + err) };
+    </script>
+
  <script type=text/javascript> 
+ 
+
         var selfPromote = false;
         var selfTick = 0;
         var adTimerDiv = document.getElementById("adTimerX");
         var selfAdCountdown = 15;
         var selfAdLocalStore = localStorage.getItem("showSelfAd");
-        window.onload = function () {
-            Enhance.logEvent('AppLaunch');
-        }
+      
+        //var Android = userAgent.indexOf("android") > -1;
 
-        function openExternal(elem) {
-            var Android = userAgent.indexOf("android") > -1;
+        //if (Android) {
+        //    console.log("Device is Android Phone");
+        //    // Prevent execution of the default onClick handler 
+        //    //window.open(elem.href, "_system");
+        //    //return false;
+        //}
+        //else { console.log("Not Android");  };
 
-            if (Android) {
-                console.log("Device is Android Phone");
-                // Prevent execution of the default onClick handler 
-                window.open(elem.href, "_system");
-                return false;
-            }
-            else { console.log("Not Android"); return };
-        }
+        //function openExternal(elem) {
+        //    var Android = userAgent.indexOf("android") > -1;
+
+        //    if (Android) {
+        //        console.log("Device is Android Phone");
+        //        // Prevent execution of the default onClick handler 
+        //        //window.open(elem.href, "_system");
+        //        return false;
+        //    }
+        //    else { console.log("Not Android"); return };
+        //}
 
         function checkSelfPromote() {
             selfTick++;
@@ -387,7 +413,11 @@
             console.log("selfAdLocalStore = " + selfAdLocalStore);
             if (selfAdLocalStore == 1) {
                 console.log("self Promote active");
-                 Enhance.logEvent('self-promote');
+                try { Enhance.logEvent('self-promote'); }
+                catch (err) {
+                    console.log('attempt to log event failed');
+                }
+                 //
                 var selfInter = document.getElementById("selfInterstatial");
                 selfInter.style.display = "block";
                 handleAdTimer();
@@ -420,7 +450,7 @@
         var callback = function (result) {
                      
                 if(!result) {
-                    app.writeLog('Interstitial ad is not ready');
+                    
                     return;
                 }
                 try { Enhance.showInterstitialAd(); }
@@ -459,6 +489,7 @@
             if (selfAdCountdown) {
                 document.getElementById("selfInterstatial").style.display = "none";
                 currentAdStep = 0;
+                selfAdCountdown = 15;
             }
             else { return;}
         }
@@ -478,29 +509,24 @@
         else {return;}
         }
 
-        //Enhance.logEvent('game_over', 'level', '2');
-        //Enhance.logEvent('exit');
+       
+          try {
+              Enhance.logEvent('AppLaunch');
+         } catch(err) { console.log("caught attempt to logEvent: " + err)}
+      
+     
+
 
  </script>
-    <!--<script type="text/javascript">
-        var isBannerAdVisible = false;
-        if (isBannerAdVisible) {
-            isBannerAdVisible = false;
-            Enhance.hideBannerAd();
-        }
+    <!--<!--<!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97706544-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-        var callback2 = function (result2) {
-            if (!result2) {
-                app.writeLog('Banner ad is not ready');
-                return;
-            }
-
-            isBannerAdVisible = true;
-            Enhance.showBannerAdWithPosition(Enhance.Position.BOTTOM);
-        };
-
-        Enhance.isBannerAdReady(callback2);
-    </script>-->
+        gtag('config', 'UA-97706544-3');
+    </script>
 </body>
 </html>
 <!--//Credits to http://www.emanueleferonato.com/ for the tuturial on the javascript that started this project-->
