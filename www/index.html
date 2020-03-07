@@ -9,11 +9,11 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, minimum-scale = 1.0, user-scalable = 0, minimal-ui" />
     <meta charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta property="og:url" content="https://guighostgames.com/GuiStack/index.html" />
+    <meta property="og:url" content="https://guighostgames.com/Stacker-BoxesOfBalance/index.html" />
     <meta property="og:type" content="game" />
     <meta property="og:title" content="Stacker: Boxes of Balance" />
     <meta property="og:description" content="Fun Physics games of box dropping to get the high score, but don't let them fall -  Family Friendly Free Online Game" />
-    <meta property="og:image" content="https://guighostgames.com/Images/Homepage/guiStack.png" />
+    <meta property="og:image" content="https://guighostgames.com/Images/Homepage/guiStack1.2.png" />
 
     <link rel="shortcut icon" sizes="256x256" href="assets/sprites/crate16.png" />
 
@@ -376,32 +376,21 @@
   
 
  <script type=text/javascript> 
-
-   
+       
 
      //cordova in app browser
           document.addEventListener("deviceready", onDeviceReady, false);
           function onDeviceReady() {
-              //try { window.open = cordova.InAppBrowser.open; }
-              //catch (err) { console.log("inappBrowsercalled - " + err) }
-              //try {
-              //    Enhance.logEvent('tutorial_begin');
-              //} catch (err) { console.log("Caught Error: " + err) };
-            
+                         
           }
    
           document.getElementById("selfAdGraphic").onclick = openLink;
-          
-          document.getElementById("gPlayImg").onclick = openLink2;
+          document.getElementById("gPlayImg").onclick = openLink;
 
           function openLink() {
-              //window.open('https://play.google.com/store/apps/dev?id=8098884313818524240', '_blank', 'location=yes');
-              cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048'); 
+                cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048'); 
           }
-          function openLink2() {
-              //window.open('https://play.google.com/store/apps/details?id=com.GuiGhostGames.StarMatch2048', '_blank', 'location=yes');
-              cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048'); 
-          }
+        
         
 
         var selfPromote = false;
@@ -409,28 +398,7 @@
         var adTimerDiv = document.getElementById("adTimerX");
         var selfAdCountdown = 15;
         var selfAdLocalStore = localStorage.getItem("showSelfAd");
-      
-        //var Android = userAgent.indexOf("android") > -1;
-
-        //if (Android) {
-        //    console.log("Device is Android Phone");
-        //    // Prevent execution of the default onClick handler 
-        //    //window.open(elem.href, "_system");
-        //    //return false;
-        //}
-        //else { console.log("Not Android");  };
-
-        //function openExternal(elem) {
-        //    var Android = userAgent.indexOf("android") > -1;
-
-        //    if (Android) {
-        //        console.log("Device is Android Phone");
-        //        // Prevent execution of the default onClick handler 
-        //        //window.open(elem.href, "_system");
-        //        return false;
-        //    }
-        //    else { console.log("Not Android"); return };
-        //}
+   
 
         function checkSelfPromote() {
             selfTick++;
