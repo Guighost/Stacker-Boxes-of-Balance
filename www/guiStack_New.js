@@ -51,7 +51,7 @@ window.onload = function () {
         localStorage.setItem("stackerLevel", LEVEL);
     }
     else LEVEL = JSON.parse(localStorage.getItem("stackerLevel"));
-    console.log("Player is level " + LEVEL);
+    //console.log("Player is level " + LEVEL);
 
 
     //game.state.add("PlayGame", playGame);
@@ -382,7 +382,7 @@ playGame.prototype = {
         else {
             this.score = JSON.parse(localStorage.getItem("stackerScore"));
             oldLevelScore = JSON.parse(localStorage.getItem("stackerScore"));
-            console.log("score is " + this.score);
+            //console.log("score is " + this.score);
         }
         
         GROUNDHEIGHT = game.cache.getImage("ground1").height;
@@ -412,7 +412,7 @@ playGame.prototype = {
         CrateSrc = "crate" + ImgBase;
 
         var randomSpot1 = Math.floor((Math.random() * 9) + 2);
-        if (randomSpot1 <= (gameOptions.width / 2)) { randomSpot1 = randomSpot1 - 150; console.log("plat1 moved back x = " + randomSpot1) }
+        if (randomSpot1 <= (gameOptions.width / 2)) { randomSpot1 = randomSpot1 - 150; /*console.log("plat1 moved back x = " + randomSpot1)*/ }
         var randomSpot2 = Math.floor(Math.random() * 9);
     
         var ground = game.add.sprite(game.width / 2, game.height, "ground1");
@@ -435,7 +435,7 @@ playGame.prototype = {
         }
         if (calcPlat2 > (game.width -100)) { calcPlat2 = (game.width / 2) + 210;  }
         if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width ) - 96);   }
-        console.log("calPlat2 = " + calcPlat2)
+        //console.log("calPlat2 = " + calcPlat2)
         var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
         platform2.y = ground.y - 180;;
         this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -50, "crate1");
@@ -507,10 +507,11 @@ playGame.prototype = {
         this.levelText = game.add.bitmapText((game.width / 4 - 25), tap.y - 165, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
     },
     dropCrate: function () {
-        this.levelText.destroy();
+        
         if (this.firstCrate) {
             this.firstCrate = false;
             this.menuGroup.destroy();
+            this.levelText.destroy();
             this.timer = 0;
             this.timerEvent = game.time.events.loop(Phaser.Timer.SECOND, this.tick, this);
             this.timeText = game.add.bitmapText(game.width - (game.width / 2) - 70, 60, "font", gameOptions.timeLimit.toString(), 84);
@@ -585,27 +586,29 @@ playGame.prototype = {
     },
     tick: function () {
         this.timer++;
-        var timeLeft = gameOptions.timeLimit - this.timer
+        timeLeft = gameOptions.timeLimit - this.timer
    
         this.timeText.text = (gameOptions.timeLimit - this.timer).toString()
-        timeLeft = gameOptions.timeLimit - this.timer
+   
         if (timeLeft == 9) {                      
-            this.timeText.x = this.timeText.x + 20;
+            this.timeText.x = (game.width / 2) - 45;
+            this.timeText.size + 10;
+           
         }
-        if (timeLeft < 6) {
+        if (timeLeft < 8) {
+        this.timeText.y = this.timeText.y + 25;      
+           
             
-            this.timeText.size = 108;
-            this.timeText.y = this.timeText.y + 35;
-            this.timeText.x = (game.width / 2 )- 45;
         }
      
         if (this.timer > gameOptions.timeLimit) {
-            pauseAllAudio();
+            
             game.time.events.remove(this.timerEvent);
             this.movingCrate.destroy();
             this.timeText.destroy();
            
             game.time.events.add(Phaser.Timer.SECOND * 2, function () {
+                pauseAllAudio();
                 this.crateGroup.forEach(function (i) {
                     i.body.static = true;
                 }, true)
@@ -662,14 +665,14 @@ playGame.prototype = {
                 levelScore = this.score;
                 oldlevelScore = this.score;
 
-                console.log("playAdTime = " + playAdTime);
+                //console.log("playAdTime = " + playAdTime);
 				game.time.events.add(Phaser.Timer.SECOND * 3, function () {
                     if ( playAdTime > timeBetweenAds) {
                      
                         playAdTime = 0;
-                        console.log("show an ad")
+                        //console.log("show an ad")
                         localStorage.setItem("showInterstatial", 1);
-                        setTimeout(function () { console.log("setting showInterstatial back to 0 and GameAdTime= " + timeBetweenAds); localStorage.setItem("showInterstatial", 0);; }, 8000); 
+                        setTimeout(function () { localStorage.setItem("showInterstatial", 0); }, 8000); 
                        
 					}
 				}, this);
@@ -694,14 +697,14 @@ playGame.prototype = {
                 this.gameOverSound.play();
                 var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
-                console.log("playAdTime = " + playAdTime);
+                //console.log("playAdTime = " + playAdTime);
 
                 if (playAdTime > timeBetweenAds - 30) {
                     playAdTime = 0;
 
                     game.time.events.add(Phaser.Timer.SECOND * 2, function () {
                         var selfAdVal = localStorage.getItem("showSelfAd");
-                        if (selfAdVal == 1) { localStorage.setItem("showSelfAd", 0); localStorage.setItem("showInterstatial", 1);}
+                        if (selfAdVal == 1) { localStorage.setItem("showSelfAd", 0); pauseAllAudio(); localStorage.setItem("showInterstatial", 1);}
                         else {
                             pauseAllAudio();
                             localStorage.setItem("showSelfAd", 1);  localStorage.setItem("showInterstatial", 1);
