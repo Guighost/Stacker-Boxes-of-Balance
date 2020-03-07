@@ -43,9 +43,9 @@ window.onload = function () {
     localStorage.setItem("showInterstatial", 0);
 
     if (localStorage.getItem("showSelfAd") == null) {
-        localStorage.setItem("showSelfAd", 0);
+        localStorage.setItem("showSelfAd", 1);
     }
-    else { localStorage.setItem("showSelfAd", 0); }
+    else { localStorage.setItem("showSelfAd", 1); }
 
     if (localStorage.getItem("stackerLevel") == null) {
         LEVEL = 1;
@@ -758,8 +758,8 @@ playGame.prototype = {
 
                     game.time.events.add(Phaser.Timer.SECOND * 2, function () {
                         var selfAdVal = localStorage.getItem("showSelfAd");
-                        if (selfAdVal == 1 ) {  localStorage.setItem("showSelfAd", 0); pauseAllAudio(); localStorage.setItem("showInterstatial", 1);}
-                        else if (selfAd1time == 1) {
+                        if (selfAdVal == 0) { pauseAllAudio(); localStorage.setItem("showInterstatial", 1); }
+                        else if (selfAd1time == 1 && selfAdVal == 1) {
                             pauseAllAudio();
                             selfAd1time = 0;
                             localStorage.setItem("showSelfAd", 1);  localStorage.setItem("showInterstatial", 1);

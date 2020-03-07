@@ -403,16 +403,13 @@
 
         function checkSelfPromote() {
             selfTick++;
-            if (selfTick == 3) { selfPromote = true; selfTick = 0; };
+            if (selfTick == 3) {
+                selfPromote = true; selfTick = 0;
+            };
             selfAdLocalStore = localStorage.getItem("showSelfAd");
             console.log("selfAdLocalStore = " + selfAdLocalStore);
             if (selfAdLocalStore == 1) {
-                //console.log("self Promote active");
-                //try { Enhance.logEvent('self-promote'); }
-                //catch (err) {
-                //    console.log('attempt to log event failed');
-                //}
-                 //
+            
                 var selfInter = document.getElementById("selfInterstatial");
                 selfInter.style.display = "block";
                 handleAdTimer();
