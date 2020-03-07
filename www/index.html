@@ -382,8 +382,8 @@
      //cordova in app browser
           document.addEventListener("deviceready", onDeviceReady, false);
           function onDeviceReady() {
-              try { window.open = cordova.InAppBrowser.open; }
-              catch (err) { console.log("inappBrowsercalled - " + err) }
+              //try { window.open = cordova.InAppBrowser.open; }
+              //catch (err) { console.log("inappBrowsercalled - " + err) }
               //try {
               //    Enhance.logEvent('tutorial_begin');
               //} catch (err) { console.log("Caught Error: " + err) };
@@ -394,8 +394,14 @@
           
           document.getElementById("gPlayImg").onclick = openLink2;
 
-          function openLink() { var ref = cordova.InAppBrowser.open('https://play.google.com/store/apps/dev?id=8098884313818524240', '_blank', 'location=yes'); }
-          function openLink2() { cordova.InAppBrowser.open('https://play.google.com/store/apps/details?id=com.GuiGhostGames.StarMatch2048', '_blank', 'location=yes'); }
+          function openLink() {
+              //window.open('https://play.google.com/store/apps/dev?id=8098884313818524240', '_blank', 'location=yes');
+              cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048'); 
+          }
+          function openLink2() {
+              //window.open('https://play.google.com/store/apps/details?id=com.GuiGhostGames.StarMatch2048', '_blank', 'location=yes');
+              cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048'); 
+          }
         
 
         var selfPromote = false;
