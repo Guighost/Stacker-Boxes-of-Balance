@@ -20,13 +20,13 @@ var CRATEHEIGHT;
 var CrateSrc = 'crate1';
 var alreadyclicked = false;
 var gameDiv = document.getElementById('gameDiv')
-var timeBetweenAds = 120;
+var timeBetweenAds = 135;
 //document.getElementById('gameDiv').style["top"] = 0;
 
 window.onload = function () {
     var windowWidth = window.innerWidth;
-    var windowHeight = window.innerHeight;
-    var ratio = windowHeight / windowWidth;
+    var windowHeight = window.innerHeight - 40;
+    var ratio = windowHeight/ windowWidth;
     if (ratio >= 1) {
         if (ratio < 1.3) {
             gameOptions.gameWidth = gameOptions.gameHeight / ratio;
@@ -149,7 +149,7 @@ window.onload = function () {
             //myAudio.pause();
         } else {
             //myAudio.play();
-            switchAndPlayTheme(levelPassed)
+            switchAndPlayTheme(LEVEL)
         }
     }
     document.addEventListener("visibilitychange", handleVisibilityChange, false);
@@ -426,6 +426,7 @@ playGame.prototype = {
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
         var platform1 = game.add.sprite(game.width / randomSpot1, game.height, platSrc);
         platform1.y = ground.y - 250;
+        if (platform1.x > 250) { platform1.x = 35; }
         var calcPlat2 = (game.width / randomSpot2);
 
         if (calcPlat2 < (game.width / 2) + 45) {
@@ -578,14 +579,15 @@ playGame.prototype = {
         }, this);
         this.movingCrate.y = game.height - GROUNDHEIGHT - maxHeight * CRATEHEIGHT - gameOptions.fallingHeight + 1;
         
-        var newHeight = game.height + CRATEHEIGHT * maxHeight + 25;
-        var ratio = game.height / newHeight;
+        var newHeight = game.height + CRATEHEIGHT * maxHeight ;
+        var ratio = game.height / newHeight ;
         this.scaleCamera(ratio);
     },
     tick: function () {
         this.timer++;
         this.timeText.text = (gameOptions.timeLimit - this.timer).toString()
         if (this.timer > gameOptions.timeLimit) {
+            pauseAllAudio();
             game.time.events.remove(this.timerEvent);
             this.movingCrate.destroy();
             this.timeText.destroy();
@@ -658,7 +660,7 @@ playGame.prototype = {
 					}
 				}, this);
 				
-                game.time.events.add(Phaser.Timer.SECOND * 5, function () {
+                game.time.events.add(Phaser.Timer.SECOND * 10, function () {
                     gameOptions.crateSpeed = gameOptions.crateSpeed - 25;
                     //gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
                     gameOptions.gravity = gameOptions.gravity + 50;
@@ -668,7 +670,7 @@ playGame.prototype = {
             
                     game.state.start("PlayGame"); 
 			
-                    switchAndPlayTheme(LEVEL)
+                    //switchAndPlayTheme(LEVEL)
                 }, this);
             }
            
@@ -680,19 +682,20 @@ playGame.prototype = {
                 lvlUpDisplayText.anchor.set(0.5);
                 console.log("playAdTime = " + playAdTime);
 
-                if (playAdTime > timeBetweenAds - 90) {
+                if (playAdTime > timeBetweenAds - 30) {
                     playAdTime = 0;
 
                     game.time.events.add(Phaser.Timer.SECOND * 2, function () {
                         var selfAdVal = localStorage.getItem("showSelfAd");
                         if (selfAdVal == 1) { localStorage.setItem("showSelfAd", 0); localStorage.setItem("showInterstatial", 1);}
                         else {
+                            pauseAllAudio();
                             localStorage.setItem("showSelfAd", 1);  localStorage.setItem("showInterstatial", 1);
                         }
                             
                            
                        
-                        setTimeout(function () { console.log("showAdzzz"); localStorage.setItem("showInterstatial", 0);; }, 8000); 
+                        setTimeout(function () { localStorage.setItem("showInterstatial", 0); pauseAllAudio(); }, 8000); 
                       
                     }, this);
 
@@ -701,7 +704,7 @@ playGame.prototype = {
 				
                 game.time.events.add(Phaser.Timer.SECOND * 6, function () {
                     game.state.start("PlayGame");
-                    switchAndPlayTheme(LEVEL);
+                    //switchAndPlayTheme(LEVEL);
 				
                 }, this);}
            

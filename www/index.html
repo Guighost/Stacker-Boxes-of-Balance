@@ -15,19 +15,20 @@
     <meta property="og:description" content="Fun Physics games of box dropping to get the high score, but don't let them fall -  Family Friendly Free Online Game" />
     <meta property="og:image" content="https://guighostgames.com/Images/Homepage/guiStack.png" />
 
-    <link rel="shortcut icon" sizes="256x256" href="images/gabbyLogo.png" />
+    <link rel="shortcut icon" sizes="256x256" href="assets/sprites/crate16.png" />
 
-
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97706544-2"></script>
+    <!--<!--<!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97706544-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'UA-97706544-2');
+        gtag('config', 'UA-97706544-3');
     </script>
+
+
+
 
     <style type="text/css">
         * {
@@ -91,7 +92,7 @@
             left: 5%;
             width: 90%;
             height: 60%;
-            background-color: red;
+            /*background-color: red;*/
             background-size: cover;
             background-repeat: no-repeat;
             z-index: 3000;
@@ -117,8 +118,17 @@
             display: inline-block;
             width: 300px;
             margin-left: 50%;
-            transform: translate(-150px,-250px);
+            transform: translate(-150px,-25px);
+            z-index: 2000;
         }
+        #linkTest2{
+            position: absolute;
+            bottom: 25px;
+            left: 40%;
+            font-family: 'Comic Sans MS';
+            font-size: 18px;
+            text-align: center;
+        } 
         #adTimerX {
             position: absolute;
             width: 20px;
@@ -126,9 +136,11 @@
             right: 20px;
             background-color: lightgray;
             border: 1px double blue;
-            border-radius: 5px;
+            border-radius: 15px;
             font-size: 18px;
             font-family: 'Comic Sans MS';
+            align-content: center;
+            padding-left: 5px;
         }
         #bannerB {
             position: relative;
@@ -361,8 +373,8 @@
               
             </div>
           
-            <a id="gameLink" class="external-link" href='https://play.google.com/store/apps/dev?id=8098884313818524240' target='_blank'><img id="gPlayImg" alt='Get it on Google Play' src='images/google-play-badge_altered.png' /></a>
-
+            <a id="gameLink" class="external-link" href='https://play.google.com/store/apps/details?id=com.GuiGhostGames.StarMatch2048' target='_blank'><img id="gPlayImg" alt='Get it on Google Play' src='images/google-play-badge_altered.png' /></a>
+            <a id="linkTest2" href='https://play.google.com/store/apps/dev?id=8098884313818524240' target='_blank'> More Games</a>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
@@ -376,7 +388,17 @@
     </script>
 
  <script type=text/javascript> 
- 
+
+     //cordova in app browser
+          document.addEventListener("deviceready", onDeviceReady, false);
+          function onDeviceReady() {
+              try { window.open = cordova.InAppBrowser.open; }
+              catch(err){ "inappBrowsercalled - " + err}
+            
+          }
+          document.getElementById("linkTest2").onclick = openLink;
+          function openLink() { var ref = cordova.InAppBrowser.open('https://play.google.com/store/apps/dev?id=8098884313818524240', '_blank', 'location=yes');}
+        
 
         var selfPromote = false;
         var selfTick = 0;
@@ -437,7 +459,8 @@
             
         }
         function fireEnhance() {
-            Enhance.logEvent('calledEnhance');
+            try { Enhance.logEvent('calledEnhance'); }
+            catch (err) { console.log("calledEnhanceLOG" + err) };
             setTimeout(function () {
                  try { Enhance.isInterstitialReady(callback); }
                 catch (err) { console.log("caughtx = " + err) }
@@ -518,15 +541,7 @@
 
 
  </script>
-    <!--<!--<!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97706544-3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-97706544-3');
-    </script>
 </body>
 </html>
 <!--//Credits to http://www.emanueleferonato.com/ for the tuturial on the javascript that started this project-->
