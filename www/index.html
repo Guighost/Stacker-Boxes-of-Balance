@@ -88,7 +88,7 @@
         }
         #selfAdInner {
             position: absolute;
-            top: 8%;
+            top: 6%;
             left: 5%;
             width: 90%;
             height: 60%;
@@ -118,7 +118,7 @@
             display: inline-block;
             width: 300px;
             margin-left: 50%;
-            transform: translate(-150px,-25px);
+            transform: translate(-150px,-5px);
             z-index: 2000;
         }
         #linkTest2{
@@ -380,24 +380,28 @@
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
-    <script type="text/javascript">
-
-          try {
-              Enhance.logEvent('tutorial_begin');
-          } catch (err) { console.log("Caught Error: " + err) };
-    </script>
+  
 
  <script type=text/javascript> 
+
+   
 
      //cordova in app browser
           document.addEventListener("deviceready", onDeviceReady, false);
           function onDeviceReady() {
               try { window.open = cordova.InAppBrowser.open; }
-              catch(err){ "inappBrowsercalled - " + err}
+              catch (err) { "inappBrowsercalled - " + err }
+              try {
+                  Enhance.logEvent('tutorial_begin');
+              } catch (err) { console.log("Caught Error: " + err) };
             
           }
           document.getElementById("linkTest2").onclick = openLink;
-          function openLink() { var ref = cordova.InAppBrowser.open('https://play.google.com/store/apps/dev?id=8098884313818524240', '_blank', 'location=yes');}
+          
+          document.getElementById("gPlayImg").onclick = openLink2;
+
+          function openLink() { var ref = cordova.InAppBrowser.open('https://play.google.com/store/apps/dev?id=8098884313818524240', '_blank', 'location=yes'); }
+          function openLink2() { cordova.InAppBrowser.open('https://play.google.com/store/apps/details?id=com.GuiGhostGames.StarMatch2048', '_blank', 'location=yes'); }
         
 
         var selfPromote = false;

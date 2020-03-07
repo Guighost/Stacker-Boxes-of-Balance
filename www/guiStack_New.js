@@ -585,12 +585,26 @@ playGame.prototype = {
     },
     tick: function () {
         this.timer++;
+        var timeLeft = gameOptions.timeLimit - this.timer
+   
         this.timeText.text = (gameOptions.timeLimit - this.timer).toString()
+        timeLeft = gameOptions.timeLimit - this.timer
+        if (timeLeft == 9) {                      
+            this.timeText.x = this.timeText.x + 20;
+        }
+        if (timeLeft < 6) {
+            
+            this.timeText.size = 108;
+            this.timeText.y = this.timeText.y + 35;
+            this.timeText.x = (game.width / 2 )- 45;
+        }
+     
         if (this.timer > gameOptions.timeLimit) {
             pauseAllAudio();
             game.time.events.remove(this.timerEvent);
             this.movingCrate.destroy();
             this.timeText.destroy();
+           
             game.time.events.add(Phaser.Timer.SECOND * 2, function () {
                 this.crateGroup.forEach(function (i) {
                     i.body.static = true;
