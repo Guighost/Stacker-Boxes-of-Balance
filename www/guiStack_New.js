@@ -21,6 +21,7 @@ var CrateSrc = 'crate1';
 var alreadyclicked = false;
 var gameDiv = document.getElementById('gameDiv')
 var timeBetweenAds = 135;
+var selfAd1time = 1;
 //document.getElementById('gameDiv').style["top"] = 0;
 
 window.onload = function () {
@@ -168,6 +169,7 @@ introScene.prototype = {
         game.stage.disableVisibilityChange = true;
         game.load.image("intro", "images/introBack3.png");
         game.load.image("playBtn1", "images/playButton.png");
+        game.load.image("playBtnNew", "images/playButtonNew.png");
         game.load.image("tut1", "images/intro1.png");
         game.load.image("tut2", "images/intro2.png");
         game.load.image("tut3", "images/intro3.png");
@@ -179,12 +181,18 @@ introScene.prototype = {
         var introBackS = game.add.image(0, 0, 'intro');
         introBackS.width = game.width;
         introBackS.height = game.height;
-        var playBtn = game.add.image(game.width / 2 - 100, game.height/2 + 120, 'playBtn1');
+        var playBtn = game.add.image(game.width / 2 - 100, game.height/2 + 50, 'playBtn1');
         playBtn.width = 200;
         playBtn.height = 100;
+        var playNew = game.add.image(game.width / 2 - 100, game.height / 2 + 175, 'playBtnNew');
+        playNew.width = 200;
+        playNew.height = 100;
         game.input.onDown.add(this.loadGame1, playBtn);
         //this.cameraGroup = game.add.group();
         //this.crateGroup = game.add.group();},
+        game.input.onDown.add(this.loadGameNew, playNew);
+        if (LEVEL == 1) { playNew.destroy(); }
+
 
     },
     loadGame1: function () {
@@ -226,7 +234,48 @@ introScene.prototype = {
         }
     },
 
+    loadGameNew: function () {
+        //introBackS.destroy(); 
+        localStorage.setItem("showInterstatial", 0);
+        localStorage.setItem("stackerLevel", 1); LEVEL = 1;
+        localStorage.setItem("stackerScore", 0);
 
+        if (alreadyclicked == false) {
+            if (LEVEL == 1) {
+                alreadyclicked = true;
+                var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
+                var tut2 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut2');
+                tut2.visible = false;
+                tut1.width = 300;
+                tut1.height = 300;
+                var timer1 = setTimeout(function () {
+                    tut1.visible = false;
+                    tut2.visible = true;
+
+                    tut2.width = 300;
+                    tut2.height = 300;
+
+                }, 1250);
+                var timer2 = setTimeout(function () {
+                    tut2.visible = false;
+                    var tut3 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut3');
+                    tut3.width = 300;
+                    tut3.height = 300;
+
+                }, 2500);
+                var timer3 = setTimeout(function () {
+                    game.state.start("PlayGame");
+                    document.getElementById("loadingGG").style.display = 'block';
+
+                }, 4000);
+
+            }
+            else {
+                game.state.start("PlayGame");
+                document.getElementById("loadingGG").style.display = 'block';
+            }
+        }
+    },
 }
 
     var playGame = function () { };
@@ -502,8 +551,8 @@ playGame.prototype = {
         var tapTween = game.add.tween(tap).to({
             alpha: 0
         }, 150, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
-        var levelGoalText = LEVEL * 5;
-        if (LEVEL > 25) {    levelGoalText = 125;        }
+        var levelGoalText = (LEVEL * 5) + 10;
+        if (LEVEL > 21) {    levelGoalText = 125;        }
         this.levelText = game.add.bitmapText((game.width / 4 - 25), tap.y - 165, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
     },
     dropCrate: function () {
@@ -704,12 +753,13 @@ playGame.prototype = {
 
                     game.time.events.add(Phaser.Timer.SECOND * 2, function () {
                         var selfAdVal = localStorage.getItem("showSelfAd");
-                        if (selfAdVal == 1) { localStorage.setItem("showSelfAd", 0); pauseAllAudio(); localStorage.setItem("showInterstatial", 1);}
-                        else {
+                        if (selfAdVal == 1 ) {  localStorage.setItem("showSelfAd", 0); pauseAllAudio(); localStorage.setItem("showInterstatial", 1);}
+                        else if (selfAd1time == 1) {
                             pauseAllAudio();
+                            selfAd1time = 0;
                             localStorage.setItem("showSelfAd", 1);  localStorage.setItem("showInterstatial", 1);
                         }
-                            
+                        else { localStorage.setItem("showInterstatial", 0);}     
                            
                        
                         setTimeout(function () { localStorage.setItem("showInterstatial", 0); pauseAllAudio(); }, 8000); 
@@ -719,9 +769,9 @@ playGame.prototype = {
                 }
 				
 				
-                game.time.events.add(Phaser.Timer.SECOND * 6, function () {
+                game.time.events.add(Phaser.Timer.SECOND * 5, function () {
                     game.state.start("PlayGame");
-                    //switchAndPlayTheme(LEVEL);
+                    pauseAllAudio();
 				
                 }, this);}
            

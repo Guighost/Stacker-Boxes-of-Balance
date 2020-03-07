@@ -38,7 +38,7 @@
 
         body {
             background: #0259a0;
-            background: url("images/bg.png") no-repeat center center fixed;
+            background: url("images/bg.png") center fixed;
             background-size: contain;
             background-repeat: no-repeat;
             background-color: black;
@@ -503,18 +503,22 @@
                         adTimerDiv.innerHTML = selfAdCountdown;
                         if (selfAdCountdown <= 0) {
                             adTimerDiv.innerHTML = "X";
+                            selfAdCountdown = 0;
+                        }
+                        if (currentAdStep > 16) {
+                            clearInterval(adInterval);
+                            currentAdStep = 0;
+                            adImgStep = 1;
+                            adImg.src = "images/starMatchPromo" + adImgStep + ".png";
                         }
                     }, 1000);
-                    if (currentAdStep > 16) {
-                        clearInterval(adInterval);
-                        currentAdStep = 0;
 
-                    }
+                
             }
-            else { timerInProgress = 0; }
+            else { timerInProgress = 1; }
         }
         adTimerDiv.onclick = function () {
-            if (selfAdCountdown) {
+            if (selfAdCountdown == 0) {
                 document.getElementById("selfInterstatial").style.display = "none";
                 currentAdStep = 0;
                 selfAdCountdown = 15;
