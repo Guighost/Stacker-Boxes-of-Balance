@@ -20,8 +20,8 @@
 <allow-intent href="geo:*"/>
 <content src="index.html"/>
 <plugin  source="npm" name="cordova-plugin-battery-status"/>
-<plugin  source="npm" name="cordova-plugin-camera"/>
-<plugin  source="npm" name="cordova-plugin-media-capture"/>
+
+
 <plugin source="npm" name="cordova-plugin-device"/>
 <plugin  source="npm" name="cordova-plugin-dialogs"/>
 <plugin  source="npm" name="cordova-plugin-file"/>
@@ -29,10 +29,10 @@
 <plugin  source="npm" name="cordova-plugin-globalization"/>
 <plugin source="npm" name="cordova-plugin-inappbrowser"/>
 <plugin  source="npm" name="cordova-plugin-network-information"/>
-<plugin  source="npm" name="cordova-plugin-vibration"/>
+
 <plugin name="enhance-cordova-connector"/>
   <plugin name="fitatu-cordova-plugin-market" />
-
+<gap:plugin name="cordova-plugin-apprate" />
  <access origin="*" />
     <feature name="http://api.phonegap.com/1.0/device" />
     <content src="index.html" />
@@ -45,6 +45,7 @@
 	<allow-intent href="market:*"/>
 	<icon src="icon.png"/>
 	<preference name="android-targetSdkVersion" value="28"/>
+	
 	<preference name="ANDROID_SUPPORT_RECYCLERVIEW_VERSION" default="27+"/>
 	<preference name="KeepRunning" value="true"/>
 	<preference name="InAppBrowserStorageEnabled" value="true"/>

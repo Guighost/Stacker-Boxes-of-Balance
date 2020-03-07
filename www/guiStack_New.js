@@ -184,19 +184,20 @@ introScene.prototype = {
         var playBtn = game.add.image(game.width / 2 - 100, game.height/2 + 50, 'playBtn1');
         playBtn.width = 200;
         playBtn.height = 100;
-        var playNew = game.add.image(game.width / 2 - 100, game.height / 2 + 175, 'playBtnNew');
-        playNew.width = 200;
-        playNew.height = 100;
+        //var playNew = game.add.image(game.width / 2 - 100, game.height / 2 + 175, 'playBtnNew');
+        //playNew.width = 200;
+        //playNew.height = 100;
         game.input.onDown.add(this.loadGame1, playBtn);
         //this.cameraGroup = game.add.group();
         //this.crateGroup = game.add.group();},
-        game.input.onDown.add(this.loadGameNew, playNew);
-        if (LEVEL == 1) { playNew.destroy(); }
+        //game.input.onDown.add(this.loadGameNew, playNew);
+        //if (LEVEL == 1) { playNew.destroy(); }
 
 
     },
     loadGame1: function () {
         //introBackS.destroy(); 
+        console.log("loadexist")
         if (alreadyclicked == false) {
             if (LEVEL == 1) {
                 alreadyclicked = true;
@@ -228,54 +229,58 @@ introScene.prototype = {
 
             }
             else {
+                LEVEL = localStorage.getItem("stackerLevel");
+
                 game.state.start("PlayGame");
                 document.getElementById("loadingGG").style.display = 'block';
             }
         }
     },
 
-    loadGameNew: function () {
-        //introBackS.destroy(); 
-        localStorage.setItem("showInterstatial", 0);
-        localStorage.setItem("stackerLevel", 1); LEVEL = 1;
-        localStorage.setItem("stackerScore", 0);
+    //loadGameNew: function () {
+        
+    //    console.log("loadNew")
+    //    //introBackS.destroy();
+    //    localStorage.setItem("showInterstatial", 0);
+    //    localStorage.setItem("stackerLevel", 1); LEVEL = 1;
+    //    localStorage.setItem("stackerScore", 0);
 
-        if (alreadyclicked == false) {
-            if (LEVEL == 1) {
-                alreadyclicked = true;
-                var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
-                var tut2 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut2');
-                tut2.visible = false;
-                tut1.width = 300;
-                tut1.height = 300;
-                var timer1 = setTimeout(function () {
-                    tut1.visible = false;
-                    tut2.visible = true;
+    //    if (alreadyclicked == false) {
+    //        if (LEVEL == 1) {
+    //            alreadyclicked = true;
+    //            var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
+    //            var tut2 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut2');
+    //            tut2.visible = false;
+    //            tut1.width = 300;
+    //            tut1.height = 300;
+    //            var timer1 = setTimeout(function () {
+    //                tut1.visible = false;
+    //                tut2.visible = true;
 
-                    tut2.width = 300;
-                    tut2.height = 300;
+    //                tut2.width = 300;
+    //                tut2.height = 300;
 
-                }, 1250);
-                var timer2 = setTimeout(function () {
-                    tut2.visible = false;
-                    var tut3 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut3');
-                    tut3.width = 300;
-                    tut3.height = 300;
+    //            }, 1250);
+    //            var timer2 = setTimeout(function () {
+    //                tut2.visible = false;
+    //                var tut3 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut3');
+    //                tut3.width = 300;
+    //                tut3.height = 300;
 
-                }, 2500);
-                var timer3 = setTimeout(function () {
-                    game.state.start("PlayGame");
-                    document.getElementById("loadingGG").style.display = 'block';
+    //            }, 2500);
+    //            var timer3 = setTimeout(function () {
+    //                game.state.start("PlayGame");
+    //                document.getElementById("loadingGG").style.display = 'block';
 
-                }, 4000);
+    //            }, 4000);
 
-            }
-            else {
-                game.state.start("PlayGame");
-                document.getElementById("loadingGG").style.display = 'block';
-            }
-        }
-    },
+    //        }
+    //        else {
+    //            game.state.start("PlayGame");
+    //            document.getElementById("loadingGG").style.display = 'block';
+    //        }
+    //    }
+    //},
 }
 
     var playGame = function () { };
