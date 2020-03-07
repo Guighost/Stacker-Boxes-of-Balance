@@ -381,10 +381,7 @@
      //cordova in app browser
           document.addEventListener("deviceready", onDeviceReady, false);
      function onDeviceReady() {
-
-         ////appRate
-
-                         
+                                        
           }
    
           document.getElementById("selfAdGraphic").onclick = openLink;
@@ -395,49 +392,7 @@
           }
         
         
-         AppRate.preferences = {
-             displayAppName: 'Stacker Boxes of Balance',
-             usesUntilPrompt: 5,
-             promptAgainForEachNewVersion: false,
-             inAppReview: true,
-             storeAppURL: {
-               
-                 android: 'market://details?id=com.GuiGhostGames.StackerBoB'
-                 
-             },
-             customLocale: {
-                 title: "Please Rate Our App",
-                 message: "It won’t take more than a minute and helps to promote our app. Thanks for your support!",
-                 cancelButtonLabel: "No, Thanks",
-                 laterButtonLabel: "Remind Me Later",
-                 rateButtonLabel: "Rate It Now",
-                 yesButtonLabel: "Yes!",
-                 noButtonLabel: "Not really",
-                 appRatePromptTitle: 'Having Fun?',
-                 feedbackPromptTitle: 'Mind giving us some feedback?',
-             },
-             callbacks: {
-                 handleNegativeFeedback: function () {
-                     window.open('mailto:info@guighost.com', '_system');
-                 },
-                 onRateDialogShow: function (callback) {
-                     callback(1) // cause immediate click on 'Rate Now' button
-                 },
-                 onButtonClicked: function (buttonIndex) {
-                     console.log("onButtonClicked -> " + buttonIndex);
-                 }
-             },
-             openUrl: AppRate.preferences.openUrl
-         };
-         var promptForRate = localStorage.getItem("stackerLevel");;
-
-         if (promptForRate > 3) {
-             try { AppRate.promptForRating(); }
-             catch (err) { console.log(err) }
-         }  
-       
-
-         /// end apprate
+      
 
         var selfPromote = false;
         var selfTick = 0;
