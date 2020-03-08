@@ -20,7 +20,7 @@ var CRATEHEIGHT;
 var CrateSrc = 'crate1';
 var alreadyclicked = false;
 var gameDiv = document.getElementById('gameDiv')
-var timeBetweenAds = 135;
+var timeBetweenAds = 120;
 var selfAd1time = 1;
 //document.getElementById('gameDiv').style["top"] = 0;
 
@@ -51,7 +51,7 @@ window.onload = function () {
         LEVEL = 1;
         localStorage.setItem("stackerLevel", LEVEL);
     }
-    else LEVEL = JSON.parse(localStorage.getItem("stackerLevel"));
+    else LEVEL = localStorage.getItem("stackerLevel");
     //console.log("Player is level " + LEVEL);
 
 
@@ -237,50 +237,7 @@ introScene.prototype = {
         }
     },
 
-    //loadGameNew: function () {
-        
-    //    console.log("loadNew")
-    //    //introBackS.destroy();
-    //    localStorage.setItem("showInterstatial", 0);
-    //    localStorage.setItem("stackerLevel", 1); LEVEL = 1;
-    //    localStorage.setItem("stackerScore", 0);
-
-    //    if (alreadyclicked == false) {
-    //        if (LEVEL == 1) {
-    //            alreadyclicked = true;
-    //            var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
-    //            var tut2 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut2');
-    //            tut2.visible = false;
-    //            tut1.width = 300;
-    //            tut1.height = 300;
-    //            var timer1 = setTimeout(function () {
-    //                tut1.visible = false;
-    //                tut2.visible = true;
-
-    //                tut2.width = 300;
-    //                tut2.height = 300;
-
-    //            }, 1250);
-    //            var timer2 = setTimeout(function () {
-    //                tut2.visible = false;
-    //                var tut3 = game.add.image(game.width / 2 - 155, game.height / 2 - 20, 'tut3');
-    //                tut3.width = 300;
-    //                tut3.height = 300;
-
-    //            }, 2500);
-    //            var timer3 = setTimeout(function () {
-    //                game.state.start("PlayGame");
-    //                document.getElementById("loadingGG").style.display = 'block';
-
-    //            }, 4000);
-
-    //        }
-    //        else {
-    //            game.state.start("PlayGame");
-    //            document.getElementById("loadingGG").style.display = 'block';
-    //        }
-    //    }
-    //},
+  
 }
 
     var playGame = function () { };
@@ -614,11 +571,11 @@ playGame.prototype = {
         var moveTween = game.add.tween(this.cameraGroup).to({
             x: (game.width - game.width * cameraScale) / 2,
             y: game.height - game.height * cameraScale,
-        }, 200, Phaser.Easing.Quadratic.IN, true);
+        }, 350, Phaser.Easing.Quadratic.IN, true);
         var scaleTween = game.add.tween(this.cameraGroup.scale).to({
             x: cameraScale,
             y: cameraScale,
-        }, 200, Phaser.Easing.Quadratic.IN, true);
+        }, 350, Phaser.Easing.Quadratic.IN, true);
         scaleTween.onComplete.add(function () {
             this.canDrop = true;
             this.movingCrate.alpha = 1;
@@ -714,7 +671,7 @@ playGame.prototype = {
                 lvlUpDisplayText.anchor.set(0.5);
 				
                 localStorage.setItem("stackerScore", this.score);
-                LEVEL = LEVEL + 1;
+                LEVEL++;
                 localStorage.setItem("stackerLevel", LEVEL);
                 levelScore = this.score;
                 oldlevelScore = this.score;
@@ -726,13 +683,14 @@ playGame.prototype = {
                         playAdTime = 0;
                         //console.log("show an ad")
                         localStorage.setItem("showInterstatial", 1);
-                        setTimeout(function () { localStorage.setItem("showInterstatial", 0); }, 8000); 
+                         
                        
 					}
 				}, this);
 				
-                game.time.events.add(Phaser.Timer.SECOND * 10, function () {
+                game.time.events.add(Phaser.Timer.SECOND * 6, function () {
                     gameOptions.crateSpeed = gameOptions.crateSpeed - 25;
+                    localStorage.setItem("showInterstatial", 0);
                     //gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
                     gameOptions.gravity = gameOptions.gravity + 50;
                     if (gameOptions.crateSpeed <= 749) { gameOptions.crateSpeed = 750; }
@@ -753,7 +711,7 @@ playGame.prototype = {
                 lvlUpDisplayText.anchor.set(0.5);
                 //console.log("playAdTime = " + playAdTime);
 
-                if (playAdTime > timeBetweenAds - 30) {
+                if (playAdTime > timeBetweenAds - 45) {
                     playAdTime = 0;
 
                     game.time.events.add(Phaser.Timer.SECOND * 2, function () {
@@ -764,7 +722,7 @@ playGame.prototype = {
                             selfAd1time = 0;
                             localStorage.setItem("showSelfAd", 1);  localStorage.setItem("showInterstatial", 1);
                         }
-                        else { localStorage.setItem("showInterstatial", 0);}     
+                        else { localStorage.setItem("showSelfAd", 0);  localStorage.setItem("showInterstatial", 1);}     
                            
                        
                         setTimeout(function () { localStorage.setItem("showInterstatial", 0); pauseAllAudio(); }, 8000); 
@@ -801,6 +759,8 @@ playGame.prototype = {
   }
 
 function switchAndPlayTheme(levelPassed) {
+   
+    levelPassed = parseInt(levelPassed, 10)
     if (levelPassed > 24) { levelPassed = levelPassed - 24 };
     switch (levelPassed) {
         case 1:
@@ -819,13 +779,14 @@ function switchAndPlayTheme(levelPassed) {
             myAudioUplifting.play();
             break;
         case 6:
-            myAudio.play();
+            myAudioTension.play();
+           
             break;
         case 7:
             myAudioCSI.play();
             break;
         case 8:
-            myAudioTension.play();
+            myAudio.play();
             break;
         case 9:
             myAudioUplifting.play();
