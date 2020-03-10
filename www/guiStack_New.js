@@ -59,7 +59,7 @@ window.onload = function () {
     //game.state.start("PlayGame");
     document.getElementById("loadingGG").style.display = 'none';
 
-    myAudio = new Audio("assets/sounds/loops/OveMelaa-ItaloUnlimited.mp3", "assets/sounds/OveMelaa-ItaloUnlimited.ogg" ); // game music loop
+    myAudio = new Audio("assets/sounds/loops/OveMelaa-ItaloUnlimited.mp3", "assets/sounds/loops/OveMelaa-ItaloUnlimited.ogg" ); // game music loop
     myAudio.load();
     myAudioUplifting = new Audio("assets/sounds/loops/Cafofo_Uplifting.mp3"); // game music loop
     myAudioUplifting.load();
@@ -167,31 +167,65 @@ introScene.prototype = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         game.stage.disableVisibilityChange = true;
-        game.load.image("intro", "images/introBack3.png");
+        game.load.image("intro", "images/introBack4.png");
         game.load.image("playBtn1", "images/playButton.png");
         game.load.image("playBtnNew", "images/playButtonNew.png");
+        game.load.image("continueBtn", "images/continueButton.png");
         game.load.image("tut1", "images/intro1.png");
         game.load.image("tut2", "images/intro2.png");
         game.load.image("tut3", "images/intro3.png");
         game.load.audio("gameover", ["assets/sounds/gameover.mp3", "assets/sounds/gameover.ogg"]);
         game.load.bitmapFont("font", "assets/fonts/font.png", "assets/fonts/font.xml");
         game.load.bitmapFont("smallfont", "assets/fonts/smallfont.png", "assets/fonts/smallfont.xml");
+
+        ///
+
+
     },
     create: function () {
         var introBackS = game.add.image(0, 0, 'intro');
         introBackS.width = game.width;
         introBackS.height = game.height;
-        var playBtn = game.add.image(game.width / 2 - 100, game.height/2 + 50, 'playBtn1');
+        var playBtn = game.add.image(game.width / 2 - 90, game.height/2 , 'playBtn1');
         playBtn.width = 200;
         playBtn.height = 100;
-        //var playNew = game.add.image(game.width / 2 - 100, game.height / 2 + 175, 'playBtnNew');
-        //playNew.width = 200;
-        //playNew.height = 100;
+        playBtn.inputEnabled = true;
+        playBtn.input.PriorityID = 1;
         game.input.onDown.add(this.loadGame1, playBtn);
+
+        var playNew = game.add.image(game.width / 2 - 90, game.height / 2 + 135, 'playBtnNew');
+        playNew.width = 200;
+        playNew.height = 100;
+        playNew.inputEnabled = true;
+        playNew.input.PriorityID = 0;
         //this.cameraGroup = game.add.group();
         //this.crateGroup = game.add.group();},
-        //game.input.onDown.add(this.loadGameNew, playNew);
-        //if (LEVEL == 1) { playNew.destroy(); }
+   
+
+        game.input.onDown.add(loadGameNew, playNew);
+        if (LEVEL == 1) { playNew.destroy(); }
+        if (LEVEL > 1) {
+            playBtn.destroy();
+            var continueBtn = game.add.image(game.width / 2 - 90, game.height / 2 + 5, 'continueBtn');
+            continueBtn.width = 200;
+            continueBtn.height = 100;
+            continueBtn.inputEnabled = true;
+            continueBtn.input.PriorityID = 1;
+            game.input.onDown.add(this.loadGame1, continueBtn);
+
+        }
+        function loadGameNew() {
+            LEVEL = 1;
+            localStorage.setItem("stackerScore", 0);
+            localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
+                score: 0
+            }));
+            localStorage.setItem("stackerLevel", 1);
+            localStorage.setItem("showSelfAd", 1);
+            localStorage.setItem("showInterstatial", 0)
+            this.loadGame1;
+        }
+
 
 
     },
