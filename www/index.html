@@ -380,15 +380,30 @@
         }
 
         // set interval to check for interstatial
+       if (localStorage.getItem("showReview") == null) {
+            localStorage.setItem("showReview", true);
+    }
 
         var showItOrNo = localStorage.getItem("showInterstatial");
+         var showReview = localStorage.getItem("showReview");
+
         var onceOnlyAd = 0;
         var tid = setInterval(interPop, 500);
 
-        function interPop() {
-            showItOrNo = localStorage.getItem("showInterstatial");
-            if(showItOrNo == 1) {   checkSelfPromote(); }
-                            }
+  function interPop() {
+    showItOrNo = localStorage.getItem("showInterstatial");
+    showReview = localStorage.getItem("showReview");
+
+    if (showItOrNo == 1 && showReview == false) { checkSelfPromote(); }
+    else {
+        showReview = false;
+        try { LaunchReview.launch(); }
+        catch (err) { console.log("caught from Review " + err) }
+    }
+
+}
+
+
 
 
 

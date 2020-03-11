@@ -39,8 +39,7 @@ window.onload = function () {
     game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight , Phaser.CANVAS);
     game.state.add("introToGame", introScene);
     game.state.add("PlayGame", playGame);
-    game.state.start("introToGame");
-    localStorage.setItem("showInterstatial", 0);
+   
 
     if (localStorage.getItem("showSelfAd") == null) {
         localStorage.setItem("showSelfAd", 1);
@@ -53,7 +52,8 @@ window.onload = function () {
     }
     else LEVEL = localStorage.getItem("stackerLevel");
     //console.log("Player is level " + LEVEL);
-
+    game.state.start("introToGame");
+    localStorage.setItem("showInterstatial", 0);
 
     //game.state.add("PlayGame", playGame);
     //game.state.start("PlayGame");
@@ -136,13 +136,8 @@ window.onload = function () {
     //myAudio.pause();
 
     var playTime = setInterval(updateplayAdTime, 1000)
-    function updateplayAdTime() {
+    function updateplayAdTime() { playAdTime++; }
 
-        playAdTime++;
-
-        //console.log("GamePlayTime = " + playAdTime);
-
-    }
     ///mute sound if minimized	
     function handleVisibilityChange() {
         if (document.hidden) {
@@ -186,6 +181,7 @@ introScene.prototype = {
         var introBackS = game.add.image(0, 0, 'intro');
         introBackS.width = game.width;
         introBackS.height = game.height;
+
         var playBtn = game.add.image(game.width / 2 - 90, game.height/2 , 'playBtn1');
         playBtn.width = 200;
         playBtn.height = 100;
@@ -193,43 +189,57 @@ introScene.prototype = {
         playBtn.input.PriorityID = 1;
         game.input.onDown.add(this.loadGame1, playBtn);
 
-        var playNew = game.add.image(game.width / 2 - 90, game.height / 2 + 135, 'playBtnNew');
-        playNew.width = 200;
-        playNew.height = 100;
-        playNew.inputEnabled = true;
-        playNew.input.PriorityID = 0;
+
         //this.cameraGroup = game.add.group();
         //this.crateGroup = game.add.group();},
    
 
-        game.input.onDown.add(loadGameNew, playNew);
+    
         if (LEVEL == 1) { playNew.destroy(); }
         if (LEVEL > 1) {
             playBtn.destroy();
-            var continueBtn = game.add.image(game.width / 2 - 90, game.height / 2 + 5, 'continueBtn');
+           
+    
+
+            var playNew = game.add.image(game.width / 2 - 90, game.height / 2 + 145, 'playBtnNew');
+            playNew.width = 200;
+            playNew.height = 100;
+            playNew.inputEnabled = true;
+            playNew.input.PriorityID = 1;
+
+            var continueBtn = game.add.image(game.width / 2 - 90, game.height / 2 - 10, 'continueBtn');
             continueBtn.width = 200;
             continueBtn.height = 100;
             continueBtn.inputEnabled = true;
-            continueBtn.input.PriorityID = 1;
+            continueBtn.input.PriorityID = 2;
+
+         
+            game.input.onDown.add(loadGameNew, playNew);
             game.input.onDown.add(this.loadGame1, continueBtn);
 
         }
+        
+
         function loadGameNew() {
-            LEVEL = 1;
-            localStorage.setItem("stackerScore", 0);
-            localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
-                score: 0
-            }));
-            localStorage.setItem("stackerLevel", 1);
-            localStorage.setItem("showSelfAd", 1);
-            localStorage.setItem("showInterstatial", 0)
-            this.loadGame1;
+            if (alreadyclicked == false) {
+                LEVEL = 1;
+                alreadyclicked = true;
+                localStorage.setItem("stackerScore", 0);
+                localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
+                    score: 0
+                }));
+                localStorage.setItem("stackerLevel", 1);
+                localStorage.setItem("showSelfAd", 1);
+                localStorage.setItem("showInterstatial", 0)
+                this.loadGame1;
+            }
         }
 
 
 
     },
     loadGame1: function () {
+       
         //introBackS.destroy(); 
         console.log("loadexist")
         if (alreadyclicked == false) {
@@ -264,7 +274,7 @@ introScene.prototype = {
             }
             else {
                 LEVEL = localStorage.getItem("stackerLevel");
-
+                alreadyclicked = true;
                 game.state.start("PlayGame");
                 document.getElementById("loadingGG").style.display = 'block';
             }
@@ -719,7 +729,8 @@ playGame.prototype = {
                         localStorage.setItem("showInterstatial", 1);
                          
                        
-					}
+                    }
+                    
 				}, this);
 				
                 game.time.events.add(Phaser.Timer.SECOND * 6, function () {
