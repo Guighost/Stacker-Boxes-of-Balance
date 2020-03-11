@@ -182,13 +182,8 @@ introScene.prototype = {
         introBackS.width = game.width;
         introBackS.height = game.height;
 
-       
-
-
         //this.cameraGroup = game.add.group();
         //this.crateGroup = game.add.group();},
-   
-
     
         if (LEVEL == 1) {
          
@@ -214,56 +209,11 @@ introScene.prototype = {
             playNew.height = 100;
             playNew.inputEnabled = true;
             playNew.events.onInputDown.add(this.loadGameNew, this);
+                 
            
-          
-
-      
-        
-        
-
-          
-
         }
-        function clickedSprite(sprite) {
-            this.loadGame1;
-            text = sprite.name + ' RenderOrderIDqq: ' + sprite.renderOrderID;
-            console.log(text)
-       
-
-            
-
-        }
-        function clickedSprite2(sprite) {
-
-            text = sprite.name + ' RenderOrderIDq4: ' + sprite.renderOrderID;
-            console.log(text)
-           
-            this.loadGameNew;
-
-
-        }
-        //var onlyOnceHomeBtn = 0;
-
      
-        //function checkBtnResult(whichClicked) {
-        //    onlyOnceHomeBtn++
-        //    console.log("which clicked = " + whichClicked)
-        //    if (onlyOnceHomeBtn == 1) {
-               
-
-        //        if (whichClicked == 2) { this.loadGame1 }
-        //        else if (whichClicked == 1) { this.loadGameNew }
-        //        else { this.loadGame1 }
-        //    }
-        //}
-          
-
-        
-
-        
-   
-
-
+       
     },
     loadGameNew: function(sprite) {
         text = sprite.name
@@ -281,7 +231,8 @@ introScene.prototype = {
    
 },
     loadGame1: function () {
-       
+   
+
         //introBackS.destroy(); 
         console.log("loadexist")
         if (alreadyclicked == false) {
@@ -320,7 +271,26 @@ introScene.prototype = {
                 alreadyclicked = true;
                 game.state.start("PlayGame");
                 document.getElementById("loadingGG").style.display = 'block';
+
+                ///rate me
+                var showRateOrNo = localStorage.getItem("rateMeNever")
+                var timesPlayed2 = localStorage.getItem("timesPlayed");
+                if (showRateOrNo == 0 && timesPlayed2 >= 3) {
+                    setTimeout(function () {
+                        document.getElementById("rateMe").style.display = 'block';
+                        document.getElementById("loadingGG").style.display = 'none';
+                        game.paused = true;
+
+                        var playTime = setInterval(unPause, 500)}, 500)
+                
+                }
+                else { document.getElementById("rateMe").style.display = 'none'; game.paused = false;  }
+                //end rate me
             }
+        }
+        function unPause() {
+            var rateVisible = document.getElementById("rateMe").style.display;
+            if (rateVisible == 'none') { game.paused = false;}
         }
     },
 

@@ -29,8 +29,8 @@
 <plugin  source="npm" name="cordova-plugin-globalization"/>
 <plugin source="npm" name="cordova-plugin-inappbrowser"/>
 <plugin  source="npm" name="cordova-plugin-network-information"/>
-<gap:plugin name="cordova-launch-review" source="npm" />
 
+  
 <plugin name="enhance-cordova-connector"/>
   <plugin name="fitatu-cordova-plugin-market" />
 
