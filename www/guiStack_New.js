@@ -171,6 +171,7 @@ introScene.prototype = {
         game.load.image("tut3", "images/intro3.png");
         game.load.audio("gameover", ["assets/sounds/gameover.mp3", "assets/sounds/gameover.ogg"]);
         game.load.bitmapFont("font", "assets/fonts/font.png", "assets/fonts/font.xml");
+        game.load.bitmapFont("font2", "assets/fonts/font2.png", "assets/fonts/font.xml");
         game.load.bitmapFont("smallfont", "assets/fonts/smallfont.png", "assets/fonts/smallfont.xml");
 
         ///
@@ -224,6 +225,7 @@ introScene.prototype = {
         localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
             score: 0
         }));
+        localStorage.setItem("timesPlayed", 0)
         localStorage.setItem("stackerLevel", 1);
         localStorage.setItem("showSelfAd", 1);
         localStorage.setItem("showInterstatial", 0)
@@ -276,6 +278,7 @@ introScene.prototype = {
                 var showRateOrNo = localStorage.getItem("rateMeNever")
                 var timesPlayed2 = localStorage.getItem("timesPlayed");
                 if (showRateOrNo == 0 && timesPlayed2 >= 3) {
+                    localStorage.setItem("timesPlayed", 0)
                     setTimeout(function () {
                         document.getElementById("rateMe").style.display = 'block';
                         document.getElementById("loadingGG").style.display = 'none';
@@ -404,8 +407,8 @@ playGame.prototype = {
         game.load.image("crate23", "assets/sprites/crate23.png");
         game.load.image("crate24", "assets/sprites/crate24.png");
         game.load.image("crate25", "assets/sprites/crate25.png");
-        game.load.image("title", "assets/sprites/title.png");
-        game.load.image("title2", "assets/sprites/title5.png");
+        game.load.image("title", "assets/sprites/title7.png");
+        game.load.image("title2", "assets/sprites/title6.png");
         game.load.image("tap", "assets/sprites/tap.png");
         game.load.audio("hit01", ["assets/sounds/hit01.mp3", "assets/sounds/hit01.ogg"]);
         game.load.audio("hit02", ["assets/sounds/hit02.mp3", "assets/sounds/hit02.ogg"]);
@@ -414,6 +417,7 @@ playGame.prototype = {
         game.load.audio("gameover", ["assets/sounds/Evil_laugh.mp3", "assets/sounds/gameover.ogg"]);
         game.load.audio("victory", ["assets/sounds/levelup.mp3"]);
         game.load.bitmapFont("font", "assets/fonts/font.png", "assets/fonts/font.xml");
+        game.load.bitmapFont("font2", "assets/fonts/font2.png", "assets/fonts/font.xml");
         game.load.bitmapFont("smallfont", "assets/fonts/smallfont.png", "assets/fonts/smallfont.xml");
 
      
@@ -488,7 +492,7 @@ playGame.prototype = {
         ground.loadTexture(groundSrc);
 
        
-        game.add.bitmapText(game.width - (game.width / 4) -30, 40, "smallfont", "Score", 45);
+        game.add.bitmapText(game.width - (game.width / 4) - 20, 40, "smallfont", "Score", 45);
         game.add.bitmapText(game.width - (game.width / 4) + 5 , 95, "smallfont", "" + this.score, 40);
         game.add.bitmapText(10, 40, "smallfont", "Level" , 45);
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
@@ -552,12 +556,12 @@ playGame.prototype = {
         tap.anchor.set(0.5);
         this.menuGroup.add(tap);
         if (LEVEL <= 1) {
-            var title = game.add.image(game.width / 2, tap.y - 470, "title");
+            var title = game.add.image(game.width / 2, tap.y - 570, "title");
             title.anchor.set(0.5, 0);
             this.menuGroup.add(title);
         }
         else {
-            var title2 = game.add.image(game.width / 2, tap.y - 505, "title2");
+            var title2 = game.add.image(game.width / 2, tap.y - 515, "title2");
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
@@ -572,8 +576,9 @@ playGame.prototype = {
         }, 150, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
         var levelGoalText = (LEVEL * 5) + 10;
         if (LEVEL > 21) {    levelGoalText = 125;        }
-        this.levelText = game.add.bitmapText((game.width / 4 - 25), tap.y - 195, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
-        this.levelText2 = game.add.bitmapText((game.width / 4 - 10), tap.y - 135, "smallfont",  + gameOptions.timeLimit.toString() + " Seconds", 48);
+        this.levelText = game.add.bitmapText((game.width / 4 + 25), tap.y - 345, "font2", "Level " + LEVEL.toString(), 72);
+        this.levelText2 = game.add.bitmapText((game.width / 4 - 20), tap.y - 240, "font2", "Goal: " + levelGoalText.toString() +  " points", 48);
+        this.levelText3 = game.add.bitmapText((game.width / 4 - 25 ), tap.y - 155, "font2",  "Time: " + gameOptions.timeLimit.toString() + " seconds", 48);
     },
     dropCrate: function () {
         
@@ -581,6 +586,9 @@ playGame.prototype = {
             this.firstCrate = false;
             this.menuGroup.destroy();
             this.levelText.destroy();
+            this.levelText2.destroy();
+            this.levelText3.destroy();
+
             this.timer = 0;
             this.timerEvent = game.time.events.loop(Phaser.Timer.SECOND, this.tick, this);
             this.timeText = game.add.bitmapText(game.width - (game.width / 2) - 70, 60, "font", gameOptions.timeLimit.toString(), 84);
