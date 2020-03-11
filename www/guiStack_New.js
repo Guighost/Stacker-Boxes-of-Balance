@@ -182,12 +182,7 @@ introScene.prototype = {
         introBackS.width = game.width;
         introBackS.height = game.height;
 
-        var playBtn = game.add.image(game.width / 2 - 90, game.height/2 , 'playBtn1');
-        playBtn.width = 200;
-        playBtn.height = 100;
-        playBtn.inputEnabled = true;
-        playBtn.input.PriorityID = 1;
-        game.input.onDown.add(this.loadGame1, playBtn);
+       
 
 
         //this.cameraGroup = game.add.group();
@@ -195,54 +190,102 @@ introScene.prototype = {
    
 
     
-        if (LEVEL == 1) { playNew.destroy(); }
+        if (LEVEL == 1) {
+         
+            var playBtn = game.add.image(game.width / 2 - 90, game.height / 2, 'playBtn1');
+            playBtn.width = 200;
+            playBtn.height = 100;
+            playBtn.inputEnabled = true;
+            playBtn.input.PriorityID = 1;
+            game.input.onDown.add(this.loadGame1, playBtn);
+        }
         if (LEVEL > 1) {
-            playBtn.destroy();
-           
-    
-
-            var playNew = game.add.image(game.width / 2 - 90, game.height / 2 + 145, 'playBtnNew');
-            playNew.width = 200;
-            playNew.height = 100;
-            playNew.inputEnabled = true;
-            playNew.input.PriorityID = 1;
-
-            var continueBtn = game.add.image(game.width / 2 - 90, game.height / 2 - 10, 'continueBtn');
+                
+            var continueBtn = game.add.sprite(game.width / 2 - 90, game.height / 2 + 5, 'continueBtn');
+            continueBtn.name = 'continueBtn'
             continueBtn.width = 200;
             continueBtn.height = 100;
             continueBtn.inputEnabled = true;
-            continueBtn.input.PriorityID = 2;
+            continueBtn.events.onInputDown.add(this.loadGame1, this);
 
-         
-            game.input.onDown.add(loadGameNew, playNew);
-            game.input.onDown.add(this.loadGame1, continueBtn);
+            var playNew = game.add.sprite(game.width / 2 - 90, game.height / 2 + 130, 'playBtnNew');
+            playNew.name = 'playBtnNew'
+            playNew.width = 200;
+            playNew.height = 100;
+            playNew.inputEnabled = true;
+            playNew.events.onInputDown.add(this.loadGameNew, this);
+           
+          
 
-        }
+      
+        
         
 
-        function loadGameNew() {
-            if (alreadyclicked == false) {
-                LEVEL = 1;
-                alreadyclicked = true;
-                localStorage.setItem("stackerScore", 0);
-                localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
-                    score: 0
-                }));
-                localStorage.setItem("stackerLevel", 1);
-                localStorage.setItem("showSelfAd", 1);
-                localStorage.setItem("showInterstatial", 0)
-                this.loadGame1;
-            }
-        }
+          
 
+        }
+        function clickedSprite(sprite) {
+            this.loadGame1;
+            text = sprite.name + ' RenderOrderIDqq: ' + sprite.renderOrderID;
+            console.log(text)
+       
+
+            
+
+        }
+        function clickedSprite2(sprite) {
+
+            text = sprite.name + ' RenderOrderIDq4: ' + sprite.renderOrderID;
+            console.log(text)
+           
+            this.loadGameNew;
+
+
+        }
+        //var onlyOnceHomeBtn = 0;
+
+     
+        //function checkBtnResult(whichClicked) {
+        //    onlyOnceHomeBtn++
+        //    console.log("which clicked = " + whichClicked)
+        //    if (onlyOnceHomeBtn == 1) {
+               
+
+        //        if (whichClicked == 2) { this.loadGame1 }
+        //        else if (whichClicked == 1) { this.loadGameNew }
+        //        else { this.loadGame1 }
+        //    }
+        //}
+          
+
+        
+
+        
+   
 
 
     },
+    loadGameNew: function(sprite) {
+        text = sprite.name
+        console.log(text)
+        LEVEL = 1;
+ 
+        localStorage.setItem("stackerScore", 0);
+        localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
+            score: 0
+        }));
+        localStorage.setItem("stackerLevel", 1);
+        localStorage.setItem("showSelfAd", 1);
+        localStorage.setItem("showInterstatial", 0)
+        this.loadGame1()
+   
+},
     loadGame1: function () {
        
         //introBackS.destroy(); 
         console.log("loadexist")
         if (alreadyclicked == false) {
+            console.log("alreadyclicked == false loadgame1")
             if (LEVEL == 1) {
                 alreadyclicked = true;
                 var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
@@ -475,7 +518,7 @@ playGame.prototype = {
         ground.loadTexture(groundSrc);
 
        
-        game.add.bitmapText(game.width - (game.width / 4), 40, "smallfont", "Score", 45);
+        game.add.bitmapText(game.width - (game.width / 4) -30, 40, "smallfont", "Score", 45);
         game.add.bitmapText(game.width - (game.width / 4) + 5 , 95, "smallfont", "" + this.score, 40);
         game.add.bitmapText(10, 40, "smallfont", "Level" , 45);
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
@@ -559,7 +602,8 @@ playGame.prototype = {
         }, 150, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
         var levelGoalText = (LEVEL * 5) + 10;
         if (LEVEL > 21) {    levelGoalText = 125;        }
-        this.levelText = game.add.bitmapText((game.width / 4 - 25), tap.y - 165, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
+        this.levelText = game.add.bitmapText((game.width / 4 - 25), tap.y - 195, "smallfont", "Level Goal: " + levelGoalText.toString(), 48);
+        this.levelText2 = game.add.bitmapText((game.width / 4 - 10), tap.y - 135, "smallfont",  + gameOptions.timeLimit.toString() + " Seconds", 48);
     },
     dropCrate: function () {
         
@@ -894,5 +938,6 @@ function pauseAllAudio() {
     myAudioUplifting.pause();
     myAudioElements.pause();
 };
+
 
 

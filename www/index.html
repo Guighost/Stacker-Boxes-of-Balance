@@ -383,6 +383,13 @@
        if (localStorage.getItem("showReview") == null) {
             localStorage.setItem("showReview", true);
     }
+      if (localStorage.getItem("timesPlayed") == null) {
+            localStorage.setItem("timesPlayed", 0);
+    }
+     var timesPlayed = localStorage.getItem("timesPlayed")
+     timesPlayed++
+     localStorage.setItem("timesPlayed", timesPlayed);
+
 
         var showItOrNo = localStorage.getItem("showInterstatial");
          var showReview = localStorage.getItem("showReview");
@@ -395,7 +402,7 @@
     showReview = localStorage.getItem("showReview");
 
     if (showItOrNo == 1 && showReview == false) { checkSelfPromote(); }
-    else {
+    else if(timesPlayed > 1 && showReview == true) {
         showReview = false;
         try { LaunchReview.launch(); }
         catch (err) { console.log("caught from Review " + err) }
