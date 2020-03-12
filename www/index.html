@@ -28,7 +28,7 @@
     </script>-->
 
 
-
+    <link rel="stylesheet" type="text/css" href="animate.css">
 
     <style type="text/css">
         * {
@@ -156,7 +156,96 @@
         }
 
 
-        @-webkit-keyframes heartBeat {
+        /*/////rate me*/
+        #rateMe {
+            position: absolute;
+            min-height: 100%;
+            min-width: 100%;
+            background-color: Black;
+            background-image: url("images/selfPromoteBack.png");
+            background-position: top;
+            background-repeat: no-repeat;
+            background-size: contain;
+            z-index: 1000;
+            /*min-width: 400px;
+            max-width: 500px;
+            max-height: 400px;*/
+            align-content: center;
+            text-align: center;
+            font-family: 'Comic Sans MS';
+            font-size: 16px;
+            color: azure;
+            text-shadow: 2px 2px #101511;
+            display: none;
+        }
+
+        #rateMeInner {
+            position: absolute;
+            background-image: linear-gradient(grey,ActiveCaption);
+            top: 30%;
+            margin-left: 50%;
+            height: 210px;
+            width: 312px;
+            border: 5px grey groove;
+            transform: translate(-161px,-5px);
+            z-index: 1100;
+            display: none;
+        }
+
+        #rateMeBtnWrap {
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            left: 0px;
+        }
+
+        .rateBtn {
+            float: left;
+            width: 26%;
+            height: 32px;
+            background-image: linear-gradient(forestGreen,#17BF39 );
+            border: 5px groove green;
+            border-radius: 5px;
+            align-content: center;
+            text-align: center;
+            margin: 2%;
+            font-family: 'Comic Sans MS';
+            font-size: 15px;
+            text-shadow: 1px 1px black;
+            color: azure;
+            padding-top: 3px;
+            /*margin-left: 5%;*/
+        }
+
+        #rateImage {
+            background-image: linear-gradient(lightcoral,yellow );
+            margin-top: 4%;
+            display: inline-block;
+            width: 300px;
+            margin-left: 50%;
+            transform: translate(-150px,-5px);
+            z-index: 2000;
+            border-radius: 10px;
+        }
+
+        #rateMeBtnNo {
+            background-image: linear-gradient(red,lightcoral );
+            margin-top: 4%;
+        }
+
+        #rateMeBtnLater {
+            background-image: linear-gradient(blue, #149EB7);
+            margin-top: 4%;
+        }
+
+        #rateMeBtnYes {
+            padding-top: 9px;
+            height: 45px;
+            margin-top: 3%;
+            font-size: 16px;
+        }
+
+        /*@-webkit-keyframes heartBeat {
             0% {
                 -webkit-transform: scale(1);
                 transform: scale(1);
@@ -219,86 +308,47 @@
             animation-timing-function: ease-in-out;
         }
 
+        @-webkit-keyframes zoomInRight {
+            from {
+                opacity: 0;
+                -webkit-transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+                transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+                -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            }
 
-        /*/////rate me*/
-        #rateMe {
-            position: absolute;
-            min-height: 100%;
-            min-width: 100%;
-            background-color: Black;
-            background-image:url("assets/sprites/title2.png");
-            background-position: top;
-            background-repeat: no-repeat;
-            background-size:contain;
-            z-index: 1000;
-            /*min-width: 400px;
-            max-width: 500px;
-            max-height: 400px;*/
-            align-content: center;
-            text-align: center;
-            font-family: 'Comic Sans MS';
-            font-size: 16px;
-            display: none;
-        }
-        #rateMeInner {
-            position: absolute;
-       
-            background-image: linear-gradient(ActiveCaption, grey);
-            top: 40%;
-            margin-left: 50%;
-            height: 200px;
-            width: 312px;
-            border: 5px grey groove;
-            transform: translate(-161px,-5px);
-            z-index: 1100;
-        }
-        #rateMeBtnWrap {
-            position: absolute;
-            bottom: 5px;
-            width: 100%;
-            left: 0px;
+            60% {
+                opacity: 1;
+                -webkit-transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+                transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+                -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+            }
         }
 
-        .rateBtn {
-            float: left;
-            width: 26%;
-            height: 32px;
-            background-image: linear-gradient(#78f542,forestGreen );
-            border: 5px groove green;
-            border-radius: 5px;
-            align-content: center;
-            text-align: center;
-            margin: 2%;
-            font-family: 'Comic Sans MS';
-            font-size: 16px;
-            text-shadow: 1px 1px black;
-            color: azure;
-            padding-top: 5px;
-            /*margin-left: 5%;*/
+        @keyframes zoomInRight {
+            from {
+                opacity: 0;
+                -webkit-transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+                transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+                -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            }
+
+            60% {
+                opacity: 1;
+                -webkit-transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+                transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+                -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+            }
         }
-        #rateImage {
-            background-image: linear-gradient(lightcoral,yellow );
-            margin-top: 5%;
-            display: inline-block;
-            width: 300px;
-            margin-left: 50%;
-            transform: translate(-150px,-5px);
-            z-index: 2000;
-            border-radius: 10px;
-        }
-        #rateMeBtnNo {
-            background-image: linear-gradient(red,lightcoral );
-            margin-top: 4%;
-        }
-        #rateMeBtnLater {
-            background-image: linear-gradient(blue, lightblue);
-            margin-top: 4%;
-        }
-        #rateMeBtnYes {
-            padding-top: 0px;
-            height: 45px;
-            margin-top: 3%;
-        }
+
+        .zoomInRight {
+            -webkit-animation-name: zoomInRight;
+            animation-name: zoomInRight;
+        }*/
+      
 
     </style>
 
@@ -336,23 +386,23 @@
       
         </div>
     </div>
-    <div id="rateMe">
-        <div id="rateMeInner">
+    <div id="rateMe" >
+        <div id="rateMeInner" class="fadeIn " >
             <div id="rateMeTopWrap">
 
                 <div id="rateMeText"> 
                     <h2>Please Rate Our App</h2>
-                <p> It takes only a moment and helps us alot</p>
+                <p> It takes only a moment and helps alot</p>
                 </div>
                 
             </div>
-            <div id="rateMeImage"> <img id="rateImage" alt='Rate on Google Play' src='images/ratingstars.png' />   </div>
+            <div id="rateMeImage" class="heartBeat"> <img id="rateImage" alt='Rate on Google Play' src='images/ratingstars.png' />   </div>
 
-            <div id="rateMeBtnWrap">
+            <div id="rateMeBtnWrap" >
 
                 <div id="rateMeBtnNo" class="rateBtn">No Thanks</div>
                 
-                <div id="rateMeBtnYes" class="rateBtn"> OK </br> Rate Now </div>
+                <div id="rateMeBtnYes" class="rateBtn"> <b>Rate Now</b>  </div>
                 <div id="rateMeBtnLater" class="rateBtn">Later</div>
             </div>
          
@@ -434,6 +484,7 @@
 
                 var selfInter = document.getElementById("selfInterstatial");
                 selfInter.style.display = "block";
+                selfInter.className += "zoomInRight";
                 handleAdTimer();
                 localStorage.setItem("showInterstatial", 0);
                 selfPromote = false;
@@ -539,6 +590,11 @@
 
     if (showItOrNo == 1 ) { checkSelfPromote(); }
 
+     var checkRateVis = document.getElementById("rateMe");
+          var checkRateVis2 = checkRateVis.style.display.toString();
+     if(checkRateVis2 == 'block'){
+              
+     }
 
 }
 

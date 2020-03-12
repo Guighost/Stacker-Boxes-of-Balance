@@ -280,7 +280,20 @@ introScene.prototype = {
                 if (showRateOrNo == 0 && timesPlayed2 >= 3) {
                     localStorage.setItem("timesPlayed", 0)
                     setTimeout(function () {
+                      
+                        var element = document.getElementById("rateMeBtnYes");
+                        element.classList.remove("zoomInRight");
+                        element.classList.remove("heartBeat");
+                        element.classList.add("zoomInUp");
                         document.getElementById("rateMe").style.display = 'block';
+
+                        //var element2 = document.getElementById("rateMeInner");
+                        //element2.classList.remove("zoomInRight");
+                        //element2.classList.remove("heartBeat");
+                        //element2.classList.add("heartBeat");
+                        document.getElementById("rateMeInner").style.display = 'block';
+      
+                       
                         document.getElementById("loadingGG").style.display = 'none';
                         game.paused = true;
 
@@ -556,29 +569,29 @@ playGame.prototype = {
         tap.anchor.set(0.5);
         this.menuGroup.add(tap);
         if (LEVEL <= 1) {
-            var title = game.add.image(game.width / 2, tap.y - 570, "title");
+            var title = game.add.image(game.width / 2, tap.y - 610, "title");
             title.anchor.set(0.5, 0);
             this.menuGroup.add(title);
         }
         else {
-            var title2 = game.add.image(game.width / 2, tap.y - 515, "title2");
+            var title2 = game.add.image(game.width / 2, tap.y - 565, "title2");
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
-        var hiScoreText = game.add.bitmapText(game.width / 2, game.height - 164, "smallfont", "YOUR TOP SCORE", 24);
+        var hiScoreText = game.add.bitmapText(game.width / 2, game.height - 174, "smallfont", "YOUR TOP SCORE", 24);
         hiScoreText.anchor.set(0.5);
         this.menuGroup.add(hiScoreText);
-        var hiScore = game.add.bitmapText(game.width / 2, game.height - 110, "font", this.savedData.score.toString(), 72);
+        var hiScore = game.add.bitmapText(game.width / 2, game.height - 120, "font", this.savedData.score.toString(), 72);
         hiScore.anchor.set(0.5);
         this.menuGroup.add(hiScore);
         var tapTween = game.add.tween(tap).to({
             alpha: 0
-        }, 150, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
+        }, 250, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
         var levelGoalText = (LEVEL * 5) + 10;
         if (LEVEL > 21) {    levelGoalText = 125;        }
-        this.levelText = game.add.bitmapText((game.width / 4 + 25), tap.y - 345, "font2", "Level " + LEVEL.toString(), 72);
-        this.levelText2 = game.add.bitmapText((game.width / 4 - 20), tap.y - 240, "font2", "Goal: " + levelGoalText.toString() +  " points", 48);
-        this.levelText3 = game.add.bitmapText((game.width / 4 - 25 ), tap.y - 155, "font2",  "Time: " + gameOptions.timeLimit.toString() + " seconds", 48);
+        this.levelText = game.add.bitmapText((game.width / 4 + 25), tap.y - 395, "font2", "Level " + LEVEL.toString(), 72);
+        this.levelText2 = game.add.bitmapText((game.width / 4 - 20), tap.y - 290, "font2", "Goal: " + levelGoalText.toString() +  " points", 48);
+        this.levelText3 = game.add.bitmapText((game.width / 4 - 25 ), tap.y - 205, "font2",  "Time: " + gameOptions.timeLimit.toString() + " seconds", 48);
     },
     dropCrate: function () {
         
@@ -708,13 +721,13 @@ playGame.prototype = {
             var scoreCheck = this.score - oldLevelScore;
             game.time.events.remove(this.removeEvent);
             pauseAllAudio();
-            var scoreText = game.add.bitmapText(game.width / 2, game.height / 4, "font", "Your Total Score", 56);
+            var scoreText = game.add.bitmapText(game.width / 2, game.height / 4 - 60, "font", "Your Total Score", 56);
             scoreText.anchor.set(0.5);
-            var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 90, "font", this.score.toString(), 78);
+            var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 20, "font", this.score.toString(), 78);
             scoreDisplayText.anchor.set(0.5);
-            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) -80), "font", "Level Score", 36);
+            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 110), "font", "Level Score", 36);
             scoreText2.anchor.set(0.5);
-            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, game.height / 2 - 20, "font", scoreCheck.toString(), 56);
+            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, game.height / 2 - 70, "font", scoreCheck.toString(), 56);
             scoreDisplayText2.anchor.set(0.5);
             localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
                 score: Math.max(this.score, this.savedData.score)
@@ -733,7 +746,7 @@ playGame.prototype = {
                 
                 //myAudio.pause();
                 this.victorySound.play();
-                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 310, "smallfont", "Level Up", 48);
+                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Level Up", 48);
                 lvlUpDisplayText.anchor.set(0.5);
 				
                 localStorage.setItem("stackerScore", this.score);
@@ -749,8 +762,7 @@ playGame.prototype = {
                         playAdTime = 0;
                         //console.log("show an ad")
                         localStorage.setItem("showInterstatial", 1);
-                         
-                       
+                                              
                     }
                     
 				}, this);
@@ -758,6 +770,7 @@ playGame.prototype = {
                 game.time.events.add(Phaser.Timer.SECOND * 6, function () {
                     gameOptions.crateSpeed = gameOptions.crateSpeed - 25;
                     localStorage.setItem("showInterstatial", 0);
+
                     //gameOptions.fallingHeight = gameOptions.fallingHeight + 25;
                     gameOptions.gravity = gameOptions.gravity + 50;
                     if (gameOptions.crateSpeed <= 749) { gameOptions.crateSpeed = 750; }
