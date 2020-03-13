@@ -36,7 +36,7 @@ window.onload = function () {
             gameOptions.gameHeight = gameOptions.gameWidth * ratio;
         }
     }
-    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight , Phaser.CANVAS);
+    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.CANVAS);
     game.state.add("introToGame", introScene);
     game.state.add("PlayGame", playGame);
    
@@ -58,8 +58,9 @@ window.onload = function () {
     //game.state.add("PlayGame", playGame);
     //game.state.start("PlayGame");
     document.getElementById("loadingGG").style.display = 'none';
+    //document.getElementById("loadingGG").style.display = 'none';
 
-    myAudio = new Audio("assets/sounds/loops/OveMelaa-ItaloUnlimited.mp3", "assets/sounds/loops/OveMelaa-ItaloUnlimited.ogg" ); // game music loop
+    myAudio = new Audio("assets/sounds/loops/OveMelaa-ItaloUnlimited.mp3" ); // game music loop
     myAudio.load();
     myAudioUplifting = new Audio("assets/sounds/loops/Cafofo_Uplifting.mp3"); // game music loop
     myAudioUplifting.load();
@@ -149,8 +150,10 @@ window.onload = function () {
         }
     }
     document.addEventListener("visibilitychange", handleVisibilityChange, false);
-
+ 
+                              ///end of window.load
 }
+              
 
 var introScene = function () { };
 var levelUpScene = function () { };
@@ -182,7 +185,7 @@ introScene.prototype = {
         var introBackS = game.add.image(0, 0, 'intro');
         introBackS.width = game.width;
         introBackS.height = game.height;
-
+          
         //this.cameraGroup = game.add.group();
         //this.crateGroup = game.add.group();},
     
@@ -308,6 +311,7 @@ introScene.prototype = {
             var rateVisible = document.getElementById("rateMe").style.display;
             if (rateVisible == 'none') { game.paused = false;}
         }
+                            //document.querySelector('canvas').style.marginTop = "-20px";
     },
 
   
@@ -510,7 +514,7 @@ playGame.prototype = {
         game.add.bitmapText(10, 40, "smallfont", "Level" , 46);
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
         var platform1 = game.add.sprite(game.width / randomSpot1, game.height, platSrc);
-        platform1.y = ground.y - 250;
+        platform1.y = ground.y - 267;
         if (platform1.x > 250) { platform1.x = 35; }
         var calcPlat2 = (game.width / randomSpot2);
 
@@ -522,7 +526,7 @@ playGame.prototype = {
         if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width ) - 96);   }
         //console.log("calPlat2 = " + calcPlat2)
         var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
-        platform2.y = ground.y - 180;;
+        platform2.y = ground.y - 181;
         this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -50, "crate1");
 
     
@@ -727,9 +731,9 @@ playGame.prototype = {
             //scoreText.anchor.set(0.5);
             //var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 20, "font", this.score.toString(), 78);
             //scoreDisplayText.anchor.set(0.5);
-            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 80), "font", "Level Score", 56);
+            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 80), "font2", "Level Score", 56);
             scoreText2.anchor.set(0.5);
-            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, (game.height / 2) + 5 , "font", scoreCheck.toString(), 78);
+            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, (game.height / 2) + 5 , "font2", scoreCheck.toString(), 78);
             scoreDisplayText2.anchor.set(0.5);
             localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
                 score: Math.max(this.score, this.savedData.score)
