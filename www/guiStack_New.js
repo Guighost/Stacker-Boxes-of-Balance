@@ -505,9 +505,9 @@ playGame.prototype = {
         ground.loadTexture(groundSrc);
 
        
-        game.add.bitmapText(game.width - (game.width / 4) - 20, 40, "smallfont", "Score", 45);
-        game.add.bitmapText(game.width - (game.width / 4) + 5 , 95, "smallfont", "" + this.score, 40);
-        game.add.bitmapText(10, 40, "smallfont", "Level" , 45);
+        game.add.bitmapText(game.width - (game.width / 4) + 15 , 40, "smallfont", "Score", 46);
+        game.add.bitmapText(game.width - (game.width / 4) + 40 , 95, "smallfont", "" + this.score, 40);
+        game.add.bitmapText(10, 40, "smallfont", "Level" , 46);
         game.add.bitmapText(55, 100, "smallfont", "" + LEVEL, 40);
         var platform1 = game.add.sprite(game.width / randomSpot1, game.height, platSrc);
         platform1.y = ground.y - 250;
@@ -574,7 +574,7 @@ playGame.prototype = {
             this.menuGroup.add(title);
         }
         else {
-            var title2 = game.add.image(game.width / 2, tap.y - 565, "title2");
+            var title2 = game.add.image(game.width / 2, tap.y - 580, "title2");
             title2.anchor.set(0.5, 0);
             this.menuGroup.add(title2);
         }
@@ -589,9 +589,9 @@ playGame.prototype = {
         }, 250, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
         var levelGoalText = (LEVEL * 5) + 10;
         if (LEVEL > 21) {    levelGoalText = 125;        }
-        this.levelText = game.add.bitmapText((game.width / 4 + 25), tap.y - 395, "font2", "Level " + LEVEL.toString(), 72);
-        this.levelText2 = game.add.bitmapText((game.width / 4 - 20), tap.y - 290, "font2", "Goal: " + levelGoalText.toString() +  " points", 48);
-        this.levelText3 = game.add.bitmapText((game.width / 4 - 25 ), tap.y - 205, "font2",  "Time: " + gameOptions.timeLimit.toString() + " seconds", 48);
+        this.levelText = game.add.bitmapText((game.width / 4 + 32), tap.y - 395, "font2", "Level " + LEVEL.toString(), 72);
+        this.levelText2 = game.add.bitmapText((game.width / 4 - 25), tap.y - 285, "font2", "Goal: " + levelGoalText.toString() +  " points", 48);
+        this.levelText3 = game.add.bitmapText((game.width / 4 + 20 ), tap.y - 195, "font2",   gameOptions.timeLimit.toString() + " seconds", 48);
     },
     dropCrate: function () {
         
@@ -721,13 +721,15 @@ playGame.prototype = {
             var scoreCheck = this.score - oldLevelScore;
             game.time.events.remove(this.removeEvent);
             pauseAllAudio();
-            var scoreText = game.add.bitmapText(game.width / 2, game.height / 4 - 60, "font", "Your Total Score", 56);
-            scoreText.anchor.set(0.5);
-            var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 20, "font", this.score.toString(), 78);
-            scoreDisplayText.anchor.set(0.5);
-            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 110), "font", "Level Score", 36);
+            var title3 = game.add.image(game.width / 2, 165, "title2");
+            title3.anchor.set(0.5, 0);
+            //var scoreText = game.add.bitmapText(game.width / 2, game.height / 4 - 60, "font", "Your Total Score", 56);
+            //scoreText.anchor.set(0.5);
+            //var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 20, "font", this.score.toString(), 78);
+            //scoreDisplayText.anchor.set(0.5);
+            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 80), "font", "Level Score", 56);
             scoreText2.anchor.set(0.5);
-            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, game.height / 2 - 70, "font", scoreCheck.toString(), 56);
+            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, (game.height / 2) + 5 , "font", scoreCheck.toString(), 78);
             scoreDisplayText2.anchor.set(0.5);
             localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
                 score: Math.max(this.score, this.savedData.score)
@@ -746,7 +748,7 @@ playGame.prototype = {
                 
                 //myAudio.pause();
                 this.victorySound.play();
-                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Level Up", 48);
+                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Level Up", 56);
                 lvlUpDisplayText.anchor.set(0.5);
 				
                 localStorage.setItem("stackerScore", this.score);
