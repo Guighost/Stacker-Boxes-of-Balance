@@ -427,12 +427,12 @@ playGame.prototype = {
         game.load.image("title", "assets/sprites/title7.png");
         game.load.image("title2", "assets/sprites/title6.png");
         game.load.image("tap", "assets/sprites/tap.png");
-        game.load.audio("hit01", ["assets/sounds/hit01.mp3", "assets/sounds/hit01.ogg"]);
-        game.load.audio("hit02", ["assets/sounds/hit02.mp3", "assets/sounds/hit02.ogg"]);
-        game.load.audio("hit03", ["assets/sounds/hit03.mp3", "assets/sounds/hit03.ogg"]);
-        game.load.audio("remove", ["assets/sounds/remove.mp3", "assets/sounds/remove.ogg"]);
-        game.load.audio("gameover", ["assets/sounds/Evil_laugh.mp3", "assets/sounds/gameover.ogg"]);
-        game.load.audio("victory", ["assets/sounds/levelup.mp3"]);
+        game.load.audio("hit01", ["assets/sounds/hit01.mp3"]);
+        game.load.audio("hit02", ["assets/sounds/hit02.mp3"]);
+        game.load.audio("hit03", ["assets/sounds/hit03.mp3"]);
+        game.load.audio("remove", ["assets/sounds/remove.mp3"]);
+        game.load.audio("gameover", ["assets/sounds/Evil_laugh.mp3"]);
+        game.load.audio("victory", ["assets/sounds/levelup2.mp3"]);
         game.load.bitmapFont("font", "assets/fonts/font.png", "assets/fonts/font.xml");
         game.load.bitmapFont("font2", "assets/fonts/font2.png", "assets/fonts/font.xml");
         game.load.bitmapFont("smallfont", "assets/fonts/smallfont.png", "assets/fonts/smallfont.xml");
