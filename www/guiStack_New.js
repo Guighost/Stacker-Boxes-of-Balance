@@ -725,7 +725,7 @@ playGame.prototype = {
             var scoreCheck = this.score - oldLevelScore;
             game.time.events.remove(this.removeEvent);
             pauseAllAudio();
-            var title3 = game.add.image(game.width / 2, 165, "title2");
+            var title3 = game.add.image(game.width / 2, 170, "title2");
             title3.anchor.set(0.5, 0);
             //var scoreText = game.add.bitmapText(game.width / 2, game.height / 4 - 60, "font", "Your Total Score", 56);
             //scoreText.anchor.set(0.5);
@@ -752,7 +752,7 @@ playGame.prototype = {
                 
                 //myAudio.pause();
                 this.victorySound.play();
-                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Level Up", 56);
+                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 340, "smallfont", "Level Up", 56);
                 lvlUpDisplayText.anchor.set(0.5);
 				
                 localStorage.setItem("stackerScore", this.score);

@@ -62,17 +62,18 @@
             left: 0px;
             width: 100%;
             height: 99%;
-            background-image:url("images/selfPromoteBack2.png");
+            background-color: black;
+            /*background-image:url("images/selfPromoteBack2.png");*/
             background-size: cover;
             background-repeat: no-repeat;
             z-index: 3000;
-            display: none;
+            /*display: none;*/
         }
         #selfAdInner {
             position: absolute;
-            top: 6%;
-            left: 5%;
-            width: 90%;
+            top: 1%;
+            /*left: 5%;*/
+            width: 100%;
             height: 58%;
             /*background-color: red;*/
             background-size: cover;
@@ -84,6 +85,14 @@
             background-image: url("images/starMatchPromo1.png");
             background-size: contain;
             background-repeat: no-repeat;
+            display: none;
+        }
+        #promoVid1 {
+            position: absolute;
+            top: 35px;
+            left: 0px;
+            width: 100%;
+            z-index: 1900;
         }
         #gameLink {
             position: absolute;
@@ -91,13 +100,14 @@
             bottom: 15%;
             width: 232px;
             height: 79px;
-            transform: translateX(-120px);
+            transform: translateX(-115px);
+            z-index: 2000;
         }
         #gPlayImg {
             display: inline-block;
             width: 300px;
             margin-left: 50%;
-            transform: translate(-150px,-40px);
+            transform: translate(-150px,-30px);
             z-index: 2000;
         }
 
@@ -227,6 +237,7 @@
             margin-top: 3%;
             font-size: 16px;
         }
+  
 
         /*@-webkit-keyframes heartBeat {
             0% {
@@ -359,11 +370,16 @@
     <div id="selfInterstatial">
         
         <div id="closeSelfAd">X</div>
+     
         <div id="selfAdMain">
+            <video id="promoVid1" width="265" height="470" autoplay>
+                <source src="assets/starMatchPromo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
             <div id="adTimerX"> 15 </div>
             <div id="selfAdInner">
                 <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
-
+            
             </div>
           
             <a id="gameLink" class="external-link" href='https://play.google.com/store/apps/details?id=com.GuiGhostGames.StarMatch2048' target='_blank'><img id="gPlayImg" alt='Get it on Google Play' src='images/google-play-badge_altered.png' /></a>
