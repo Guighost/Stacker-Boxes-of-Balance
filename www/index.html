@@ -110,7 +110,17 @@
             transform: translate(-150px,-30px);
             z-index: 2000;
         }
-
+        #labelSelfInter {
+            position: absolute;
+            width: 90%;
+            top: 5px;
+            left: 5%;
+            background-color:CaptionText;
+            font-family: 'Comic Sans MS';
+            font-size: large;
+            color:azure;
+            text-align:center;
+        }
         #adTimerX {
             position: absolute;
             width: 21px;
@@ -376,7 +386,8 @@
                 <source src="assets/starMatchPromo.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <div id="adTimerX"> 15 </div>
+            <div id="labelSelfInter"> Star Match 2048 </div>
+            <div id="adTimerX"> 30 </div>
             <div id="selfAdInner">
                 <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
             
@@ -472,7 +483,7 @@
         var selfPromote = false;
         var selfTick = 0;
         var adTimerDiv = document.getElementById("adTimerX");
-        var selfAdCountdown = 15;
+        var selfAdCountdown = 30;
         var selfAdLocalStore = localStorage.getItem("showSelfAd");
 
         function checkSelfPromote() {
@@ -495,7 +506,11 @@
             var gPlayBtn = document.getElementById("gPlayImg");
             gPlayBtn.className += "heartBeat";
 
-            }
+            var myVideo = document.getElementById("promoVid1");
+            
+                  myVideo.play();
+            
+     }
             else {
                 console.log("self Promote NOT active- fireEnhance");
                 fireEnhance();
@@ -534,10 +549,7 @@
                     var adInterval = setInterval(function () {
                         currentAdStep++;
 
-                        if (currentAdStep == 3 || currentAdStep == 6 || currentAdStep == 9 || currentAdStep == 12 || currentAdStep == 15) { adImgStep++;}
 
-                            if (adImgStep > 6) { adImgStep = 1; }
-                            adImg.src = "images/starMatchPromo" + adImgStep + ".png";
 
                         selfAdCountdown = selfAdCountdown - 1;
                         adTimerDiv.innerHTML = selfAdCountdown;
@@ -545,11 +557,11 @@
                             adTimerDiv.innerHTML = "X";
                             selfAdCountdown = 0;
                         }
-                        if (currentAdStep > 16) {
+                        if (currentAdStep > 30) {
                             clearInterval(adInterval);
                             currentAdStep = 0;
                             adImgStep = 1;
-                            adImg.src = "images/starMatchPromo" + adImgStep + ".png";
+
                         }
                     }, 1000);
 
@@ -561,7 +573,7 @@
             if (selfAdCountdown == 0) {
                 document.getElementById("selfInterstatial").style.display = "none";
                 currentAdStep = 0;
-                selfAdCountdown = 15;
+                selfAdCountdown = 30;
                 adImgStep = 1;
                 adImg.src = "images/starMatchPromo1.png";
             }
@@ -589,7 +601,7 @@
   function interPop() {
     showItOrNo = localStorage.getItem("showInterstatial");
     showReview = localStorage.getItem("showReview");
-     
+
     if (showItOrNo == 1 ) { checkSelfPromote(); }
 
 
