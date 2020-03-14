@@ -89,10 +89,11 @@
         }
         #promoVid1 {
             position: absolute;
-            top: 35px;
+            top: 50px;
             left: 0px;
             width: 100%;
             z-index: 1900;
+         
         }
         #gameLink {
             position: absolute;
@@ -112,20 +113,22 @@
         }
         #labelSelfInter {
             position: absolute;
-            width: 90%;
+            width: 80%;
             top: 5px;
             left: 5%;
-            background-color:CaptionText;
+            background-color: CaptionText;
             font-family: 'Comic Sans MS';
             font-size: large;
-            color:azure;
-            text-align:center;
+            color: azure;
+            text-align: center;
+            border: 1px solid grey;
         }
         #adTimerX {
             position: absolute;
-            width: 21px;
+            width: 22px;
+            height: 22px;
             top: 5px;
-            right: 20px;
+            right: 15px;
             background-color: lightgray;
             border: 1px double blue;
             border-radius: 15px;
@@ -133,7 +136,8 @@
             font-family: 'Comic Sans MS';
             align-content: center;
             padding-left: 5px;
-            padding-right: 1px;
+            padding-right: 3px;
+            z-index: 3500;
         }
 
         
@@ -379,15 +383,16 @@
     <!--SELF Advertising-->`
     <div id="selfInterstatial">
         
-        <div id="closeSelfAd">X</div>
-     
+        <!--<div id="closeSelfAd">X</div>-->
+        <div id="adTimerX"> 30 </div>
         <div id="selfAdMain">
+            
+
             <video id="promoVid1" width="265" height="470" >
                 <source src="assets/starMatchPromo.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <div id="labelSelfInter"> Star Match 2048 </div>
-            <div id="adTimerX"> 30 </div>
+            <!--<div id="labelSelfInter"> Star Match 2048 </div>-->
             <div id="selfAdInner">
                 <img id="selfAdGraphic" src="images/starMatchPromo1.png" />
             
@@ -437,8 +442,9 @@
     window.addEventListener('load', (event) => {
   console.log('page is fully loaded');
 
-     var selfdGraphic = document.getElementById("selfAdGraphic")
-          selfdGraphic.addEventListener("click",openLink);
+     var selfAdGraphic = document.getElementById("promoVid1")
+          selfAdGraphic.addEventListener("click",openLink);
+
 
      var gPlayImg = selfdGraphic = document.getElementById("gPlayImg")
           gPlayImg.addEventListener("click", openLink);
@@ -457,6 +463,7 @@
         var rateImage = selfdGraphic = document.getElementById("rateImage")
           rateImage.addEventListener("click", openRateOnPlay);
      });
+
      function closeRate1() {
                 document.getElementById("rateMe").style.display = 'none';
                localStorage.setItem("rateMeNever", 1)
@@ -477,12 +484,14 @@
           }
 
          function openLink() {
+      try { cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048'); }
+                catch (err) { console.log("caught = " + err) }
 
-                cordova.plugins.market.open('com.GuiGhostGames.StarMatch2048');
           }
         var selfPromote = false;
         var selfTick = 0;
         var adTimerDiv = document.getElementById("adTimerX");
+
         var selfAdCountdown = 30;
         var selfAdLocalStore = localStorage.getItem("showSelfAd");
 
@@ -507,9 +516,9 @@
             gPlayBtn.className += "heartBeat";
 
             var myVideo = document.getElementById("promoVid1");
-            
+
                   myVideo.play();
-            
+
      }
             else {
                 console.log("self Promote NOT active- fireEnhance");
@@ -556,11 +565,13 @@
                         if (selfAdCountdown <= 0) {
                             adTimerDiv.innerHTML = "X";
                             selfAdCountdown = 0;
+                         adTimerDiv.addEventListener("click",closeSelfAd);
                         }
                         if (currentAdStep > 30) {
                             clearInterval(adInterval);
                             currentAdStep = 0;
                             adImgStep = 1;
+     selfAdCountdown == 0;
 
                         }
                     }, 1000);
@@ -569,16 +580,20 @@
             }
             else { timerInProgress = 1; }
         }
-        adTimerDiv.onclick = function () {
-            if (selfAdCountdown == 0) {
-                document.getElementById("selfInterstatial").style.display = "none";
-                currentAdStep = 0;
-                selfAdCountdown = 30;
-                adImgStep = 1;
-                adImg.src = "images/starMatchPromo1.png";
-            }
-            else { return;}
-        }
+
+   
+           function closeSelfAd() {
+                        console.log("entered check")
+                        if (selfAdCountdown == 0) {
+                                    console.log("passed check")
+                                     document.getElementById("selfInterstatial").style.display = "none";
+                                    currentAdStep = 0;
+                                    selfAdCountdown = 30;
+                                    adImgStep = 1;
+
+                                    }
+
+                        }
 
         // set interval to check for interstatial
        if (localStorage.getItem("showReview") == null) {
