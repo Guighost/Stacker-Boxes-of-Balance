@@ -42,9 +42,9 @@ window.onload = function () {
    
 
     if (localStorage.getItem("showSelfAd") == null) {
-        localStorage.setItem("showSelfAd", 1);
+        localStorage.setItem("showSelfAd", 0);
     }
-    else { localStorage.setItem("showSelfAd", 1); }
+    else { localStorage.setItem("showSelfAd", 0); }
 
     if (localStorage.getItem("stackerLevel") == null) {
         LEVEL = 1;
@@ -150,10 +150,16 @@ window.onload = function () {
         }
     }
     document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+
+
  
+
+   
+
                               ///end of window.load
 }
-              
+     
 
 var introScene = function () { };
 var levelUpScene = function () { };
@@ -793,10 +799,16 @@ playGame.prototype = {
                 pauseAllAudio();
                 //myAudio.pause();
                 this.gameOverSound.play();
-                var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
-                lvlUpDisplayText.anchor.set(0.5);
+                //var lvlUpDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 330, "smallfont", "Get " + (levelCheck) + " to Level Up", 48);
+                //lvlUpDisplayText.anchor.set(0.5);
+                var levelEndModal2 = document.getElementById("levelComplete");
+           
+                var levelEndModal2Goal = document.getElementById("goalHtml");
+                levelEndModal2Goal.innerHTML = levelCheck;
+                var levelEndModal2Score = document.getElementById("scoreHtml");
+                levelEndModal2Score.innerHTML = this.score;
                 //console.log("playAdTime = " + playAdTime);
-
+                document.getElementById("levelComplete").style.display = 'block'
                 if (playAdTime > timeBetweenAds - 45) {
                     playAdTime = 0;
 
@@ -937,4 +949,8 @@ function pauseAllAudio() {
 };
 
 
+//var tryAgain = document.getElementById("continueBtnHtml")
+//tryAgain.addEventListener("click", handleLevelPopup(1));
+   
 
+//levelEndModal.style.display = 'none'

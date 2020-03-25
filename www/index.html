@@ -356,6 +356,81 @@
             -webkit-animation-name: zoomInRight;
             animation-name: zoomInRight;
         }*/
+        #levelComplete {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 5000;
+            /*top: 10%;*/
+            background-color: black;
+            
+        
+            /*display:none;*/
+        }
+        #levelCompleteInner {
+            border: 3px grey groove;
+            margin: auto;
+            width: 95%;
+            height: 95%;
+            z-index: 5000;
+        
+            text-align: center;
+            font-family: 'Comic Sans MS';
+            color: azure;
+        }
+      
+        #bannerImg {
+        width:100%;
+        } 
+        #LevelComleteTextDiv {
+            margin: auto;
+            width: 95%;
+            height: 100%;
+            font-family: 'Comic Sans MS';
+            font-size: xx-large;
+        }
+        #goalText{
+    margin-top: 2%;
+    }
+
+        .rowBackFail {
+            width: 100%;
+            height: 16%;
+            margin: auto;
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            font-size: xx-large;
+        }
+        .rowBackFail2 {
+            width: 100%;
+            height: 10%;
+            margin: auto;
+            float: left;
+            margin-top: 5px;
+            margin-bottom: 12px;
+            font-size: xx-large;
+            /*border: 3px grey groove;*/
+            background-image: radial-gradient( blue, black);
+            border-radius: 10px;
+            text-align:center;
+        }
+
+        .buttonSize {
+            max-width: 110px;
+            float: left;
+            margin: auto;
+            margin-left: 10px;
+        }
+        #lvlStatusTxt {
+            background-image:url(images/topBanner.png);
+
+            background-position: top;
+            color: red;
+            font-size: xx-large;
+            height:65px;
+            padding-top: 7px;
+        }
       
 
     </style>
@@ -427,6 +502,28 @@
         </div>
 
     </div>
+    <div id="levelComplete" class="zoomInDown">
+        <div id="levelCompleteInner">
+            <div id="headFailed">
+                <!--<img id="bannerImg" src="images/topBanner.png"/>-->
+                <div id="lvlStatusTxt"><p>FAILED</p> </div>
+            </div>
+            <div id="LevelComleteTextDiv">
+                <div id="goalText" class="rowBackFail">Level Goal: <h2 id="goalHtml">25</h2> </div>
+                <div id="yourScoreText" class="rowBackFail">Your Score: <h2 id="scoreHtml">25</h2> </div>
+                <div id="tryAgainText"  class="rowBackFail2"><img class="buttonSize" id="continueBtnHtml" src="images/continueButton.png" />Try Again </div>
+                <div id="SkipLevelText"  class="rowBackFail2" ><img class="buttonSize" id="viewAdBtnHtml" src="images/viewAd.png" />Skip Level </div>
+                <div id="startOver" class="rowBackFail2"><img class="buttonSize" id="startoverBtnHtml" src="images/playButtonNew.png" /> Start Over </div>
+        
+            </div>
+         
+           
+            <div id="LevelComleteSkipBtn"></div>
+            <div id="LevelComleteQuitBtn"></div>
+
+        </div>
+
+    </div>
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
@@ -441,6 +538,7 @@
      //cordova in app browser
     window.addEventListener('load', (event) => {
   console.log('page is fully loaded');
+
 
      var selfAdGraphic = document.getElementById("promoVid1")
           selfAdGraphic.addEventListener("click",openLink);
@@ -463,6 +561,8 @@
         var rateImage = selfdGraphic = document.getElementById("rateImage")
           rateImage.addEventListener("click", openRateOnPlay);
      });
+
+
 
      function closeRate1() {
                 document.getElementById("rateMe").style.display = 'none';
@@ -497,8 +597,9 @@
 
         function checkSelfPromote() {
             selfTick++;
-            if (selfTick == 2) {
+            if (selfTick == 3) {
                 selfPromote = true; selfTick = 0;
+            localStorage.setItem("showSelfAd", 1);
             };
             selfAdLocalStore = localStorage.getItem("showSelfAd");
             console.log("selfAdLocalStore  showSelfAd = " + selfAdLocalStore);
@@ -581,7 +682,7 @@
             else { timerInProgress = 1; }
         }
 
-   
+
            function closeSelfAd() {
                         console.log("entered check")
                         if (selfAdCountdown == 0) {
@@ -624,6 +725,86 @@
       // try {
          //     Enhance.logEvent('AppLaunch');
          //} catch(err) { console.log("caught attempt to logEvent: " + err)}
+window.addEventListener('load', (event) => {
+    console.log('page is fully loaded');
+    document.getElementById("continueBtnHtml").addEventListener("click", handleLevelPopup);
+    document.getElementById("continueBtnHtml").addEventListener("touchstart", handleLevelPopup);
+
+    document.getElementById("viewAdBtnHtml").addEventListener("click", handleLevelPopup2);
+    document.getElementById("viewAdBtnHtml").addEventListener("touchstart", handleLevelPopup2);
+
+    document.getElementById("startoverBtnHtml").addEventListener("click", handleLevelPopup3);
+    document.getElementById("startoverBtnHtml").addEventListener("touchstart", handleLevelPopup3);
+
+    var levelEndModal = document.getElementById("levelComplete");
+
+     //try again
+    function handleLevelPopup(evt) {
+        console.log("still here")
+        evt.preventDefault()
+
+        levelEndModal.style.display = 'none'
+        game.state.start("PlayGame");
+    }
+     //view ad
+    function handleLevelPopup2(evt) {
+        evt.preventDefault()
+        console.log("still here2")
+
+                try { Enhance.isRewardedAdReady(callback2);  }
+                catch (err) { console.log("Caught rewarded error " + err) }
+
+      setTimeout(function(){
+            levelEndModal.style.display = 'none'
+            LEVEL = LEVEL + 1;
+             game.state.start("PlayGame");
+        }, 5000);
+
+
+
+    }
+     //start over
+    function handleLevelPopup3(evt) {
+        evt.preventDefault()
+        console.log("still here3")
+        levelEndModal.style.display = 'none'
+        LEVEL = 1;
+        game.state.start("PlayGame");
+
+    }
+});
+
+ var callback2 = function (result) {
+        if (!result) {
+            app.writeLog('Rewarded ad is not ready');
+            return;
+        }
+
+        // The ad is ready
+        var onRewardGranted = function (rewardValue, rewardType) {
+            if (rewardType == Enhance.RewardType.ITEM){
+                app.writeLog("Reward granted (item)")
+                }
+
+            else if (rewardType == Enhance.RewardType.COINS) {
+                app.writeLog("Reward granted (coins), value: " + rewardValue)
+           
+                };
+     }
+        var onRewardDeclined = function () {
+            app.writeLog('Reward declined')
+       
+        };
+
+        var onRewardUnavailable = function () {
+            app.writeLog('Reward unavailable');
+            
+        };
+
+        Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable);
+    };
+
+
 
  </script>
 

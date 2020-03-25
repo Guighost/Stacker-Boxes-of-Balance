@@ -20,8 +20,6 @@
 <allow-intent href="geo:*"/>
 <content src="index.html"/>
 <plugin  source="npm" name="cordova-plugin-battery-status"/>
-
-
 <plugin source="npm" name="cordova-plugin-device"/>
 <plugin  source="npm" name="cordova-plugin-dialogs"/>
 <plugin  source="npm" name="cordova-plugin-file"/>
@@ -29,10 +27,8 @@
 <plugin  source="npm" name="cordova-plugin-globalization"/>
 <plugin source="npm" name="cordova-plugin-inappbrowser"/>
 <plugin  source="npm" name="cordova-plugin-network-information"/>
-
-  
 <plugin name="enhance-cordova-connector"/>
-  <plugin name="fitatu-cordova-plugin-market" />
+<plugin name="fitatu-cordova-plugin-market" />
 
  <access origin="*" />
     <feature name="http://api.phonegap.com/1.0/device" />
