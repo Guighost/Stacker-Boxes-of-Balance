@@ -721,18 +721,43 @@
          var showReview = localStorage.getItem("showReview");
 
         var onceOnlyAd = 0;
-             // set interval to check for interstatial
-       // var tid = setInterval(interPop, 500);
+   
+          ///rewarded ad callbacks
+    var rewardedCompleted = 0;
+     
+    var callback2 = function (result) {
+        if (!result) {
+            app.writeLog('Rewarded ad is not ready');
+            return;
+        }
 
- // function interPop() {
-       // showItOrNo = localStorage.getItem("showInterstatial");
-      //  showReview = localStorage.getItem("showReview");
+        // The ad is ready
+        var onRewardGranted = function (rewardValue, rewardType) {
+            if (rewardType == Enhance.RewardType.ITEM)
+                app.writeLog("Reward granted (item)"),
+                rewardedCompleted = 1;
 
-      //  if (showItOrNo == 1 ) { checkSelfPromote(); }
-//  }
-      // try {
-         //     Enhance.logEvent('AppLaunch');
-         //} catch(err) { console.log("caught attempt to logEvent: " + err)}
+            else if (rewardType == Enhance.RewardType.COINS)
+                app.writeLog("Reward granted (coins), value: " + rewardValue),
+            rewardedCompleted = 1;
+        };
+
+        var onRewardDeclined = function () {
+            app.writeLog('Reward declined'),
+            rewardedCompleted = 0;
+        };
+
+        var onRewardUnavailable = function () {
+            app.writeLog('Reward unavailable');
+            rewardedCompleted = 0;
+        };
+
+        Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable);
+    };
+
+
+
+
 window.addEventListener('load', (event) => {
     console.log('page is fully loaded');
 
@@ -789,37 +814,7 @@ window.addEventListener('load', (event) => {
 
     }
 
-     ///rewarded ad callbacks
-      var callback2 = function (result) {
-        if (!result) {
-            app.writeLog('Rewarded ad is not ready');
-            return;
-        }
-        var rewardType = Enhance.RewardType.ITEM;
-        var rewardValue = "level";
-        // The ad is ready
-        var onRewardGranted = function (rewardValue, rewardType) {
-            if (rewardType == Enhance.RewardType.ITEM){
-                app.writeLog("Reward granted (item)")
-                }
 
-            else if (rewardType == Enhance.RewardType.COINS) {
-                app.writeLog("Reward granted (coins), value: " + rewardValue)
-
-                };
-        }
-        var onRewardDeclined = function () {
-            app.writeLog('Reward declined')
-
-        };
-
-        var onRewardUnavailable = function () {
-            app.writeLog('Reward unavailable');
-
-        };
-
-        Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable);
-    };
 });
 
 
