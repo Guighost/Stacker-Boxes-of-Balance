@@ -721,11 +721,18 @@
          var showReview = localStorage.getItem("showReview");
 
         var onceOnlyAd = 0;
-   
+
           ///rewarded ad callbacks
     var rewardedCompleted = 0;
-     
-    var callback2 = function (result) {
+
+
+
+
+
+
+window.addEventListener('load', (event) => {
+    console.log('page is fully loaded');
+     var callback2 = function (result) {
         if (!result) {
             app.writeLog('Rewarded ad is not ready');
             return;
@@ -755,13 +762,6 @@
         Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable);
     };
 
-
-
-
-window.addEventListener('load', (event) => {
-    console.log('page is fully loaded');
-
-
      ///start level end loss modal
     document.getElementById("tryAgainText").addEventListener("click", handleLevelPopup);
     document.getElementById("tryAgainText").addEventListener("touchstart", handleLevelPopup);
@@ -790,7 +790,7 @@ window.addEventListener('load', (event) => {
         evt.preventDefault()
         console.log("still here2")
 
-                try { Enhance.isRewardedAdReady(callback2);  }
+               try { Enhance.isRewardedAdReady(callback2); showRewarded = 0; }
                 catch (err) { console.log("Caught rewarded error " + err) }
 
       setTimeout(function(){
