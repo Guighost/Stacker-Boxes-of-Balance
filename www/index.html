@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Stacker - Boxes of Balance</title>
-    <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, minimum-scale = 1.0, user-scalable = 0, minimal-ui" />
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, minimum-scale = 1.0, user-scalable = no, minimal-ui" />
     <meta charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta property="og:url" content="https://guighostgames.com/Stacker-BoxesOfBalance/index.html" />
@@ -361,11 +361,10 @@
             width: 100%;
             height: 100%;
             z-index: 5000;
-            /*top: 10%;*/
+            top: 0px;
             background-color: black;
-            
-        
-            display:none;
+            overflow: hidden;
+            /*display:none;*/
         }
         #levelCompleteInner {
           
@@ -410,16 +409,16 @@
             background-image: radial-gradient( green, black);
         }
         .rowBackFail2 {
-            width: 100%;
+            width: 80%;
             height: 10%;
-            margin: auto;
+            margin-left: 10%;
             float: left;
             margin-top: 5px;
             margin-bottom: 12px;
             font-size: xx-large;
             /*border: 3px grey groove;*/
             background-image: radial-gradient( purple, black);
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
         }
 
@@ -523,10 +522,13 @@
             </div>
             <div id="LevelComleteTextDiv">
                 <div id="goalText" class="rowBackFail">Level Goal <h4 id="goalHtml" >25</h4> </div>
-                <div id="yourScoreText" class="rowBackFail">Your Score <h4 id="scoreHtml">25</h4> </div>
-                <div id="tryAgainText"  class="rowBackFail2"><img class="buttonSize" id="continueBtnHtml" src="images/continueButton.png" />Try Again </div>
+                <div id="yourScoreText" class="rowBackFail">Your Score <h4 id="scoreHtml">0</h4> </div>
+                <!--<div id="tryAgainText"  class="rowBackFail2"><img class="buttonSize" id="continueBtnHtml" src="images/continueButton.png" />Try Again </div>
                 <div id="SkipLevelText"  class="rowBackFail2" ><img class="buttonSize   heartBeat" id="viewAdBtnHtml"  src="images/viewAd.png" />Skip Level </div>
-                <div id="startOver" class="rowBackFail2"><img class="buttonSize" id="startoverBtnHtml" src="images/playButtonNew.png" /> Start Over </div>
+                <div id="startOver" class="rowBackFail2"><img class="buttonSize" id="startoverBtnHtml" src="images/playButtonNew.png" /> Start Over </div>-->
+                <div id="tryAgainText" class="rowBackFail2">Try Again </div>
+                <div id="SkipLevelText" class="rowBackFail2">Skip Level </div>
+                <div id="startOver" class="rowBackFail2">Start Over </div>
         
             </div>
          
@@ -612,7 +614,7 @@
             selfTick++;
             if (selfTick == 3) {
                 selfPromote = true; selfTick = 0;
-            localStorage.setItem("showSelfAd", 1);
+                localStorage.setItem("showSelfAd", 1);
             };
             selfAdLocalStore = localStorage.getItem("showSelfAd");
             console.log("selfAdLocalStore  showSelfAd = " + selfAdLocalStore);
@@ -625,15 +627,13 @@
                 localStorage.setItem("showInterstatial", 0);
                 selfPromote = false;
                 localStorage.setItem("showSelfAd", 0);
-                 selfAdLocalStore = 0
-            var gPlayBtn = document.getElementById("gPlayImg");
-            gPlayBtn.className += "heartBeat";
+                selfAdLocalStore = 0
+                var gPlayBtn = document.getElementById("gPlayImg");
+                gPlayBtn.className += "heartBeat";
+                var myVideo = document.getElementById("promoVid1");
+                myVideo.play();
 
-            var myVideo = document.getElementById("promoVid1");
-
-                  myVideo.play();
-
-     }
+         }
             else {
                 console.log("self Promote NOT active- fireEnhance");
                 fireEnhance();
@@ -670,25 +670,21 @@
                 timerInProgress = 0;
 
                     var adInterval = setInterval(function () {
-                        currentAdStep++;
-
-
-
-                        selfAdCountdown = selfAdCountdown - 1;
-                        adTimerDiv.innerHTML = selfAdCountdown;
-                        if (selfAdCountdown <= 0) {
-                            adTimerDiv.innerHTML = "X";
-                            selfAdCountdown = 0;
-                         adTimerDiv.addEventListener("click",closeSelfAd);
-                        }
-                        if (currentAdStep > 30) {
-                            clearInterval(adInterval);
-                            currentAdStep = 0;
-                            adImgStep = 1;
-     selfAdCountdown == 0;
-
-                        }
-                    }, 1000);
+                                                            currentAdStep++;
+                                                            selfAdCountdown = selfAdCountdown - 1;
+                                                            adTimerDiv.innerHTML = selfAdCountdown;
+                                                            if (selfAdCountdown <= 0) {
+                                                                adTimerDiv.innerHTML = "X";
+                                                                selfAdCountdown = 0;
+                                                                adTimerDiv.addEventListener("click",closeSelfAd);
+                                                            }
+                                                            if (currentAdStep > 30) {
+                                                                clearInterval(adInterval);
+                                                                currentAdStep = 0;
+                                                                adImgStep = 1;
+                                                                selfAdCountdown == 0;
+                                                            }
+                                                        }, 1000);
 
 
             }
@@ -709,7 +705,7 @@
 
                         }
 
-        // set interval to check for interstatial
+
        if (localStorage.getItem("showReview") == null) {
             localStorage.setItem("showReview", true);
     }
@@ -725,29 +721,31 @@
          var showReview = localStorage.getItem("showReview");
 
         var onceOnlyAd = 0;
-        var tid = setInterval(interPop, 500);
+             // set interval to check for interstatial
+       // var tid = setInterval(interPop, 500);
 
-  function interPop() {
-    showItOrNo = localStorage.getItem("showInterstatial");
-    showReview = localStorage.getItem("showReview");
+ // function interPop() {
+       // showItOrNo = localStorage.getItem("showInterstatial");
+      //  showReview = localStorage.getItem("showReview");
 
-    if (showItOrNo == 1 ) { checkSelfPromote(); }
-
-
-}
+      //  if (showItOrNo == 1 ) { checkSelfPromote(); }
+//  }
       // try {
          //     Enhance.logEvent('AppLaunch');
          //} catch(err) { console.log("caught attempt to logEvent: " + err)}
 window.addEventListener('load', (event) => {
     console.log('page is fully loaded');
-    document.getElementById("continueBtnHtml").addEventListener("click", handleLevelPopup);
-    document.getElementById("continueBtnHtml").addEventListener("touchstart", handleLevelPopup);
 
-    document.getElementById("viewAdBtnHtml").addEventListener("click", handleLevelPopup2);
-    document.getElementById("viewAdBtnHtml").addEventListener("touchstart", handleLevelPopup2);
 
-    document.getElementById("startoverBtnHtml").addEventListener("click", handleLevelPopup3);
-    document.getElementById("startoverBtnHtml").addEventListener("touchstart", handleLevelPopup3);
+     ///start level end loss modal
+    document.getElementById("tryAgainText").addEventListener("click", handleLevelPopup);
+    document.getElementById("tryAgainText").addEventListener("touchstart", handleLevelPopup);
+
+    document.getElementById("SkipLevelText").addEventListener("click", handleLevelPopup2);
+    document.getElementById("SkipLevelText").addEventListener("touchstart", handleLevelPopup2);
+
+    document.getElementById("startOver").addEventListener("click", handleLevelPopup3);
+    document.getElementById("startOver").addEventListener("touchstart", handleLevelPopup3);
 
     var levelEndModal = document.getElementById("levelComplete");
 
@@ -755,11 +753,14 @@ window.addEventListener('load', (event) => {
     function handleLevelPopup(evt) {
         console.log("still here")
         evt.preventDefault()
+        showItOrNo = localStorage.getItem("showInterstatial");
+        showReview = localStorage.getItem("showReview");
 
+      if (showItOrNo == 1 ) { checkSelfPromote(); }
         levelEndModal.style.display = 'none'
         game.state.start("PlayGame");
     }
-     //view ad
+     //view ad and skip level
     function handleLevelPopup2(evt) {
         evt.preventDefault()
         console.log("still here2")
@@ -768,9 +769,11 @@ window.addEventListener('load', (event) => {
                 catch (err) { console.log("Caught rewarded error " + err) }
 
       setTimeout(function(){
-            levelEndModal.style.display = 'none'
-            LEVEL = LEVEL + 1;
-             game.state.start("PlayGame");
+            levelEndModal.style.display = 'none';
+            LEVEL =  localStorage.getItem("stackerLevel");
+            LEVEL = parseInt(LEVEL) + 1;
+            localStorage.setItem("stackerLevel", LEVEL);
+            game.state.start("PlayGame");
         }, 5000);
 
 
@@ -785,14 +788,15 @@ window.addEventListener('load', (event) => {
         game.state.start("PlayGame");
 
     }
-});
 
- var callback2 = function (result) {
+     ///rewarded ad callbacks
+      var callback2 = function (result) {
         if (!result) {
             app.writeLog('Rewarded ad is not ready');
             return;
         }
-
+        var rewardType = Enhance.RewardType.ITEM;
+        var rewardValue = "level";
         // The ad is ready
         var onRewardGranted = function (rewardValue, rewardType) {
             if (rewardType == Enhance.RewardType.ITEM){
@@ -801,21 +805,24 @@ window.addEventListener('load', (event) => {
 
             else if (rewardType == Enhance.RewardType.COINS) {
                 app.writeLog("Reward granted (coins), value: " + rewardValue)
-           
+
                 };
-     }
+        }
         var onRewardDeclined = function () {
             app.writeLog('Reward declined')
-       
+
         };
 
         var onRewardUnavailable = function () {
             app.writeLog('Reward unavailable');
-            
+
         };
 
         Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable);
     };
+});
+
+
 
 
 
