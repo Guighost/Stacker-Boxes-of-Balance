@@ -607,6 +607,18 @@
 
         var rateImage = selfdGraphic = document.getElementById("rateImage")
           rateImage.addEventListener("click", openRateOnPlay);
+
+
+     ///start level end loss modal
+    document.getElementById("tryAgainText").addEventListener("click", handleLevelPopup);
+    document.getElementById("tryAgainText").addEventListener("touchstart", handleLevelPopup);
+
+    document.getElementById("SkipLevelText").addEventListener("click", handleLevelPopup2);
+    document.getElementById("SkipLevelText").addEventListener("touchstart", handleLevelPopup2);
+
+    document.getElementById("startOver").addEventListener("click", handleLevelPopup3);
+    document.getElementById("startOver").addEventListener("touchstart", handleLevelPopup3);
+
      });
 
 
@@ -764,28 +776,7 @@
 
         var onceOnlyAd = 0;
 
-
-
-
-
-
-
-window.addEventListener('load', (event) => {
-    console.log('page is fully loaded');
-
-
-
-     ///start level end loss modal
-    document.getElementById("tryAgainText").addEventListener("click", handleLevelPopup);
-    document.getElementById("tryAgainText").addEventListener("touchstart", handleLevelPopup);
-
-    document.getElementById("SkipLevelText").addEventListener("click", handleLevelPopup2);
-    document.getElementById("SkipLevelText").addEventListener("touchstart", handleLevelPopup2);
-
-    document.getElementById("startOver").addEventListener("click", handleLevelPopup3);
-    document.getElementById("startOver").addEventListener("touchstart", handleLevelPopup3);
-
-    var levelEndModal = document.getElementById("levelComplete");
+       var levelEndModal = document.getElementById("levelComplete");
 
      //try again
     function handleLevelPopup(evt) {
@@ -822,6 +813,27 @@ window.addEventListener('load', (event) => {
         game.state.start("PlayGame");
 
     }
+
+
+
+
+
+
+window.addEventListener('load', (event) => {
+    console.log('page is fully loaded');
+
+
+
+     ///start level end loss modal
+    document.getElementById("tryAgainText").addEventListener("click", handleLevelPopup);
+    document.getElementById("tryAgainText").addEventListener("touchstart", handleLevelPopup);
+
+    document.getElementById("SkipLevelText").addEventListener("click", handleLevelPopup2);
+    document.getElementById("SkipLevelText").addEventListener("touchstart", handleLevelPopup2);
+
+    document.getElementById("startOver").addEventListener("click", handleLevelPopup3);
+    document.getElementById("startOver").addEventListener("touchstart", handleLevelPopup3);
+
 
 
 });
