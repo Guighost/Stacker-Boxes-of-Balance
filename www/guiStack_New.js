@@ -532,7 +532,7 @@ playGame.prototype = {
         if (calcPlat2 < ((game.width / randomSpot1) + 96)) { calcPlat2 = ((game.width ) - 96);   }
         //console.log("calPlat2 = " + calcPlat2)
         var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
-        platform2.y = ground.y - 183;
+        platform2.y = ground.y - 185;
         this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -50, "crate1");
 
     
