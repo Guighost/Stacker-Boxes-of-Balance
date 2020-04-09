@@ -596,12 +596,12 @@
                 document.getElementById("rateMe").style.display = 'none';
                localStorage.setItem("rateMeNever", 1)
 
-          }
+        }
        function closeRate2() {
                 document.getElementById("rateMe").style.display = 'none';
                localStorage.setItem("rateMeNever", 0)
 
-          }
+			}
 
         function openRateOnPlay() {
                 document.getElementById("rateMe").style.display = 'none';
@@ -646,7 +646,7 @@
                 var myVideo = document.getElementById("promoVid1");
                 myVideo.play();
 
-         }
+			}
             else {
                 console.log("self Promote NOT active- fireEnhance");
                 fireEnhance();
@@ -714,10 +714,14 @@
         catch (err) { console.log("caughtError = " + err) };
     };
 
-
-
-
-        var currentAdStep = 0;
+    var adIntervalWin = setInterval(function () {
+        var thisTimeWin =  localStorage.getItem("showInterstatial")
+		if (thisTimeWin == 1){
+		fireEnhance();
+		localStorage.setItem("showInterstatial", 0)
+		}							
+    }, 1000);
+       var currentAdStep = 0;
         var adImgStep = 1;
         var adImg = document.getElementById("selfAdGraphic");
         var timerInProgress = 1;
@@ -790,7 +794,7 @@
       if (showItOrNo == 1 ) { 
 			checkSelfPromote();
 			setTimeout(function(){
-            
+            localStorage.setItem("showInterstatial", 0);
 			levelEndModal.style.display = 'none'
 			game.state.start("PlayGame");
             

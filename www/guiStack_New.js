@@ -511,7 +511,7 @@ playGame.prototype = {
         var randomSpot2 = Math.floor(Math.random() * 9);
     
         var ground = game.add.sprite(game.width / 2, game.height, "ground1");
-        ground.y = (game.height - ground.height / 2) -70;
+        ground.y = (game.height - ground.height / 2) -90;
         ground.loadTexture(groundSrc);
 
        
@@ -737,9 +737,9 @@ playGame.prototype = {
             //scoreText.anchor.set(0.5);
             //var scoreDisplayText = game.add.bitmapText(game.width / 2, game.height / 4 + 20, "font", this.score.toString(), 78);
             //scoreDisplayText.anchor.set(0.5);
-            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 80), "font2", "Level Score", 56);
+            var scoreText2 = game.add.bitmapText(game.width / 2, ((game.height / 2) - 100), "font2", "Level Score", 56);
             scoreText2.anchor.set(0.5);
-            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, (game.height / 2) + 5 , "font2", scoreCheck.toString(), 78);
+            var scoreDisplayText2 = game.add.bitmapText(game.width / 2, (game.height / 2) - 5 , "font2", scoreCheck.toString(), 78);
             scoreDisplayText2.anchor.set(0.5);
             localStorage.setItem(gameOptions.localStorageName, JSON.stringify({
                 score: Math.max(this.score, this.savedData.score)
@@ -806,7 +806,7 @@ playGame.prototype = {
                 var levelEndModal2Goal = document.getElementById("goalHtml");
                 levelEndModal2Goal.innerHTML = levelCheck;
                 var levelEndModal2Score = document.getElementById("scoreHtml");
-                levelEndModal2Score.innerHTML = this.score;
+                levelEndModal2Score.innerHTML = scoreCheck;
                 //console.log("playAdTime = " + playAdTime);
                 document.getElementById("levelComplete").style.display = 'block'
                 if (playAdTime > timeBetweenAds - 45) {
