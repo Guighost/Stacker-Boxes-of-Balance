@@ -628,8 +628,9 @@
             if (selfTick == 3) {
                 selfPromote = true; selfTick = 0;
                 localStorage.setItem("showSelfAd", 1);
+            selfAdLocalStore = 1;
             };
-            selfAdLocalStore = localStorage.getItem("showSelfAd");
+
             console.log("selfAdLocalStore  showSelfAd = " + selfAdLocalStore);
             if (selfAdLocalStore == 1) {
 
@@ -645,12 +646,12 @@
                 gPlayBtn.className += "heartBeat";
                 var myVideo = document.getElementById("promoVid1");
                 myVideo.play();
-
+     	        localStorage.setItem("showInterstatial", 0)
 			}
             else {
                 console.log("self Promote NOT active- fireEnhance");
                 fireEnhance();
-
+     	        localStorage.setItem("showInterstatial", 0)
             }
 
         }
@@ -717,9 +718,9 @@
     var adIntervalWin = setInterval(function () {
         var thisTimeWin =  localStorage.getItem("showInterstatial")
 		if (thisTimeWin == 1){
-		fireEnhance();
-		localStorage.setItem("showInterstatial", 0)
-		}							
+	    checkSelfPromote();
+
+		}
     }, 1000);
        var currentAdStep = 0;
         var adImgStep = 1;
@@ -791,21 +792,21 @@
         showItOrNo = localStorage.getItem("showInterstatial");
         showReview = localStorage.getItem("showReview");
 
-      if (showItOrNo == 1 ) { 
+      if (showItOrNo == 1 ) {
 			checkSelfPromote();
 			setTimeout(function(){
             localStorage.setItem("showInterstatial", 0);
 			levelEndModal.style.display = 'none'
 			game.state.start("PlayGame");
-            
+
 			}, 3000);
 	  }
 	  else {
 			levelEndModal.style.display = 'none'
 			game.state.start("PlayGame");
 	  }
-       
-		
+
+
     }
      //view ad and skip level
     function handleLevelPopup2(evt) {
