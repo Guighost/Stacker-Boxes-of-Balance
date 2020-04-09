@@ -550,38 +550,7 @@
             localStorage.setItem("rateMeNever", 0);
     }
 
-          ///rewarded ad callbacks
-    var rewardedCompleted = 0;
-     var callback2 = function (result) {
-        if (!result) {
-            app.writeLog('Rewarded ad is not ready');
-            return;
-        }
 
-        // The ad is ready
-        var onRewardGranted = function (rewardValue, rewardType) {
-            if (rewardType == Enhance.RewardType.ITEM)
-                app.writeLog("Reward granted (item)"),
-                rewardedCompleted = 1;
-
-            else if (rewardType == Enhance.RewardType.COINS)
-                app.writeLog("Reward granted (coins), value: " + rewardValue),
-            rewardedCompleted = 1;
-        };
-
-        var onRewardDeclined = function () {
-            app.writeLog('Reward declined'),
-            rewardedCompleted = 0;
-        };
-
-        var onRewardUnavailable = function () {
-            app.writeLog('Reward unavailable');
-            rewardedCompleted = 0;
-        };
-
-        try {Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable); }
-        catch (err) { console.log("caughtError = " + err) };
-    };
      //cordova in app browser
     window.addEventListener('load', (event) => {
   console.log('page is fully loaded');
@@ -698,7 +667,7 @@
                try { Enhance.isRewardedAdReady(callback2); showRewarded = 0; }
                 catch (err) { console.log("Caught rewarded error " + err) }
      }
-
+////interstitial ads
         var callback = function (result) {
                if(!result) {
                      console.log('Interstitial ad is not ready');
@@ -710,7 +679,40 @@
 
         };
 
+          ///rewarded ad callbacks
+    var rewardedCompleted = 0;
+	var rewardType = 'COINS';
+	var rewardValue = 1;
+     var callback2 = function (result) {
+        if (!result) {
+            app.writeLog('Rewarded ad is not ready');
+            return;
+        }
 
+        // The ad is ready
+        var onRewardGranted = function (rewardValue, rewardType) {
+            if (rewardType == Enhance.RewardType.ITEM)
+                app.writeLog("Reward granted (item)"),
+                rewardedCompleted = 1;
+
+            else if (rewardType == Enhance.RewardType.COINS)
+                app.writeLog("Reward granted (coins), value: " + rewardValue),
+            rewardedCompleted = 1;
+        };
+
+        var onRewardDeclined = function () {
+            app.writeLog('Reward declined'),
+            rewardedCompleted = 0;
+        };
+
+        var onRewardUnavailable = function () {
+            app.writeLog('Reward unavailable');
+            rewardedCompleted = 0;
+        };
+
+        try {Enhance.showRewardedAd(onRewardGranted, onRewardDeclined, onRewardUnavailable); }
+        catch (err) { console.log("caughtError = " + err) };
+    };
 
 
 
@@ -785,15 +787,27 @@
         showItOrNo = localStorage.getItem("showInterstatial");
         showReview = localStorage.getItem("showReview");
 
-      if (showItOrNo == 1 ) { checkSelfPromote(); }
-        levelEndModal.style.display = 'none'
-        game.state.start("PlayGame");
+      if (showItOrNo == 1 ) { 
+			checkSelfPromote();
+			setTimeout(function(){
+            
+			levelEndModal.style.display = 'none'
+			game.state.start("PlayGame");
+            
+			}, 3000);
+	  }
+	  else {
+			levelEndModal.style.display = 'none'
+			game.state.start("PlayGame");
+	  }
+       
+		
     }
      //view ad and skip level
     function handleLevelPopup2(evt) {
         evt.preventDefault()
         console.log("still here2")
-
+		fireEnhance2()
 
       setTimeout(function(){
             levelEndModal.style.display = 'none';
@@ -801,7 +815,7 @@
             LEVEL = parseInt(LEVEL) + 1;
             localStorage.setItem("stackerLevel", LEVEL);
             game.state.start("PlayGame");
-        }, 5000);
+        }, 4000);
 
     }
      //start over
