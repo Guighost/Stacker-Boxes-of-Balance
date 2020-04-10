@@ -791,7 +791,7 @@
         showItOrNo = localStorage.getItem("showInterstatial");
         showReview = localStorage.getItem("showReview");
 
-      if (showItOrNo == 1 ) {
+        if (showItOrNo == 1 ) {
 			checkSelfPromote();
 			setTimeout(function(){
             localStorage.setItem("showInterstatial", 0);
@@ -799,13 +799,11 @@
 			game.state.start("PlayGame");
 
 			}, 2000);
-	  }
-	  else {
+	     }
+	    else {
 			levelEndModal.style.display = 'none'
 			game.state.start("PlayGame");
-	  }
-
-
+	    }
     }
      //view ad and skip level
      var firstClick2 = 0;
