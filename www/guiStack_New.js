@@ -136,8 +136,8 @@ window.onload = function () {
     pauseAllAudio();
     //myAudio.pause();
 
-    var playTime = setInterval(updateplayAdTime, 1000)
-    function updateplayAdTime() { playAdTime++; }
+    //var playTime = setInterval(updateplayAdTime, 1000)
+    //function updateplayAdTime() { playAdTime++; }
 
     ///mute sound if minimized	
     function handleVisibilityChange() {
@@ -227,7 +227,7 @@ introScene.prototype = {
     },
     loadGameNew: function(sprite) {
         text = sprite.name
-        console.log(text)
+        //console.log(text)
         LEVEL = 1;
  
         localStorage.setItem("stackerScore", 0);
@@ -245,9 +245,9 @@ introScene.prototype = {
    
 
         //introBackS.destroy(); 
-        console.log("loadexist")
+        //console.log("loadexist")
         if (alreadyclicked == false) {
-            console.log("alreadyclicked == false loadgame1")
+            //console.log("alreadyclicked == false loadgame1")
             if (LEVEL == 1) {
                 alreadyclicked = true;
                 var tut1 = game.add.image(game.width / 2 - 150, game.height / 2 - 20, 'tut1');
@@ -289,7 +289,7 @@ introScene.prototype = {
                 if (showRateOrNo == 0 && timesPlayed2 >= 3) {
                     localStorage.setItem("timesPlayed", 0)
                     setTimeout(function () {
-                      
+
                         var element = document.getElementById("rateMeBtnYes");
                         element.classList.remove("zoomInRight");
                         element.classList.remove("heartBeat");
@@ -301,12 +301,13 @@ introScene.prototype = {
                         //element2.classList.remove("heartBeat");
                         //element2.classList.add("heartBeat");
                         document.getElementById("rateMeInner").style.display = 'block';
-      
-                       
+
+
                         document.getElementById("loadingGG").style.display = 'none';
                         game.paused = true;
 
-                        var playTime = setInterval(unPause, 500)}, 500)
+                        var playTime2 = setInterval(unPause, 1000);
+                    }, 500);
                 
                 }
                 else { document.getElementById("rateMe").style.display = 'none'; game.paused = false;  }
@@ -315,7 +316,7 @@ introScene.prototype = {
         }
         function unPause() {
             var rateVisible = document.getElementById("rateMe").style.display;
-            if (rateVisible == 'none') { game.paused = false;}
+            if (rateVisible == 'none') { game.paused = false; clearInterval(playTime2) }
         }
                             //document.querySelector('canvas').style.marginTop = "-20px";
     },
@@ -687,7 +688,7 @@ playGame.prototype = {
     tick: function () {
         this.timer++;
         timeLeft = gameOptions.timeLimit - this.timer
-   
+        playAdTime++;
         this.timeText.text = (gameOptions.timeLimit - this.timer).toString()
    
         if (timeLeft == 9) {                      

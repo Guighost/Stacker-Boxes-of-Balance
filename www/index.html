@@ -554,7 +554,7 @@
 
      //cordova in app browser
     window.addEventListener('load', (event) => {
-  console.log('page is fully loaded');
+  //console.log('page is fully loaded');
 
 
      var selfAdGraphic = document.getElementById("promoVid1")
@@ -632,7 +632,7 @@
             selfAdLocalStore = 1;
             };
 
-            console.log("selfAdLocalStore  showSelfAd = " + selfAdLocalStore);
+           // console.log("selfAdLocalStore  showSelfAd = " + selfAdLocalStore);
             if (selfAdLocalStore == 1) {
 
                 var selfInter = document.getElementById("selfInterstatial");
@@ -717,12 +717,9 @@
     };
 
     var adIntervalWin = setInterval(function () {
-        var thisTimeWin =  localStorage.getItem("showInterstatial")
-		if (thisTimeWin == 1){
-	    checkSelfPromote();
-
-		}
-    }, 1000);
+       var thisTimeWin =  localStorage.getItem("showInterstatial")
+		if (thisTimeWin == 1){	    checkSelfPromote();		}
+       }, 1000);
        var currentAdStep = 0;
         var adImgStep = 1;
         var adImg = document.getElementById("selfAdGraphic");
@@ -731,22 +728,22 @@
             if (timerInProgress == 1) {
                 timerInProgress = 0;
 
-                    var adInterval = setInterval(function () {
-                                                            currentAdStep++;
-                                                            selfAdCountdown = selfAdCountdown - 1;
-                                                            adTimerDiv.innerHTML = selfAdCountdown;
-                                                            if (selfAdCountdown <= 0) {
+                     var adInterval = setInterval(function () {
+                                            currentAdStep++;
+                                            selfAdCountdown = selfAdCountdown - 1;
+                                            adTimerDiv.innerHTML = selfAdCountdown;
+                                             if (selfAdCountdown <= 0) {
                                                                 adTimerDiv.innerHTML = "X";
                                                                 selfAdCountdown = 0;
                                                                 adTimerDiv.addEventListener("click",closeSelfAd);
-                                                            }
-                                                            if (currentAdStep > 30) {
+                                                }
+                                              if (currentAdStep > 30) {
                                                                 clearInterval(adInterval);
                                                                 currentAdStep = 0;
                                                                 adImgStep = 1;
                                                                 selfAdCountdown == 0;
                                                             }
-                                                        }, 1000);
+                                }, 1000);
 
 
             }
@@ -755,9 +752,9 @@
 
 
            function closeSelfAd() {
-                        console.log("entered check")
+                        //console.log("entered check")
                         if (selfAdCountdown == 0) {
-                                    console.log("passed check")
+                                   // console.log("passed check")
                                      document.getElementById("selfInterstatial").style.display = "none";
                                     currentAdStep = 0;
                                     selfAdCountdown = 30;
@@ -788,7 +785,7 @@
 
      //try again
     function handleLevelPopup(evt) {
-        console.log("still here")
+       // console.log("still here")
         evt.preventDefault()
         showItOrNo = localStorage.getItem("showInterstatial");
         showReview = localStorage.getItem("showReview");
@@ -800,7 +797,7 @@
 			levelEndModal.style.display = 'none'
 			game.state.start("PlayGame");
 
-			}, 3000);
+			}, 2000);
 	  }
 	  else {
 			levelEndModal.style.display = 'none'
@@ -810,9 +807,12 @@
 
     }
      //view ad and skip level
+     var firstClick2 = 0;
     function handleLevelPopup2(evt) {
+     if (firstClick2 == 0 ) {
+        firstClick2 = 1;
         evt.preventDefault()
-        console.log("still here2")
+      //  console.log("still here2")
 		fireEnhance2()
 
       setTimeout(function(){
@@ -821,13 +821,14 @@
             LEVEL = parseInt(LEVEL) + 1;
             localStorage.setItem("stackerLevel", LEVEL);
             game.state.start("PlayGame");
+            firstClick2 = 0;
         }, 4000);
-
+     }
     }
      //start over
     function handleLevelPopup3(evt) {
         evt.preventDefault()
-        console.log("still here3")
+       // console.log("still here3")
         levelEndModal.style.display = 'none'
         LEVEL = 1;
         game.state.start("PlayGame");
@@ -839,24 +840,6 @@
 
 
 
-window.addEventListener('load', (event) => {
-    console.log('page is fully loaded');
-
-
-
-     ///start level end loss modal
-    document.getElementById("tryAgainText").addEventListener("click", handleLevelPopup);
-    document.getElementById("tryAgainText").addEventListener("touchstart", handleLevelPopup);
-
-    document.getElementById("SkipLevelText").addEventListener("click", handleLevelPopup2);
-    document.getElementById("SkipLevelText").addEventListener("touchstart", handleLevelPopup2);
-
-    document.getElementById("startOver").addEventListener("click", handleLevelPopup3);
-    document.getElementById("startOver").addEventListener("touchstart", handleLevelPopup3);
-
-
-
-});
 
 
 
