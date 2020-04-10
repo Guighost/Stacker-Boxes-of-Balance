@@ -720,6 +720,7 @@
        var thisTimeWin =  localStorage.getItem("showInterstatial")
 		if (thisTimeWin == 1){	    checkSelfPromote();		}
        }, 1000);
+
        var currentAdStep = 0;
         var adImgStep = 1;
         var adImg = document.getElementById("selfAdGraphic");
@@ -728,21 +729,21 @@
             if (timerInProgress == 1) {
                 timerInProgress = 0;
 
-                     var adInterval = setInterval(function () {
-                                            currentAdStep++;
-                                            selfAdCountdown = selfAdCountdown - 1;
-                                            adTimerDiv.innerHTML = selfAdCountdown;
-                                             if (selfAdCountdown <= 0) {
+               var adInterval = setInterval(function () {
+                                    currentAdStep++;
+                                    selfAdCountdown = selfAdCountdown - 1;
+                                     adTimerDiv.innerHTML = selfAdCountdown;
+                                      if (selfAdCountdown <= 0) {
                                                                 adTimerDiv.innerHTML = "X";
                                                                 selfAdCountdown = 0;
                                                                 adTimerDiv.addEventListener("click",closeSelfAd);
                                                 }
-                                              if (currentAdStep > 30) {
+                                     if (currentAdStep > 30) {
                                                                 clearInterval(adInterval);
                                                                 currentAdStep = 0;
                                                                 adImgStep = 1;
                                                                 selfAdCountdown == 0;
-                                                            }
+                                               }
                                 }, 1000);
 
 
