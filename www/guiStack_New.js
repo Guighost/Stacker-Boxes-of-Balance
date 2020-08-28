@@ -9,7 +9,7 @@ var gameOptions = {
     gravity: 2000,
     crateSpeed: 1500,
     crateHorizontalRange: 540,
-    fallingHeight: 500,
+    fallingHeight: 620,
     localStorageName: "Stacker_HighScore",
     gameWidth: 640,
     gameHeight: 960
@@ -534,7 +534,7 @@ playGame.prototype = {
         //console.log("calPlat2 = " + calcPlat2)
         var platform2 = game.add.sprite(calcPlat2, game.height, platSrc);
         platform2.y = ground.y - 185;
-        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - (game.height / 3.25) - gameOptions.fallingHeight -50, "crate1");
+        this.movingCrate = game.add.sprite((game.width - gameOptions.crateHorizontalRange) / 2, game.height - GROUNDHEIGHT - gameOptions.fallingHeight, "crate1");
 
     
                 
@@ -767,7 +767,19 @@ playGame.prototype = {
                 localStorage.setItem("stackerLevel", LEVEL);
                 levelScore = this.score;
                 oldlevelScore = this.score;
+                var playername = "me2";
+                //function postScore() {
+                //    var constructedLink = "http://gmscoreboard.com/handle_score.php?tagid=5eb066a6f2d7915886189182596&player=" + playername + "&score=" + localStorage.getItem("stackerScore");
+                //    console.log(constructedLink);
+                //    var xmlhttp = new XMLHttpRequest();
+                //    xmlhttp.open("GET", constructedLink, true);
+                //    xmlhttp.send();
+                //    var scorePost = window.open(constructedLink, '', 'width=,height=,resizable=no');
+                //    scorePost.blur();
+                //    window.focus();
 
+                //}
+                //postScore();
                 //console.log("playAdTime = " + playAdTime);
 				game.time.events.add(Phaser.Timer.SECOND * 3, function () {
                     if ( playAdTime > timeBetweenAds) {
